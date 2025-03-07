@@ -32,6 +32,7 @@ public:
     QAction *actionSelectImageNext;
     QAction *actionSelectImagePrevious;
     QAction *actionSelectImageEnd;
+    QAction *actionImport;
     QWidget *centralWidget;
     QLabel *labelMain;
     QMenuBar *menuBar;
@@ -55,6 +56,8 @@ public:
         actionSelectImagePrevious->setObjectName(QStringLiteral("actionSelectImagePrevious"));
         actionSelectImageEnd = new QAction(MainWindow);
         actionSelectImageEnd->setObjectName(QStringLiteral("actionSelectImageEnd"));
+        actionImport = new QAction(MainWindow);
+        actionImport->setObjectName(QStringLiteral("actionImport"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         labelMain = new QLabel(centralWidget);
@@ -78,6 +81,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuSelect_image->menuAction());
+        menuFile->addAction(actionImport);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
         menuSelect_image->addAction(actionSelectImageNext);
@@ -98,6 +102,7 @@ public:
         actionSelectImageNext->setText(QApplication::translate("MainWindow", "Next", 0));
         actionSelectImagePrevious->setText(QApplication::translate("MainWindow", "Previous", 0));
         actionSelectImageEnd->setText(QApplication::translate("MainWindow", "End", 0));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
         labelMain->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));

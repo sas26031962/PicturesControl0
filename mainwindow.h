@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QImage>
+#include <memory>
+#include "cinifile.h"
 
 #define STATUS_BAR_DELAY 500
 
@@ -18,6 +20,7 @@ class MainWindow : public QMainWindow
 private:
     //Атрибуты
     QString scaledImagePath = "./img/tmp/scaled_image.png";
+    bool IsError = false;
 
 public:
     //Конструкторы, деструкторы
@@ -36,6 +39,7 @@ private slots:
     void execActionSelectImageNext();
     void execActionSelectImagePrevious();
     void execActionSelectImageEnd();
+    void execActionImport();
 
 public slots:
 

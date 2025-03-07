@@ -11,7 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
+    connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
 
+    //---Создание рабочего списка
+    std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
+    cRecord::RecordList = ptrRecordList.get();
 }
 
 MainWindow::~MainWindow()
@@ -98,3 +102,36 @@ void MainWindow::execActionSelectImageEnd()
     qDebug() << s;
     ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
 }
+
+void MainWindow::execActionImport()
+{
+    QString s = "execActionImport()";
+    qDebug() << s;
+    ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
+
+    //---Создание рабочего списка
+    std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
+    cRecord::RecordList = ptrRecordList.get();
+
+    //---Очистка рабочего списка
+    cRecord::RecordList->clear();
+
+    //---Чтение содержимого каталога ---
+
+    if(cRecord::readDirectory(cIniFile::IniFile.getDirectoryPah()) > 0)
+    {
+        //qDebug() << "Directory not found: " << directoryPath;
+        IsError = true;
+        return;
+    }
+
+    //---Отображение даных
+    //cRecord::showList();
+
+    //---Добавление идентификационной секции
+    cIniFile::IniFile.addInitalSection(cRecord::RecordList->count());
+
+    //---Добавление данных в файл конфигурации
+    cIniFile::IniFile.addRecordListData();
+
+}//End of void MainWindow::execActionImport()
