@@ -169,7 +169,6 @@ Makefile: ../PicturesControl0.pro ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/win
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/win32/qt_config.prf \
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/win32-g++/qmake.conf \
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/default_pre.prf \
 		../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/win32/default_pre.prf \
@@ -306,7 +305,6 @@ Makefile: ../PicturesControl0.pro ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/win
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/win32/qt_config.prf:
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/win32-g++/qmake.conf:
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/spec_post.prf:
-.qmake.stash:
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/default_pre.prf:
 ../../../Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/features/win32/default_pre.prf:
@@ -342,7 +340,6 @@ all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash
 
 debug-mocclean:
 	$(MAKE) -f $(MAKEFILE).Debug mocclean

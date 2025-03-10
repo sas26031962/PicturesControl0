@@ -16,10 +16,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     cinifile.cpp \
-    crecord.cpp
+    crecord.cpp \
+    #programm/debug/moc_mainwindow.cpp \
+    #programm/moc_mainwindow.cpp
 
 HEADERS  += mainwindow.h \
     cinifile.h \
-    crecord.h
+    crecord.h \
+    #programm/moc_predefs.h \
+    #programm/ui_mainwindow.h
 
 FORMS    += mainwindow.ui

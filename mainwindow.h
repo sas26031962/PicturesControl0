@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QImage>
+#include <QProgressBar>
+#include <QLabel>
 #include <memory>
 #include <QStringList>
 #include "cinifile.h"
@@ -22,6 +24,9 @@ private:
     //Атрибуты
     QString scaledImagePath = "./img/tmp/scaled_image.png";
     bool IsError = false;
+
+    QLabel * labelProgressBar;
+    QProgressBar * progressBarProcess;
 
 public:
     //Конструкторы, деструкторы

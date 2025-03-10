@@ -1,0 +1,21 @@
+
+Запускается C:\WORK\PicturesControl0\programm\debug\PicturesControl0.exe...
+INI file created at:  "/home/andy/From Smartfone"
+"execActionLoad()"
+length:  104
+childGroupsList length:  104
+----------------------------
+Id= 36 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Details 1.jpeg"  iCount= 1
+Id= 37 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Details 2.jpeg"  iCount= 2
+Id= 38 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Details 3.jpeg"  iCount= 3
+Id= 39 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Details 4.jpeg"  iCount= 4
+Id= 40 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Details 5.jpeg"  iCount= 5
+Id= 41 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Draft 1.jpeg"  iCount= 6
+Id= 51 Name= "C:/Work/Ships/Dreadnote_Marat/Dreadnote_Marat (model).jpg"  iCount= 7
+Id= 52 Name= "C:/Work/Ships/Dreadnote_Marat/Dreadnote_Marat 1.jpg"  iCount= 8
+Id= 53 Name= "C:/Work/Ships/Dreadnote_Marat/Dreadnote_Marat 2.jpg"  iCount= 9
+Id= 54 Name= "C:/Work/Ships/Dreadnote_Marat/Dreadnote_Marat 3.jpg"  iCount= 10
+Id= 66 Name= "C:/Work/Ships/Torpedo-boat G-5/Inner view torpedo-boat G-5.html"  iCount= 11
+Id= 42 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Russian alphabeth.png"  iCount= 12
+Id= 43 Name= "C:/Work/Ships/Cruiser_Pamyat_Azova/Theoretic draft 1.jpeg"  iCount= 13
+C:\WORK\PicturesControl0\programm\debug\PicturesControl0.exe завершился с кодом 0
