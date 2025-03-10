@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QImage>
 #include <memory>
+#include <QStringList>
 #include "cinifile.h"
 
 #define STATUS_BAR_DELAY 500
@@ -40,6 +41,7 @@ private slots:
     void execActionSelectImagePrevious();
     void execActionSelectImageEnd();
     void execActionImport();
+    void execActionLoad();
 
 public slots:
 

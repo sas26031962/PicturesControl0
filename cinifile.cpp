@@ -4,8 +4,8 @@
 //Глобальные переменные
 //=============================================================================
 QList<cRecord> * cRecord::RecordList;
-//QString cIniFile::iniFilePath = "C:/WORK/ReadDirectory0/programm/data/FilesConfigShips.ini";// Путь к INI-файлу
-QString cIniFile::iniFilePath = "/home/andy/MyQtProjects/PicturesControl0/programm/data/FilesConfigPhotos.ini";// Путь к INI-файлу
+QString cIniFile::iniFilePath = "C:/WORK/ReadDirectory0/programm/data/FilesConfigShips.ini";// Путь к INI-файлу
+//QString cIniFile::iniFilePath = "/home/andy/MyQtProjects/PicturesControl0/programm/data/FilesConfigPhotos.ini";// Путь к INI-файлу
 QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
 // Путь к каталогу, который нужно прочитать.

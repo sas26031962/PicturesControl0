@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
+    connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
 
     //---Создание рабочего списка
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
@@ -98,7 +99,7 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    QString s = "execActionSelectImageEmd()";
+    QString s = "execActionSelectImageEnd()";
     qDebug() << s;
     ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
 }
@@ -135,3 +136,38 @@ void MainWindow::execActionImport()
     cIniFile::IniFile.addRecordListData();
 
 }//End of void MainWindow::execActionImport()
+
+void MainWindow::execActionLoad()
+{
+    QString s = "execActionLoad()";
+    qDebug() << s;
+    ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+    settings.beginGroup("RecordList");
+    QString qsLength = settings.value("length", "0").toString();
+
+    std::unique_ptr<bool> ptrOk = std::make_unique<bool>();
+    bool* Ok = ptrOk.get();
+    int iLength = qsLength.toInt(Ok);
+    if(!*Ok)iLength = 0;
+    settings.endGroup();
+
+    QStringList groups = settings.childGroups();
+
+    // Выводим значения
+    qDebug() << "length: " << iLength;
+    qDebug() << "childGroupsList length: " << groups.count();
+    qDebug() << "----------------------------";
+    QListIterator<QString> readIt(groups);
+    while (readIt.hasNext())
+    {
+        qDebug() << readIt.next();
+    }
+
+
+}//End of void MainWindow::execActionLoad()
+
