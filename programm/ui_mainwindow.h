@@ -13,11 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -36,6 +38,11 @@ public:
     QAction *actionLoad;
     QWidget *centralWidget;
     QLabel *labelMain;
+    QGroupBox *groupBoxControl;
+    QPushButton *pushButtonBegin;
+    QPushButton *pushButtonNext;
+    QPushButton *pushButtonPrevious;
+    QPushButton *pushButtonEnd;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -65,7 +72,22 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         labelMain = new QLabel(centralWidget);
         labelMain->setObjectName(QStringLiteral("labelMain"));
-        labelMain->setGeometry(QRect(26, 20, 480, 270));
+        labelMain->setGeometry(QRect(26, 20, 661, 341));
+        groupBoxControl = new QGroupBox(centralWidget);
+        groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
+        groupBoxControl->setGeometry(QRect(10, 380, 131, 51));
+        pushButtonBegin = new QPushButton(groupBoxControl);
+        pushButtonBegin->setObjectName(QStringLiteral("pushButtonBegin"));
+        pushButtonBegin->setGeometry(QRect(10, 20, 23, 23));
+        pushButtonNext = new QPushButton(groupBoxControl);
+        pushButtonNext->setObjectName(QStringLiteral("pushButtonNext"));
+        pushButtonNext->setGeometry(QRect(40, 20, 23, 23));
+        pushButtonPrevious = new QPushButton(groupBoxControl);
+        pushButtonPrevious->setObjectName(QStringLiteral("pushButtonPrevious"));
+        pushButtonPrevious->setGeometry(QRect(70, 20, 23, 23));
+        pushButtonEnd = new QPushButton(groupBoxControl);
+        pushButtonEnd->setObjectName(QStringLiteral("pushButtonEnd"));
+        pushButtonEnd->setGeometry(QRect(100, 20, 23, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -109,6 +131,11 @@ public:
         actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
         actionLoad->setText(QApplication::translate("MainWindow", "Load", 0));
         labelMain->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
+        pushButtonBegin->setText(QApplication::translate("MainWindow", "|<", 0));
+        pushButtonNext->setText(QApplication::translate("MainWindow", ">", 0));
+        pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
+        pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
     } // retranslateUi

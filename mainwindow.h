@@ -31,6 +31,9 @@ private:
     int CurrentIndex = 0;
     QStringList Groups;
 
+    //Методы
+    void showCurrentIndexPicture();
+
 public:
     //Конструкторы, деструкторы
     explicit MainWindow(QWidget *parent = 0);

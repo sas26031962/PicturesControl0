@@ -11,6 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
+
+    connect(ui->pushButtonBegin, SIGNAL(pressed()), this, SLOT( execActionSelectImageBegin()));
+    connect(ui->pushButtonNext, SIGNAL(pressed()), this, SLOT( execActionSelectImageNext()));
+    connect(ui->pushButtonPrevious, SIGNAL(pressed()), this, SLOT( execActionSelectImagePrevious()));
+    connect(ui->pushButtonEnd, SIGNAL(pressed()), this, SLOT( execActionSelectImageEnd()));
+
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
 
@@ -25,6 +31,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     labelProgressBar = new QLabel("ProgressBar");
     ui->statusBar->addWidget(labelProgressBar);
+
+    execActionLoad();
+
+    execActionSelectImageBegin();
 
 }//End of ctor
 
@@ -60,18 +70,11 @@ void MainWindow::scaleImage(QString path)
     scaledImage.save(scaledImagePath);
 }
 
-void MainWindow::execActionSelectImageBegin()
+void MainWindow::showCurrentIndexPicture()
 {
-    QString s = "execActionSelectImageBegin()";
-    qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelProgressBar->setText(s);
-    //---
+
     // Создаем объект QSettings с указанием формата INI и пути к файлу
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
-    CurrentIndex = 0;
-    progressBarProcess->setValue(CurrentIndex);
 
     // Читаем значения из INI-файла
     QString qsGroupName = Groups.at(CurrentIndex);
@@ -81,43 +84,46 @@ void MainWindow::execActionSelectImageBegin()
     settings.endGroup();
 
     QString imagePath = qsPath + '/' + qsName;
-    // Выводим значения
-    qDebug() << "FullPat: " << imagePath;
-    //---
 
+    qDebug() << "FullPath: " << imagePath;
+
+    //Вывод картинки на форму
     scaleImage(imagePath);
     QPixmap pmMain(scaledImagePath);//
     ui->labelMain->setPixmap(pmMain);
+
 }
+
+void MainWindow::execActionSelectImageBegin()
+{
+    //---
+    QString s = "execActionSelectImageBegin()";
+    qDebug() << s;
+    labelProgressBar->setText(s);
+    //---
+
+    // Модификация индекса
+    CurrentIndex = 0;
+    progressBarProcess->setValue(CurrentIndex);
+
+    // Отобразить картинку
+    showCurrentIndexPicture();
+
+}//End of void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
+    //---
     QString s = "execActionSelectImageNext()";
     qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
     labelProgressBar->setText(s);
+    //---
 
     if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
     progressBarProcess->setValue(CurrentIndex);
 
-    // Создаем объект QSettings с указанием формата INI и пути к файлу
-    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
-    // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
-    settings.beginGroup(qsGroupName);
-    QString qsPath = settings.value("path","noName").toString();
-    QString qsName = settings.value("name", "noName").toString();
-    settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    // Выводим значения
-    qDebug() << "FullPat: " << imagePath;
-    //---
-
-    scaleImage(imagePath);
-    QPixmap pmMain(scaledImagePath);//
-    ui->labelMain->setPixmap(pmMain);
+    // Отобразить картинку
+    showCurrentIndexPicture();
 
 }
 
@@ -131,24 +137,8 @@ void MainWindow::execActionSelectImagePrevious()
     if(CurrentIndex > 0) CurrentIndex--;
     progressBarProcess->setValue(CurrentIndex);
 
-    // Создаем объект QSettings с указанием формата INI и пути к файлу
-    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
-    // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
-    settings.beginGroup(qsGroupName);
-    QString qsPath = settings.value("path","noName").toString();
-    QString qsName = settings.value("name", "noName").toString();
-    settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    // Выводим значения
-    qDebug() << "FullPat: " << imagePath;
-    //---
-
-    scaleImage(imagePath);
-    QPixmap pmMain(scaledImagePath);//
-    ui->labelMain->setPixmap(pmMain);
+    // Отобразить картинку
+    showCurrentIndexPicture();
 
 }
 
@@ -162,24 +152,8 @@ void MainWindow::execActionSelectImageEnd()
     CurrentIndex = Groups.count() - 1;
     progressBarProcess->setValue(CurrentIndex);
 
-    // Создаем объект QSettings с указанием формата INI и пути к файлу
-    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
-    // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
-    settings.beginGroup(qsGroupName);
-    QString qsPath = settings.value("path","noName").toString();
-    QString qsName = settings.value("name", "noName").toString();
-    settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    // Выводим значения
-    qDebug() << "FullPat: " << imagePath;
-    //---
-
-    scaleImage(imagePath);
-    QPixmap pmMain(scaledImagePath);//
-    ui->labelMain->setPixmap(pmMain);
+    // Отобразить картинку
+    showCurrentIndexPicture();
 
 }
 
