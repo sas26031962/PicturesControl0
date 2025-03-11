@@ -55,6 +55,7 @@ void MainWindow::scaleImage(QString path)
 
     if (originalImage.isNull())
     {
+        ui->labelMain->setText(path);
         qDebug() << "Error: Could not load image: " << path;
         return;
     }
@@ -81,17 +82,25 @@ void MainWindow::showCurrentIndexPicture()
     settings.beginGroup(qsGroupName);
     QString qsPath = settings.value("path","noName").toString();
     QString qsName = settings.value("name", "noName").toString();
+    QString qsError = settings.value("Error", "true").toString();
     settings.endGroup();
 
     QString imagePath = qsPath + '/' + qsName;
 
     qDebug() << "FullPath: " << imagePath;
 
-    //Вывод картинки на форму
-    scaleImage(imagePath);
-    QPixmap pmMain(scaledImagePath);//
-    ui->labelMain->setPixmap(pmMain);
-
+//    if(qsError == "true")
+//    {
+//        ui->labelMain->setText(imagePath);
+//        return;
+//    }
+//    else
+//    {
+        //Вывод картинки на форму
+        scaleImage(imagePath);
+        QPixmap pmMain(scaledImagePath);//
+        ui->labelMain->setPixmap(pmMain);
+//    }
 }
 
 void MainWindow::execActionSelectImageBegin()
@@ -217,7 +226,8 @@ void MainWindow::execActionImport()
 
         if(qsExtension.toLower() == "mp4")
         {
-            qDebug() << "Extension: mp4";
+            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: mp4";
+            IsError = true;
         }
         else
         {
@@ -292,8 +302,13 @@ void MainWindow::execActionLoad()
         QString qsPath = settings.value("path","noName").toString();
         QString qsName = settings.value("name", "noName").toString();
         QString qsId = settings.value("Id","0").toString();
+        QString qsError = settings.value("Error", "true").toString();
+        //int Error = qsError.toInt(Ok);
+
         int Id = qsId.toInt(Ok);
-        if(!*Ok)iLength = 0;
+        if(!*Ok) Id = 0;
+
+        qDebug() << "Id=" << Id << "Error=" << qsError;
 
         if(qsName.indexOf(' ') >= 0)
         {

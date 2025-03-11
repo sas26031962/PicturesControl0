@@ -72,7 +72,8 @@ void cIniFile::addRecordListData()
 
         if(qsExtension.toLower() == "mp4")
         {
-            qDebug() << "Extension: mp4";
+            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: mp4";
+            IsError = true;
         }
         else
         {
