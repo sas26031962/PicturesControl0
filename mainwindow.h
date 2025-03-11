@@ -28,6 +28,9 @@ private:
     QLabel * labelProgressBar;
     QProgressBar * progressBarProcess;
 
+    int CurrentIndex = 0;
+    QStringList Groups;
+
 public:
     //Конструкторы, деструкторы
     explicit MainWindow(QWidget *parent = 0);

@@ -66,32 +66,26 @@ void MainWindow::execActionSelectImageBegin()
     qDebug() << s;
     //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
     labelProgressBar->setText(s);
+    //---
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
-    QString imagePath = "./img/Ships/Cruiser_Moscow.png"; // Путь к вашему изображению
+    CurrentIndex = 0;
+    progressBarProcess->setValue(CurrentIndex);
+
+    // Читаем значения из INI-файла
+    QString qsGroupName = Groups.at(CurrentIndex);
+    settings.beginGroup(qsGroupName);
+    QString qsPath = settings.value("path","noName").toString();
+    QString qsName = settings.value("name", "noName").toString();
+    settings.endGroup();
+
+    QString imagePath = qsPath + '/' + qsName;
+    // Выводим значения
+    qDebug() << "FullPat: " << imagePath;
+    //---
 
     scaleImage(imagePath);
-/*
-    int newWidth = ui->labelMain->width();//960
-    int newHeight = ui->labelMain->height();//540
-
-    QImage originalImage(imagePath);
-
-    if (originalImage.isNull())
-    {
-        qDebug() << "Error: Could not load image: " << imagePath;
-        return;
-    }
-
-    // Масштабирование изображения
-    QImage scaledImage = originalImage.scaled(
-        newWidth,
-        newHeight,
-        Qt::KeepAspectRatio, // Сохранять пропорции
-        Qt::SmoothTransformation // Использовать сглаживание
-    );
-    // Сохранение масштабированного изображения
-    scaledImage.save(scaledImagePath);
-*/
     QPixmap pmMain(scaledImagePath);//
     ui->labelMain->setPixmap(pmMain);
 }
@@ -102,6 +96,29 @@ void MainWindow::execActionSelectImageNext()
     qDebug() << s;
     //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
     labelProgressBar->setText(s);
+
+    if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
+    progressBarProcess->setValue(CurrentIndex);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+    QString qsGroupName = Groups.at(CurrentIndex);
+    settings.beginGroup(qsGroupName);
+    QString qsPath = settings.value("path","noName").toString();
+    QString qsName = settings.value("name", "noName").toString();
+    settings.endGroup();
+
+    QString imagePath = qsPath + '/' + qsName;
+    // Выводим значения
+    qDebug() << "FullPat: " << imagePath;
+    //---
+
+    scaleImage(imagePath);
+    QPixmap pmMain(scaledImagePath);//
+    ui->labelMain->setPixmap(pmMain);
+
 }
 
 void MainWindow::execActionSelectImagePrevious()
@@ -110,6 +127,29 @@ void MainWindow::execActionSelectImagePrevious()
     qDebug() << s;
     //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
     labelProgressBar->setText(s);
+
+    if(CurrentIndex > 0) CurrentIndex--;
+    progressBarProcess->setValue(CurrentIndex);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+    QString qsGroupName = Groups.at(CurrentIndex);
+    settings.beginGroup(qsGroupName);
+    QString qsPath = settings.value("path","noName").toString();
+    QString qsName = settings.value("name", "noName").toString();
+    settings.endGroup();
+
+    QString imagePath = qsPath + '/' + qsName;
+    // Выводим значения
+    qDebug() << "FullPat: " << imagePath;
+    //---
+
+    scaleImage(imagePath);
+    QPixmap pmMain(scaledImagePath);//
+    ui->labelMain->setPixmap(pmMain);
+
 }
 
 void MainWindow::execActionSelectImageEnd()
@@ -118,6 +158,29 @@ void MainWindow::execActionSelectImageEnd()
     qDebug() << s;
     //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
     labelProgressBar->setText(s);
+
+    CurrentIndex = Groups.count() - 1;
+    progressBarProcess->setValue(CurrentIndex);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+    QString qsGroupName = Groups.at(CurrentIndex);
+    settings.beginGroup(qsGroupName);
+    QString qsPath = settings.value("path","noName").toString();
+    QString qsName = settings.value("name", "noName").toString();
+    settings.endGroup();
+
+    QString imagePath = qsPath + '/' + qsName;
+    // Выводим значения
+    qDebug() << "FullPat: " << imagePath;
+    //---
+
+    scaleImage(imagePath);
+    QPixmap pmMain(scaledImagePath);//
+    ui->labelMain->setPixmap(pmMain);
+
 }
 
 void MainWindow::execActionImport()
@@ -234,16 +297,16 @@ void MainWindow::execActionLoad()
     if(!*Ok)iLength = 0;
     settings.endGroup();
 
-    QStringList groups = settings.childGroups();
+    Groups = settings.childGroups();
 
     // Выводим значения
     qDebug() << "length: " << iLength;
-    qDebug() << "childGroupsList length: " << groups.count();
+    qDebug() << "childGroupsList length: " << Groups.count();
     qDebug() << "----------------------------";
-    progressBarProcess->setRange(0, groups.count());
+    progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
     int iProgress = 0;
-    QListIterator<QString> readIt(groups);
+    QListIterator<QString> readIt(Groups);
     while (readIt.hasNext())
     {
         iProgress++;
@@ -274,6 +337,8 @@ void MainWindow::execActionLoad()
         qDebug() << "Space character in file name detected in " << iCount << " files";
     else
         qDebug() << "No errors in file names detected, Ok!";
+
+    CurrentIndex = 0;
 
 }//End of void MainWindow::execActionLoad()
 
