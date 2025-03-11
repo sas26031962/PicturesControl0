@@ -7,6 +7,8 @@
 #include <QImage>
 #include "crecord.h"
 
+#define HOME_STORAGE YES
+
 class cIniFile
 {
 private:

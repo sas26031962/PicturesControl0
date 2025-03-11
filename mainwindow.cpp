@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     labelProgressBar = new QLabel("ProgressBar");
     ui->statusBar->addWidget(labelProgressBar);
 
-    execActionLoad();
+    //execActionLoad();
 
-    execActionSelectImageBegin();
+    //execActionSelectImageBegin();
 
 }//End of ctor
 
