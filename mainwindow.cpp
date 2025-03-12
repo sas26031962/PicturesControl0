@@ -81,9 +81,6 @@ void MainWindow::scaleImage(QString path)
 void MainWindow::showCurrentIndexPicture()
 {
 
-    // Создаем объект QSettings с указанием формата INI и пути к файлу
-    //QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
     // Читаем значения из INI-файла
     QString qsGroupName = Groups.at(CurrentIndex);
     cIniFile::settings.beginGroup(qsGroupName);
@@ -108,6 +105,15 @@ void MainWindow::showCurrentIndexPicture()
         ui->labelMain->setPixmap(pmMain);
     }
       labelFileName->setText(qsName);
+
+      //Сохранение текущего индекса
+      cIniFile::settings.beginGroup("RecordList");
+      //cIniFile::settings.setValue("root_path", cIniFile::IniFile.getDirectoryPah());
+      //cIniFile::settings.setValue("length", cIniFile::IniFile.iRecordListLength);
+      cIniFile::settings.setValue("index", CurrentIndex);
+      cIniFile::settings.endGroup();
+
+      qDebug() << "Store CurrentIndex:" << CurrentIndex;
 }
 
 void MainWindow::execActionSelectImageBegin()
@@ -276,20 +282,24 @@ void MainWindow::execActionImport()
 
 void MainWindow::execActionLoad()
 {
-    QString s = "execActionLoad()";
-    qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelExecStatus->setText(s);
-
     // Создаем объект QSettings с указанием формата INI и пути к файлу
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
-    // Читаем значения из INI-файла
-    settings.beginGroup("RecordList");
-    QString qsLength = settings.value("length", "0").toString();
-
     std::unique_ptr<bool> ptrOk = std::make_unique<bool>();
     bool* Ok = ptrOk.get();
+
+    // Читаем значения из INI-файла
+    settings.beginGroup("RecordList");
+
+    QString qsCurrentIndex = settings.value("index", "0").toString();
+    CurrentIndex = qsCurrentIndex.toInt(Ok);
+    if(!*Ok)CurrentIndex = 0;
+
+    qDebug() << "Load CurrentIndex:" << CurrentIndex;
+
+    //std::unique_ptr<bool> ptrOk = std::make_unique<bool>();
+    //bool* Ok = ptrOk.get();
+    QString qsLength = settings.value("length", "0").toString();
     int iLength = qsLength.toInt(Ok);
     if(!*Ok)iLength = 0;
     settings.endGroup();
@@ -340,9 +350,13 @@ void MainWindow::execActionLoad()
     else
         qDebug() << "No errors in file names detected, Ok!";
 
-    CurrentIndex = 0;
+    execActionSelectImageNext();
 
-    execActionSelectImageBegin();//Отобразить первое изображение
+    //---
+    QString s = "execActionLoad(), goto index:";
+    s += QString::number(CurrentIndex);
+    labelExecStatus->setText(s);
+    //---
 
 }//End of void MainWindow::execActionLoad()
 

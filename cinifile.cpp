@@ -41,6 +41,7 @@ void cIniFile::addInitalSection(int n)
     cIniFile::settings.beginGroup("RecordList");
     cIniFile::settings.setValue("root_path", cIniFile::IniFile.getDirectoryPah());
     cIniFile::settings.setValue("length", cIniFile::IniFile.iRecordListLength);
+    cIniFile::settings.setValue("index", 0);
     cIniFile::settings.endGroup();
 }
 
