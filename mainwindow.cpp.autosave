@@ -81,9 +81,6 @@ void MainWindow::scaleImage(QString path)
 void MainWindow::showCurrentIndexPicture()
 {
 
-    // Создаем объект QSettings с указанием формата INI и пути к файлу
-    //QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
-
     // Читаем значения из INI-файла
     QString qsGroupName = Groups.at(CurrentIndex);
     cIniFile::settings.beginGroup(qsGroupName);
