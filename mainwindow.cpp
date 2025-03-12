@@ -118,11 +118,6 @@ void MainWindow::showCurrentIndexPicture()
 
 void MainWindow::execActionSelectImageBegin()
 {
-    //---
-    QString s = "execActionSelectImageBegin()";
-    labelExecStatus->setText(s);
-    //---
-
     // Модификация индекса
     CurrentIndex = 0;
     progressBarProcess->setValue(CurrentIndex);
@@ -130,50 +125,59 @@ void MainWindow::execActionSelectImageBegin()
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    //---
+    QString s = "execActionSelectImageBegin(), goto index:";
+    s += QString::number(CurrentIndex);
+    labelExecStatus->setText(s);
+    //---
+
 }//End of void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
-    //---
-    QString s = "execActionSelectImageNext()";
-    labelExecStatus->setText(s);
-    //---
-
     if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
     progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    //---
+    QString s = "execActionSelectImageNext(), goto index:";
+    s += QString::number(CurrentIndex);
+    labelExecStatus->setText(s);
+    //---
+
 }
 
 void MainWindow::execActionSelectImagePrevious()
 {
-    //---
-    QString s = "execActionSelectImagePrevious()";
-    labelExecStatus->setText(s);
-    //---
-
     if(CurrentIndex > 0) CurrentIndex--;
     progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    //---
+    QString s = "execActionSelectImagePrevious(), goto index:";
+    s += QString::number(CurrentIndex);
+    labelExecStatus->setText(s);
+    //---
+
 }
 
 void MainWindow::execActionSelectImageEnd()
 {
-    //---
-    QString s = "execActionSelectImageEnd()";
-    labelExecStatus->setText(s);
-    //---
-
     CurrentIndex = Groups.count() - 1;
     progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
+
+    //---
+    QString s = "execActionSelectImageEnd(), goto index";
+    s += QString::number(CurrentIndex);
+    labelExecStatus->setText(s);
+    //---
 
 }
 
