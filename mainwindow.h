@@ -26,6 +26,7 @@ private:
     bool IsError = false;
 
     QLabel * labelProgressBar;
+    QLabel * labelFileName;
     QProgressBar * progressBarProcess;
 
     int CurrentIndex = 0;

@@ -29,8 +29,22 @@ MainWindow::MainWindow(QWidget *parent) :
     progressBarProcess->setRange(0, 100);
     ui->statusBar->addWidget(progressBarProcess);
 
+    //std::shared_ptr<QLabel> labelProgressBarPtr{new QLabel("ProgressBar")};
+    std::shared_ptr<QLabel> labelProgressBarPtr = std::make_shared<QLabel>("ProgressBar");
+    qDebug() << "labelProgressBarPtr use count before:" << labelProgressBarPtr.use_count();
+    //labelProgressBar = labelProgressBarPtr;//new QLabel("ProgressBar");
+    //labelProgressBar = labelProgressBarPtr.get();
+    //qDebug() << "labelProgressBarPtr use count after1:" << labelProgressBarPtr.use_count();
     labelProgressBar = new QLabel("ProgressBar");
     ui->statusBar->addWidget(labelProgressBar);
+    //ui->statusBar->addWidget(labelProgressBarPtr.get());
+    qDebug() << "labelProgressBarPtr use count after2:" << labelProgressBarPtr.use_count();
+
+
+    labelFileName = new QLabel("LoadedFileName");
+    ui->statusBar->addWidget(labelFileName);
+
+    ui->labelMain->setText("Exec 'Load' option for get file name list");
 
     //execActionLoad();
 
@@ -42,6 +56,7 @@ MainWindow::~MainWindow()
 {
     delete progressBarProcess;
     delete labelProgressBar;
+    delete labelFileName;
 
     delete ui;
 }
@@ -101,6 +116,7 @@ void MainWindow::showCurrentIndexPicture()
         QPixmap pmMain(scaledImagePath);//
         ui->labelMain->setPixmap(pmMain);
 //    }
+      labelFileName->setText(qsName);
 }
 
 void MainWindow::execActionSelectImageBegin()
@@ -328,6 +344,8 @@ void MainWindow::execActionLoad()
         qDebug() << "No errors in file names detected, Ok!";
 
     CurrentIndex = 0;
+
+    execActionSelectImageBegin();//Отобразить первое изображение
 
 }//End of void MainWindow::execActionLoad()
 

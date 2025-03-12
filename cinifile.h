@@ -7,7 +7,16 @@
 #include <QImage>
 #include "crecord.h"
 
-#define HOME_STORAGE YES
+/******************************************************************************
+ * === Выбор вариантов работы ===
+ * Для работы с хранилищем фотодокументов размаскировать строку под этим
+ * комментарием
+ * Для работы с тестовым хранилищем изображений для Blender-проектов
+ * замаскировать строку под этим комментарием
+ *
+ *****************************************************************************/
+
+//#define HOME_STORAGE YES
 
 class cIniFile
 {
@@ -16,7 +25,7 @@ private:
 public:
     //Атрибуты
     static QString iniFilePath;
-    static QSettings settings;  //(cIniFile::iniFilePath, QSettings::IniFormat);
+    static QSettings settings;
     static cIniFile IniFile;
 
     int iRecordListLength = 0;  //Полное число записей
