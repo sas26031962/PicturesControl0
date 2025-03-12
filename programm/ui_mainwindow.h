@@ -43,6 +43,7 @@ public:
     QPushButton *pushButtonNext;
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
+    QPushButton *pushButtonLoad;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -75,19 +76,22 @@ public:
         labelMain->setGeometry(QRect(26, 20, 661, 341));
         groupBoxControl = new QGroupBox(centralWidget);
         groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
-        groupBoxControl->setGeometry(QRect(10, 380, 131, 51));
+        groupBoxControl->setGeometry(QRect(10, 380, 221, 51));
         pushButtonBegin = new QPushButton(groupBoxControl);
         pushButtonBegin->setObjectName(QStringLiteral("pushButtonBegin"));
-        pushButtonBegin->setGeometry(QRect(10, 20, 23, 23));
+        pushButtonBegin->setGeometry(QRect(100, 20, 23, 23));
         pushButtonNext = new QPushButton(groupBoxControl);
         pushButtonNext->setObjectName(QStringLiteral("pushButtonNext"));
-        pushButtonNext->setGeometry(QRect(40, 20, 23, 23));
+        pushButtonNext->setGeometry(QRect(130, 20, 23, 23));
         pushButtonPrevious = new QPushButton(groupBoxControl);
         pushButtonPrevious->setObjectName(QStringLiteral("pushButtonPrevious"));
-        pushButtonPrevious->setGeometry(QRect(70, 20, 23, 23));
+        pushButtonPrevious->setGeometry(QRect(160, 20, 23, 23));
         pushButtonEnd = new QPushButton(groupBoxControl);
         pushButtonEnd->setObjectName(QStringLiteral("pushButtonEnd"));
-        pushButtonEnd->setGeometry(QRect(100, 20, 23, 23));
+        pushButtonEnd->setGeometry(QRect(190, 20, 23, 23));
+        pushButtonLoad = new QPushButton(groupBoxControl);
+        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -136,6 +140,7 @@ public:
         pushButtonNext->setText(QApplication::translate("MainWindow", ">", 0));
         pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
         pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
+        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
     } // retranslateUi

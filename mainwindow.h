@@ -25,7 +25,7 @@ private:
     QString scaledImagePath = "./img/tmp/scaled_image.png";
     bool IsError = false;
 
-    QLabel * labelProgressBar;
+    QLabel * labelExecStatus;
     QLabel * labelFileName;
     QProgressBar * progressBarProcess;
 

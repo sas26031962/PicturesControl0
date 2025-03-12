@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonNext, SIGNAL(pressed()), this, SLOT( execActionSelectImageNext()));
     connect(ui->pushButtonPrevious, SIGNAL(pressed()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->pushButtonEnd, SIGNAL(pressed()), this, SLOT( execActionSelectImageEnd()));
+    connect(ui->pushButtonLoad, SIGNAL(pressed()), this, SLOT( execActionLoad()));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
@@ -29,17 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
     progressBarProcess->setRange(0, 100);
     ui->statusBar->addWidget(progressBarProcess);
 
-    //std::shared_ptr<QLabel> labelProgressBarPtr{new QLabel("ProgressBar")};
-    std::shared_ptr<QLabel> labelProgressBarPtr = std::make_shared<QLabel>("ProgressBar");
-    qDebug() << "labelProgressBarPtr use count before:" << labelProgressBarPtr.use_count();
-    //labelProgressBar = labelProgressBarPtr;//new QLabel("ProgressBar");
-    //labelProgressBar = labelProgressBarPtr.get();
-    //qDebug() << "labelProgressBarPtr use count after1:" << labelProgressBarPtr.use_count();
-    labelProgressBar = new QLabel("ProgressBar");
-    ui->statusBar->addWidget(labelProgressBar);
-    //ui->statusBar->addWidget(labelProgressBarPtr.get());
-    qDebug() << "labelProgressBarPtr use count after2:" << labelProgressBarPtr.use_count();
-
+    labelExecStatus = new QLabel("ExecStatus");
+    ui->statusBar->addWidget(labelExecStatus);
 
     labelFileName = new QLabel("LoadedFileName");
     ui->statusBar->addWidget(labelFileName);
@@ -55,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete progressBarProcess;
-    delete labelProgressBar;
+    delete labelExecStatus;
     delete labelFileName;
 
     delete ui;
@@ -97,25 +89,24 @@ void MainWindow::showCurrentIndexPicture()
     settings.beginGroup(qsGroupName);
     QString qsPath = settings.value("path","noName").toString();
     QString qsName = settings.value("name", "noName").toString();
-    QString qsError = settings.value("Error", "true").toString();
+    QString qsError = settings.value("Error", "false").toString();
     settings.endGroup();
 
     QString imagePath = qsPath + '/' + qsName;
 
-    qDebug() << "FullPath: " << imagePath;
-
-//    if(qsError == "true")
-//    {
-//        ui->labelMain->setText(imagePath);
-//        return;
-//    }
-//    else
-//    {
+    if(qsError == "true")
+    {
+        qDebug() << "FullPath: " << imagePath << " Error:" << qsError;
+        ui->labelMain->setText(imagePath);
+        return;
+    }
+    else
+    {
         //Вывод картинки на форму
         scaleImage(imagePath);
         QPixmap pmMain(scaledImagePath);//
         ui->labelMain->setPixmap(pmMain);
-//    }
+    }
       labelFileName->setText(qsName);
 }
 
@@ -123,8 +114,7 @@ void MainWindow::execActionSelectImageBegin()
 {
     //---
     QString s = "execActionSelectImageBegin()";
-    qDebug() << s;
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
     //---
 
     // Модификация индекса
@@ -140,8 +130,7 @@ void MainWindow::execActionSelectImageNext()
 {
     //---
     QString s = "execActionSelectImageNext()";
-    qDebug() << s;
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
     //---
 
     if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
@@ -154,10 +143,10 @@ void MainWindow::execActionSelectImageNext()
 
 void MainWindow::execActionSelectImagePrevious()
 {
+    //---
     QString s = "execActionSelectImagePrevious()";
-    qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
+    //---
 
     if(CurrentIndex > 0) CurrentIndex--;
     progressBarProcess->setValue(CurrentIndex);
@@ -169,10 +158,10 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
+    //---
     QString s = "execActionSelectImageEnd()";
-    qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
+    //---
 
     CurrentIndex = Groups.count() - 1;
     progressBarProcess->setValue(CurrentIndex);
@@ -184,10 +173,10 @@ void MainWindow::execActionSelectImageEnd()
 
 void MainWindow::execActionImport()
 {
+    //---
     QString s = "execActionImport()";
-    qDebug() << s;
-    //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
+    //---
 
     //---Создание рабочего списка
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
@@ -249,9 +238,15 @@ void MainWindow::execActionImport()
         {
             //Фрагмент для обработки файлов изображений
             QImage image(path);//name
-
-            width = image.width();
-            height = image.height();
+            if(image.isNull())
+            {
+                IsError = true;
+            }
+            else
+            {
+                width = image.width();
+                height = image.height();
+            }
         }
 
             cIniFile::settings.beginGroup(groupName);
@@ -273,7 +268,9 @@ void MainWindow::execActionImport()
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
 
     qDebug() << "==================Task is done!!!=========================";
-    labelProgressBar->setText("File import complete!");
+    labelExecStatus->setText("File import complete!");
+
+    execActionLoad();//Выполнить загрузку изображений
 
 }//End of void MainWindow::execActionImport()
 
@@ -282,7 +279,7 @@ void MainWindow::execActionLoad()
     QString s = "execActionLoad()";
     qDebug() << s;
     //ui->statusBar->showMessage(s, STATUS_BAR_DELAY);
-    labelProgressBar->setText(s);
+    labelExecStatus->setText(s);
 
     // Создаем объект QSettings с указанием формата INI и пути к файлу
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
@@ -318,13 +315,13 @@ void MainWindow::execActionLoad()
         QString qsPath = settings.value("path","noName").toString();
         QString qsName = settings.value("name", "noName").toString();
         QString qsId = settings.value("Id","0").toString();
-        QString qsError = settings.value("Error", "true").toString();
+        QString qsError = settings.value("Error", "false").toString();
         //int Error = qsError.toInt(Ok);
 
         int Id = qsId.toInt(Ok);
         if(!*Ok) Id = 0;
 
-        qDebug() << "Id=" << Id << "Error=" << qsError;
+        //qDebug() << "Id=" << Id << "Error=" << qsError;
 
         if(qsName.indexOf(' ') >= 0)
         {
