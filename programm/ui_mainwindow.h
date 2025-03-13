@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -44,6 +45,8 @@ public:
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
     QPushButton *pushButtonLoad;
+    QGroupBox *groupBoxHashTag;
+    QComboBox *comboBoxHashTag;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -92,6 +95,12 @@ public:
         pushButtonLoad = new QPushButton(groupBoxControl);
         pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
+        groupBoxHashTag = new QGroupBox(centralWidget);
+        groupBoxHashTag->setObjectName(QStringLiteral("groupBoxHashTag"));
+        groupBoxHashTag->setGeometry(QRect(240, 380, 441, 51));
+        comboBoxHashTag = new QComboBox(groupBoxHashTag);
+        comboBoxHashTag->setObjectName(QStringLiteral("comboBoxHashTag"));
+        comboBoxHashTag->setGeometry(QRect(10, 20, 421, 22));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -141,6 +150,7 @@ public:
         pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
         pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
         pushButtonLoad->setText(QApplication::translate("MainWindow", "Load", 0));
+        groupBoxHashTag->setTitle(QApplication::translate("MainWindow", "HashTag", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
     } // retranslateUi

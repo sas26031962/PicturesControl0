@@ -38,6 +38,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->labelMain->setText("Exec 'Load' option for get file name list");
 
+    ui->comboBoxHashTag->clear();
+    ui->comboBoxHashTag->addItem("HashTag0");
+    ui->comboBoxHashTag->addItem("HashTag1");
+    ui->comboBoxHashTag->addItem("HashTag2");
+    ui->comboBoxHashTag->addItem("HashTag3");
+    ui->comboBoxHashTag->addItem("HashTag4");
+    ui->comboBoxHashTag->addItem("HashTag5");
+    ui->comboBoxHashTag->addItem("HashTag6");
+    ui->comboBoxHashTag->addItem("HashTag7");
+    ui->comboBoxHashTag->addItem("HashTag8");
+
     //execActionLoad();
 
     //execActionSelectImageBegin();
