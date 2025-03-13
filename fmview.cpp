@@ -19,6 +19,7 @@ void fmView::execDraw(QString s)
     //Вывод картинки на форму
     scaleImage(s);
     QPixmap pmMain(scaledImagePath);//
+    //QPixmap pmMain(s);//
     ui->labelMain->setPixmap(pmMain);
 }
 
