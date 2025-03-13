@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
+    <width>413</width>
     <height>495</height>
    </rect>
   </property>
@@ -14,19 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="labelMain">
-    <property name="geometry">
-     <rect>
-      <x>26</x>
-      <y>20</y>
-      <width>661</width>
-      <height>341</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBoxControl">
     <property name="geometry">
      <rect>
@@ -105,28 +92,15 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBoxHashTag">
+   <widget class="QListView" name="listView">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>380</y>
-      <width>441</width>
-      <height>51</height>
+      <x>20</x>
+      <y>10</y>
+      <width>371</width>
+      <height>361</height>
      </rect>
     </property>
-    <property name="title">
-     <string>HashTag</string>
-    </property>
-    <widget class="QComboBox" name="comboBoxHashTag">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>421</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -134,7 +108,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>696</width>
+     <width>413</width>
      <height>21</height>
     </rect>
    </property>
@@ -155,8 +129,15 @@
     <addaction name="actionSelectImagePrevious"/>
     <addaction name="actionSelectImageEnd"/>
    </widget>
+   <widget class="QMenu" name="menuForms">
+    <property name="title">
+     <string>Forms</string>
+    </property>
+    <addaction name="actionViewPicture"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
+   <addaction name="menuForms"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -200,6 +181,17 @@
   <action name="actionLoad">
    <property name="text">
     <string>Load</string>
+   </property>
+  </action>
+  <action name="actionViewPicture">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>ViewPicture</string>
    </property>
   </action>
  </widget>

@@ -8,7 +8,9 @@
 #include <QLabel>
 #include <memory>
 #include <QStringList>
+
 #include "cinifile.h"
+#include "fmview.h"
 
 #define STATUS_BAR_DELAY 500
 
@@ -22,7 +24,6 @@ class MainWindow : public QMainWindow
 
 private:
     //Атрибуты
-    QString scaledImagePath = "./img/tmp/scaled_image.png";
     bool IsError = false;
 
     QLabel * labelExecStatus;
@@ -31,6 +32,8 @@ private:
 
     int CurrentIndex = 0;
     QStringList Groups;
+
+    fmView * ViewPicture;
 
     //Методы
     void showCurrentIndexPicture();
@@ -54,11 +57,12 @@ private slots:
     void execActionSelectImageEnd();
     void execActionImport();
     void execActionLoad();
+    void execActionFormViewPicture();
 
 public slots:
 
 signals:
-
+    void draw(QString s);
 };
 
 #endif // MAINWINDOW_H

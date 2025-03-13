@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+    connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
@@ -20,6 +22,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
+
+    ViewPicture = new fmView(this);
+    //ViewPicture->setWindowFlags(Qt::Window);//3 flags
+    ViewPicture->setWindowFlags(Qt::Drawer);//1 flag
+    //ViewPicture->setWindowFlags(Qt::Sheet);//1 flag + ?
+    //ViewPicture->setWindowFlags(Qt::Dialog);//1 flag + ?
+    //ViewPicture->setWindowFlags(Qt::Popup);//no flags, immobil
+    //ViewPicture->setWindowFlags(Qt::Tool);//1 flag, immobil
+    //ViewPicture->setWindowFlags(Qt::ToolTip);//no flags, immobil
+    //ViewPicture->setWindowFlags(Qt::SplashScreen);//no flags, immobil
+
+    connect(this, SIGNAL(draw(QString)), ViewPicture, SLOT( execDraw(QString)));
+
+    ViewPicture->show();
 
     //---Создание рабочего списка
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
@@ -36,18 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     labelFileName = new QLabel("LoadedFileName");
     ui->statusBar->addWidget(labelFileName);
 
-    ui->labelMain->setText("Exec 'Load' option for get file name list");
-
-    ui->comboBoxHashTag->clear();
-    ui->comboBoxHashTag->addItem("HashTag0");
-    ui->comboBoxHashTag->addItem("HashTag1");
-    ui->comboBoxHashTag->addItem("HashTag2");
-    ui->comboBoxHashTag->addItem("HashTag3");
-    ui->comboBoxHashTag->addItem("HashTag4");
-    ui->comboBoxHashTag->addItem("HashTag5");
-    ui->comboBoxHashTag->addItem("HashTag6");
-    ui->comboBoxHashTag->addItem("HashTag7");
-    ui->comboBoxHashTag->addItem("HashTag8");
+    //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
     //execActionLoad();
 
@@ -61,32 +66,9 @@ MainWindow::~MainWindow()
     delete labelExecStatus;
     delete labelFileName;
 
+    delete ViewPicture;
+
     delete ui;
-}
-
-void MainWindow::scaleImage(QString path)
-{
-    int newWidth = ui->labelMain->width();//960
-    int newHeight = ui->labelMain->height();//540
-
-    QImage originalImage(path);
-
-    if (originalImage.isNull())
-    {
-        ui->labelMain->setText(path);
-        qDebug() << "Error: Could not load image: " << path;
-        return;
-    }
-
-    // Масштабирование изображения
-    QImage scaledImage = originalImage.scaled(
-        newWidth,
-        newHeight,
-        Qt::KeepAspectRatio, // Сохранять пропорции
-        Qt::SmoothTransformation // Использовать сглаживание
-    );
-    // Сохранение масштабированного изображения
-    scaledImage.save(scaledImagePath);
 }
 
 void MainWindow::showCurrentIndexPicture()
@@ -105,22 +87,17 @@ void MainWindow::showCurrentIndexPicture()
     if(qsError == "true")
     {
         qDebug() << "FullPath: " << imagePath << " Error:" << qsError;
-        ui->labelMain->setText(imagePath);
+        //ui->labelMain->setText(imagePath);
         return;
     }
     else
     {
-        //Вывод картинки на форму
-        scaleImage(imagePath);
-        QPixmap pmMain(scaledImagePath);//
-        ui->labelMain->setPixmap(pmMain);
+        emit draw(imagePath);
     }
       labelFileName->setText(qsName);
 
       //Сохранение текущего индекса
       cIniFile::settings.beginGroup("RecordList");
-      //cIniFile::settings.setValue("root_path", cIniFile::IniFile.getDirectoryPah());
-      //cIniFile::settings.setValue("length", cIniFile::IniFile.iRecordListLength);
       cIniFile::settings.setValue("index", CurrentIndex);
       cIniFile::settings.endGroup();
 
@@ -288,7 +265,7 @@ void MainWindow::execActionImport()
 
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
 
-    qDebug() << "==================Task is done!!!=========================";
+    //qDebug() << "==================Task is done!!!=========================";
     labelExecStatus->setText("File import complete!");
 
     execActionLoad();//Выполнить загрузку изображений
@@ -300,7 +277,7 @@ void MainWindow::execActionLoad()
     // Создаем объект QSettings с указанием формата INI и пути к файлу
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
-    std::unique_ptr<bool> ptrOk = std::make_unique<bool>();
+    std::unique_ptr<bool> ptrOk = std::make_unique<bool>(true);
     bool* Ok = ptrOk.get();
 
     // Читаем значения из INI-файла
@@ -312,8 +289,6 @@ void MainWindow::execActionLoad()
 
     qDebug() << "Load CurrentIndex:" << CurrentIndex;
 
-    //std::unique_ptr<bool> ptrOk = std::make_unique<bool>();
-    //bool* Ok = ptrOk.get();
     QString qsLength = settings.value("length", "0").toString();
     int iLength = qsLength.toInt(Ok);
     if(!*Ok)iLength = 0;
@@ -375,3 +350,19 @@ void MainWindow::execActionLoad()
 
 }//End of void MainWindow::execActionLoad()
 
+
+void MainWindow::execActionFormViewPicture()
+{
+    if(ui->actionViewPicture->isChecked())
+    {
+        ViewPicture->show();
+    }
+    else
+    {
+        ViewPicture->hide();
+    }
+    //---
+    QString s = "execActionFormViewPicture()";
+    labelExecStatus->setText(s);
+    //---
+}

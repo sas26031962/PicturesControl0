@@ -13,10 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -37,19 +36,19 @@ public:
     QAction *actionSelectImageEnd;
     QAction *actionImport;
     QAction *actionLoad;
+    QAction *actionViewPicture;
     QWidget *centralWidget;
-    QLabel *labelMain;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
     QPushButton *pushButtonNext;
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
     QPushButton *pushButtonLoad;
-    QGroupBox *groupBoxHashTag;
-    QComboBox *comboBoxHashTag;
+    QListView *listView;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
+    QMenu *menuForms;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -57,7 +56,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(696, 495);
+        MainWindow->resize(413, 495);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionSelectImageBegin = new QAction(MainWindow);
@@ -72,11 +71,12 @@ public:
         actionImport->setObjectName(QStringLiteral("actionImport"));
         actionLoad = new QAction(MainWindow);
         actionLoad->setObjectName(QStringLiteral("actionLoad"));
+        actionViewPicture = new QAction(MainWindow);
+        actionViewPicture->setObjectName(QStringLiteral("actionViewPicture"));
+        actionViewPicture->setCheckable(true);
+        actionViewPicture->setChecked(true);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        labelMain = new QLabel(centralWidget);
-        labelMain->setObjectName(QStringLiteral("labelMain"));
-        labelMain->setGeometry(QRect(26, 20, 661, 341));
         groupBoxControl = new QGroupBox(centralWidget);
         groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
         groupBoxControl->setGeometry(QRect(10, 380, 221, 51));
@@ -95,20 +95,19 @@ public:
         pushButtonLoad = new QPushButton(groupBoxControl);
         pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
-        groupBoxHashTag = new QGroupBox(centralWidget);
-        groupBoxHashTag->setObjectName(QStringLiteral("groupBoxHashTag"));
-        groupBoxHashTag->setGeometry(QRect(240, 380, 441, 51));
-        comboBoxHashTag = new QComboBox(groupBoxHashTag);
-        comboBoxHashTag->setObjectName(QStringLiteral("comboBoxHashTag"));
-        comboBoxHashTag->setGeometry(QRect(10, 20, 421, 22));
+        listView = new QListView(centralWidget);
+        listView->setObjectName(QStringLiteral("listView"));
+        listView->setGeometry(QRect(20, 10, 371, 361));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 696, 21));
+        menuBar->setGeometry(QRect(0, 0, 413, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuSelect_image = new QMenu(menuBar);
         menuSelect_image->setObjectName(QStringLiteral("menuSelect_image"));
+        menuForms = new QMenu(menuBar);
+        menuForms->setObjectName(QStringLiteral("menuForms"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -119,6 +118,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuSelect_image->menuAction());
+        menuBar->addAction(menuForms->menuAction());
         menuFile->addAction(actionImport);
         menuFile->addAction(actionLoad);
         menuFile->addAction(actionExit);
@@ -126,6 +126,7 @@ public:
         menuSelect_image->addAction(actionSelectImageNext);
         menuSelect_image->addAction(actionSelectImagePrevious);
         menuSelect_image->addAction(actionSelectImageEnd);
+        menuForms->addAction(actionViewPicture);
 
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -143,16 +144,16 @@ public:
         actionSelectImageEnd->setText(QApplication::translate("MainWindow", "End", 0));
         actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
         actionLoad->setText(QApplication::translate("MainWindow", "Load", 0));
-        labelMain->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        actionViewPicture->setText(QApplication::translate("MainWindow", "ViewPicture", 0));
         groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
         pushButtonBegin->setText(QApplication::translate("MainWindow", "|<", 0));
         pushButtonNext->setText(QApplication::translate("MainWindow", ">", 0));
         pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
         pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
         pushButtonLoad->setText(QApplication::translate("MainWindow", "Load", 0));
-        groupBoxHashTag->setTitle(QApplication::translate("MainWindow", "HashTag", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
+        menuForms->setTitle(QApplication::translate("MainWindow", "Forms", 0));
     } // retranslateUi
 
 };
