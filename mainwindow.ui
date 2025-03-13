@@ -92,12 +92,12 @@
      </property>
     </widget>
    </widget>
-   <widget class="QListView" name="listView">
+   <widget class="QListWidget" name="listWidgetView">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>10</y>
-      <width>371</width>
+      <width>391</width>
       <height>361</height>
      </rect>
     </property>

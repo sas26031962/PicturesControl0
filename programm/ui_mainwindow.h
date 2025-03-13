@@ -15,7 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -44,7 +44,7 @@ public:
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
     QPushButton *pushButtonLoad;
-    QListView *listView;
+    QListWidget *listWidgetView;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -95,9 +95,9 @@ public:
         pushButtonLoad = new QPushButton(groupBoxControl);
         pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QStringLiteral("listView"));
-        listView->setGeometry(QRect(20, 10, 371, 361));
+        listWidgetView = new QListWidget(centralWidget);
+        listWidgetView->setObjectName(QStringLiteral("listWidgetView"));
+        listWidgetView->setGeometry(QRect(10, 10, 391, 361));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

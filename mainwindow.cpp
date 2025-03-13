@@ -52,6 +52,24 @@ MainWindow::MainWindow(QWidget *parent) :
     labelFileName = new QLabel("LoadedFileName");
     ui->statusBar->addWidget(labelFileName);
 
+    qslHashTagList = new QStringList();
+
+    qslHashTagList->append("HashTag0");
+    qslHashTagList->append("HashTag1");
+    qslHashTagList->append("HashTag2");
+    qslHashTagList->append("HashTag3");
+    qslHashTagList->append("HashTag4");
+    qslHashTagList->append("HashTag5");
+    qslHashTagList->append("HashTag6");
+    qslHashTagList->append("HashTag7");
+    qslHashTagList->append("HashTag8");
+
+    ui->listWidgetView->clear();
+    ui->listWidgetView->setSelectionMode(QAbstractItemView::MultiSelection);
+    ui->listWidgetView->addItems(*qslHashTagList);
+
+    connect(ui->listWidgetView, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetViewItemClicked()));
+
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
     //execActionLoad();
@@ -67,6 +85,7 @@ MainWindow::~MainWindow()
     delete labelFileName;
 
     delete ViewPicture;
+    delete qslHashTagList;
 
     delete ui;
 }
@@ -365,4 +384,9 @@ void MainWindow::execActionFormViewPicture()
     QString s = "execActionFormViewPicture()";
     labelExecStatus->setText(s);
     //---
+}
+
+void MainWindow::execListWidgetViewItemClicked()
+{
+    qDebug() << "ListWidgetView: item=" << ui->listWidgetView->currentItem()->text();
 }

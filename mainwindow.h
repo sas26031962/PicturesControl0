@@ -35,6 +35,8 @@ private:
 
     fmView * ViewPicture;
 
+    QStringList * qslHashTagList;
+
     //Методы
     void showCurrentIndexPicture();
 
@@ -58,6 +60,7 @@ private slots:
     void execActionImport();
     void execActionLoad();
     void execActionFormViewPicture();
+    void execListWidgetViewItemClicked();
 
 public slots:
 
