@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
+    connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
 
     ViewPicture = new fmView(this);
     ViewPicture->setWindowFlags(Qt::Window);//3 flags
@@ -75,20 +76,10 @@ MainWindow::MainWindow(QWidget *parent) :
     std::unique_ptr<QStringList> ptrHashTagList(new QStringList());
     qslHashTagList = ptrHashTagList.get();
 
-//    qslHashTagList->append("HashTag0");
-//    qslHashTagList->append("HashTag1");
-//    qslHashTagList->append("HashTag2");
-//    qslHashTagList->append("HashTag3");
-//    qslHashTagList->append("HashTag4");
-//    qslHashTagList->append("HashTag5");
-//    qslHashTagList->append("HashTag6");
-//    qslHashTagList->append("HashTag7");
-//    qslHashTagList->append("HashTag8");
-
-    if(loadHashTagList())
+    if(loadHashTagListSubject())
     {
         ui->listWidgetSuggest->clear();
-        ui->listWidgetSuggest->setSelectionMode(QAbstractItemView::MultiSelection);
+        //ui->listWidgetSuggest->setSelectionMode(QAbstractItemView::MultiSelection);
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
         connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
@@ -457,14 +448,21 @@ void MainWindow::execListWidgetSuggestItemClicked()
     //---
 }
 
-bool MainWindow::loadHashTagList()
+bool MainWindow::loadHashTagListSubject()
 {
-    QString filePath = "C:/WORK/PicturesControl0/programm/data/HashTagListShips.txt";
 
-    QFile file(filePath);
+#ifdef HOME_STORAGE
+    filePath = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPhotos.txt";
+    qDebug() << "HOME_STORAGE";
+#else
+    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListShips.txt";
+    qDebug() << "WORK_STORAGE";
+#endif
+
+    QFile file(filePathSubject);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Error: Could not open file: " << filePath;
+        qDebug() << "Error: Could not open file: " << filePathSubject;
         return false;
     }
 
@@ -479,4 +477,24 @@ bool MainWindow::loadHashTagList()
     file.close();
 
     return true;
+}
+
+void MainWindow::execActionLoadHashTagListSubject()
+{
+    QString s = "ActionLoadHashTagListSubject()";
+    if(loadHashTagListSubject())
+    {
+        ui->listWidgetSuggest->clear();
+        ui->listWidgetSuggest->addItems(*qslHashTagList);
+
+//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+    }
+    else
+    {
+        ui->listWidgetSuggest->clear();
+    }
+    //---
+    labelExecStatus->setText(s);
+    //---
+
 }

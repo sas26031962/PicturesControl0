@@ -210,9 +210,16 @@
     </property>
     <addaction name="actionViewPicture"/>
    </widget>
+   <widget class="QMenu" name="menuTags">
+    <property name="title">
+     <string>Tags</string>
+    </property>
+    <addaction name="actionLoaadHashTagListSubject"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
    <addaction name="menuForms"/>
+   <addaction name="menuTags"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -267,6 +274,11 @@
    </property>
    <property name="text">
     <string>ViewPicture</string>
+   </property>
+  </action>
+  <action name="actionLoaadHashTagListSubject">
+   <property name="text">
+    <string>Subject</string>
    </property>
   </action>
  </widget>

@@ -45,9 +45,11 @@ private:
 
     //Методы
     void showCurrentIndexPicture();
-    bool loadHashTagList();
+    bool loadHashTagListSubject();
 
 public:
+    //Атрибуты
+    QString filePathSubject;
     //Конструкторы, деструкторы
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -68,6 +70,7 @@ private slots:
     void execActionLoad();
     void execActionFormViewPicture();
     void execListWidgetSuggestItemClicked();
+    void execActionLoadHashTagListSubject();
 
 public slots:
 

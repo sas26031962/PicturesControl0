@@ -39,6 +39,7 @@ public:
     QAction *actionImport;
     QAction *actionLoad;
     QAction *actionViewPicture;
+    QAction *actionLoaadHashTagListSubject;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -57,6 +58,7 @@ public:
     QMenu *menuFile;
     QMenu *menuSelect_image;
     QMenu *menuForms;
+    QMenu *menuTags;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -83,6 +85,8 @@ public:
         actionViewPicture->setObjectName(QStringLiteral("actionViewPicture"));
         actionViewPicture->setCheckable(true);
         actionViewPicture->setChecked(true);
+        actionLoaadHashTagListSubject = new QAction(MainWindow);
+        actionLoaadHashTagListSubject->setObjectName(QStringLiteral("actionLoaadHashTagListSubject"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -134,6 +138,8 @@ public:
         menuSelect_image->setObjectName(QStringLiteral("menuSelect_image"));
         menuForms = new QMenu(menuBar);
         menuForms->setObjectName(QStringLiteral("menuForms"));
+        menuTags = new QMenu(menuBar);
+        menuTags->setObjectName(QStringLiteral("menuTags"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -145,6 +151,7 @@ public:
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuSelect_image->menuAction());
         menuBar->addAction(menuForms->menuAction());
+        menuBar->addAction(menuTags->menuAction());
         menuFile->addAction(actionImport);
         menuFile->addAction(actionLoad);
         menuFile->addAction(actionExit);
@@ -153,6 +160,7 @@ public:
         menuSelect_image->addAction(actionSelectImagePrevious);
         menuSelect_image->addAction(actionSelectImageEnd);
         menuForms->addAction(actionViewPicture);
+        menuTags->addAction(actionLoaadHashTagListSubject);
 
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -171,6 +179,7 @@ public:
         actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
         actionLoad->setText(QApplication::translate("MainWindow", "Load", 0));
         actionViewPicture->setText(QApplication::translate("MainWindow", "ViewPicture", 0));
+        actionLoaadHashTagListSubject->setText(QApplication::translate("MainWindow", "Subject", 0));
         groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
         pushButtonBegin->setText(QApplication::translate("MainWindow", "|<", 0));
         pushButtonNext->setText(QApplication::translate("MainWindow", ">", 0));
@@ -185,6 +194,7 @@ public:
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
         menuForms->setTitle(QApplication::translate("MainWindow", "Forms", 0));
+        menuTags->setTitle(QApplication::translate("MainWindow", "Tags", 0));
     } // retranslateUi
 
 };
