@@ -13,6 +13,7 @@
 #include "fmview.h"
 
 #define STATUS_BAR_DELAY 500
+#define WINDOW_MARGING 20
 
 namespace Ui {
 class MainWindow;

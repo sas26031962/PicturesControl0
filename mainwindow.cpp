@@ -24,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
 
     ViewPicture = new fmView(this);
-    //ViewPicture->setWindowFlags(Qt::Window);//3 flags
-    ViewPicture->setWindowFlags(Qt::Drawer);//1 flag
+    ViewPicture->setWindowFlags(Qt::Window);//3 flags
+    //ViewPicture->setWindowFlags(Qt::Drawer);//1 flag
     //ViewPicture->setWindowFlags(Qt::Sheet);//1 flag + ?
     //ViewPicture->setWindowFlags(Qt::Dialog);//1 flag + ?
     //ViewPicture->setWindowFlags(Qt::Popup);//no flags, immobil
@@ -33,9 +33,29 @@ MainWindow::MainWindow(QWidget *parent) :
     //ViewPicture->setWindowFlags(Qt::ToolTip);//no flags, immobil
     //ViewPicture->setWindowFlags(Qt::SplashScreen);//no flags, immobil
 
+    /*
+    int windowX = this->x();
+    windowX = windowX + this->width();
+    windowX = windowX + WINDOW_MARGING;
+
+    int windowY = this->y();
+
+    int windowWidth = ViewPicture->width();
+    int windowHeight = ViewPicture->height();
+
+    QRect windowPlace = QRect(windowX, windowY, windowWidth, windowHeight);
+    ViewPicture->setGeometry(windowPlace);
+    */
+
     connect(this, SIGNAL(draw(QString)), ViewPicture, SLOT( execDraw(QString)));
 
-    ViewPicture->show();
+    ui->actionViewPicture->setChecked(false);
+    //ViewPicture->show();
+
+    //this->setFocus();
+    //this->raise();
+    //this->activateWindow();
+    //this->show();
 
     //---Создание рабочего списка
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
