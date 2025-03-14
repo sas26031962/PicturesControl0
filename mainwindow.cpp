@@ -443,6 +443,8 @@ void MainWindow::execListWidgetSuggestItemClicked()
     {
         s = "List is empty, exec Load function!!!";
     }
+    // Отобразить картинку
+    showCurrentIndexPicture();
     //---
     labelExecStatus->setText(s);
     //---
@@ -452,7 +454,7 @@ bool MainWindow::loadHashTagListSubject()
 {
 
 #ifdef HOME_STORAGE
-    filePath = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPhotos.txt";
+    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPhotos.txt";
     qDebug() << "HOME_STORAGE";
 #else
     filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListShips.txt";
@@ -467,7 +469,9 @@ bool MainWindow::loadHashTagListSubject()
     }
 
     QTextStream in(&file);
+#ifndef HOME_STORAGE
     in.setCodec("Windows-1251");
+#endif
 
     while (!in.atEnd()) {
         QString line = in.readLine();

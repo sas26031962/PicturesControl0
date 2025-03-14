@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-//#define HOME_STORAGE YES
+#define HOME_STORAGE YES
 
 class cIniFile
 {
