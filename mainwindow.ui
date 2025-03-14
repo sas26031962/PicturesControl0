@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
+    <width>481</width>
     <height>495</height>
    </rect>
   </property>
@@ -92,13 +92,88 @@
      </property>
     </widget>
    </widget>
-   <widget class="QListWidget" name="listWidgetView">
+   <widget class="QListWidget" name="listWidgetSuggest">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>30</y>
+      <width>221</width>
+      <height>341</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelSuggestListCaption">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>10</y>
+      <width>221</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Suggest tags</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelIncomingListCaption">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>221</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Incoming tags</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelIncomingId">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>391</width>
-      <height>361</height>
+      <width>221</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Id=</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelIncomingName">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>221</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Name=</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelIncomingPath">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>221</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Path=</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableViewCurrent">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>231</width>
+      <height>281</height>
      </rect>
     </property>
    </widget>
@@ -108,7 +183,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>413</width>
+     <width>481</width>
      <height>21</height>
     </rect>
    </property>

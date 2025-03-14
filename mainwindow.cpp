@@ -72,23 +72,27 @@ MainWindow::MainWindow(QWidget *parent) :
     labelFileName = new QLabel("LoadedFileName");
     ui->statusBar->addWidget(labelFileName);
 
-    qslHashTagList = new QStringList();
+    std::unique_ptr<QStringList> ptrHashTagList(new QStringList());
+    qslHashTagList = ptrHashTagList.get();
 
-    qslHashTagList->append("HashTag0");
-    qslHashTagList->append("HashTag1");
-    qslHashTagList->append("HashTag2");
-    qslHashTagList->append("HashTag3");
-    qslHashTagList->append("HashTag4");
-    qslHashTagList->append("HashTag5");
-    qslHashTagList->append("HashTag6");
-    qslHashTagList->append("HashTag7");
-    qslHashTagList->append("HashTag8");
+//    qslHashTagList->append("HashTag0");
+//    qslHashTagList->append("HashTag1");
+//    qslHashTagList->append("HashTag2");
+//    qslHashTagList->append("HashTag3");
+//    qslHashTagList->append("HashTag4");
+//    qslHashTagList->append("HashTag5");
+//    qslHashTagList->append("HashTag6");
+//    qslHashTagList->append("HashTag7");
+//    qslHashTagList->append("HashTag8");
 
-    ui->listWidgetView->clear();
-    ui->listWidgetView->setSelectionMode(QAbstractItemView::MultiSelection);
-    ui->listWidgetView->addItems(*qslHashTagList);
+    if(loadHashTagList())
+    {
+        ui->listWidgetSuggest->clear();
+        ui->listWidgetSuggest->setSelectionMode(QAbstractItemView::MultiSelection);
+        ui->listWidgetSuggest->addItems(*qslHashTagList);
 
-    connect(ui->listWidgetView, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetViewItemClicked()));
+        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+    }
 
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
@@ -105,7 +109,6 @@ MainWindow::~MainWindow()
     delete labelFileName;
 
     delete ViewPicture;
-    delete qslHashTagList;
 
     delete ui;
 }
@@ -116,9 +119,33 @@ void MainWindow::showCurrentIndexPicture()
     // Читаем значения из INI-файла
     QString qsGroupName = Groups.at(CurrentIndex);
     cIniFile::settings.beginGroup(qsGroupName);
-    QString qsPath = cIniFile::settings.value("path","noName").toString();
-    QString qsName = cIniFile::settings.value("name", "noName").toString();
-    QString qsError = cIniFile::settings.value("Error", "false").toString();
+
+    QString qsPath, qsName, qsError;
+
+    QStringList keys = cIniFile::settings.childKeys();
+    int iStrings = keys.count();
+
+    QStandardItemModel * model= new QStandardItemModel(iStrings, 2);
+    QListIterator<QString> readIt(keys);
+    int iIndex = 0;
+    while(readIt.hasNext())
+    {
+        QString key = readIt.next();
+        QString value = cIniFile::settings.value(key,"0").toString();
+
+        if(key == "path") qsPath = value;
+        if(key == "name") qsName = value;
+        if(key == "Eror") qsError = value;
+
+        model->setItem(iIndex, 0, new QStandardItem(key));
+        model->setItem(iIndex, 1, new QStandardItem(value));
+        iIndex++;
+        //qDebug() << "iterator:" << key << " index:" << iIndex;
+    }
+    model->setHeaderData(0, Qt::Horizontal, "Key");
+    model->setHeaderData(1,Qt::Horizontal,"Value");
+    ui->tableViewCurrent->setModel(model);
+
     cIniFile::settings.endGroup();
 
     QString imagePath = qsPath + '/' + qsName;
@@ -406,7 +433,50 @@ void MainWindow::execActionFormViewPicture()
     //---
 }
 
-void MainWindow::execListWidgetViewItemClicked()
+void MainWindow::execListWidgetSuggestItemClicked()
 {
-    qDebug() << "ListWidgetView: item=" << ui->listWidgetView->currentItem()->text();
+    QString s = "execInsertNewKeyValue()";
+    QString item = ui->listWidgetSuggest->currentItem()->text();
+    qDebug() << "listWidgetSuggest: item=" << item;
+
+    // Сохранение параметра в INI-файле
+    if(Groups.count() > 0)
+    {
+        QString qsGroupName = Groups.at(CurrentIndex);
+        cIniFile::settings.beginGroup(qsGroupName);
+        cIniFile::settings.setValue(item, "true");
+        cIniFile::settings.endGroup();
+
+    }
+    else
+    {
+        s = "List is empty, exec Load function!!!";
+    }
+    //---
+    labelExecStatus->setText(s);
+    //---
+}
+
+bool MainWindow::loadHashTagList()
+{
+    QString filePath = "C:/WORK/PicturesControl0/programm/data/HashTagListShips.txt";
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file: " << filePath;
+        return false;
+    }
+
+    QTextStream in(&file);
+    in.setCodec("Windows-1251");
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        qslHashTagList->append(line);
+    }
+
+    file.close();
+
+    return true;
 }

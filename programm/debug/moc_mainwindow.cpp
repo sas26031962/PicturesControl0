@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[12];
-    char stringdata0[215];
+    char stringdata0[218];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,7 +40,7 @@ QT_MOC_LITERAL(7, 102, 24), // "execActionSelectImageEnd"
 QT_MOC_LITERAL(8, 127, 16), // "execActionImport"
 QT_MOC_LITERAL(9, 144, 14), // "execActionLoad"
 QT_MOC_LITERAL(10, 159, 25), // "execActionFormViewPicture"
-QT_MOC_LITERAL(11, 185, 29) // "execListWidgetViewItemClicked"
+QT_MOC_LITERAL(11, 185, 32) // "execListWidgetSuggestItemClicked"
 
     },
     "MainWindow\0draw\0\0s\0execActionSelectImageBegin\0"
@@ -48,7 +48,7 @@ QT_MOC_LITERAL(11, 185, 29) // "execListWidgetViewItemClicked"
     "execActionSelectImagePrevious\0"
     "execActionSelectImageEnd\0execActionImport\0"
     "execActionLoad\0execActionFormViewPicture\0"
-    "execListWidgetViewItemClicked"
+    "execListWidgetSuggestItemClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -108,7 +108,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->execActionImport(); break;
         case 6: _t->execActionLoad(); break;
         case 7: _t->execActionFormViewPicture(); break;
-        case 8: _t->execListWidgetViewItemClicked(); break;
+        case 8: _t->execListWidgetSuggestItemClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

@@ -8,6 +8,11 @@
 #include <QLabel>
 #include <memory>
 #include <QStringList>
+#include <QTableView>
+#include <QStandardItemModel>
+#include <QStringListIterator>
+#include <QFile>
+#include <QTextStream>
 
 #include "cinifile.h"
 #include "fmview.h"
@@ -40,6 +45,7 @@ private:
 
     //Методы
     void showCurrentIndexPicture();
+    bool loadHashTagList();
 
 public:
     //Конструкторы, деструкторы
@@ -61,7 +67,7 @@ private slots:
     void execActionImport();
     void execActionLoad();
     void execActionFormViewPicture();
-    void execListWidgetViewItemClicked();
+    void execListWidgetSuggestItemClicked();
 
 public slots:
 

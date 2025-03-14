@@ -15,12 +15,14 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -44,7 +46,13 @@ public:
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
     QPushButton *pushButtonLoad;
-    QListWidget *listWidgetView;
+    QListWidget *listWidgetSuggest;
+    QLabel *labelSuggestListCaption;
+    QLabel *labelIncomingListCaption;
+    QLabel *labelIncomingId;
+    QLabel *labelIncomingName;
+    QLabel *labelIncomingPath;
+    QTableView *tableViewCurrent;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -56,7 +64,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(413, 495);
+        MainWindow->resize(481, 495);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionSelectImageBegin = new QAction(MainWindow);
@@ -95,13 +103,31 @@ public:
         pushButtonLoad = new QPushButton(groupBoxControl);
         pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
-        listWidgetView = new QListWidget(centralWidget);
-        listWidgetView->setObjectName(QStringLiteral("listWidgetView"));
-        listWidgetView->setGeometry(QRect(10, 10, 391, 361));
+        listWidgetSuggest = new QListWidget(centralWidget);
+        listWidgetSuggest->setObjectName(QStringLiteral("listWidgetSuggest"));
+        listWidgetSuggest->setGeometry(QRect(250, 30, 221, 341));
+        labelSuggestListCaption = new QLabel(centralWidget);
+        labelSuggestListCaption->setObjectName(QStringLiteral("labelSuggestListCaption"));
+        labelSuggestListCaption->setGeometry(QRect(250, 10, 221, 20));
+        labelIncomingListCaption = new QLabel(centralWidget);
+        labelIncomingListCaption->setObjectName(QStringLiteral("labelIncomingListCaption"));
+        labelIncomingListCaption->setGeometry(QRect(10, 70, 221, 20));
+        labelIncomingId = new QLabel(centralWidget);
+        labelIncomingId->setObjectName(QStringLiteral("labelIncomingId"));
+        labelIncomingId->setGeometry(QRect(10, 10, 221, 20));
+        labelIncomingName = new QLabel(centralWidget);
+        labelIncomingName->setObjectName(QStringLiteral("labelIncomingName"));
+        labelIncomingName->setGeometry(QRect(10, 30, 221, 20));
+        labelIncomingPath = new QLabel(centralWidget);
+        labelIncomingPath->setObjectName(QStringLiteral("labelIncomingPath"));
+        labelIncomingPath->setGeometry(QRect(10, 50, 221, 20));
+        tableViewCurrent = new QTableView(centralWidget);
+        tableViewCurrent->setObjectName(QStringLiteral("tableViewCurrent"));
+        tableViewCurrent->setGeometry(QRect(10, 90, 231, 281));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 413, 21));
+        menuBar->setGeometry(QRect(0, 0, 481, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuSelect_image = new QMenu(menuBar);
@@ -151,6 +177,11 @@ public:
         pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
         pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
         pushButtonLoad->setText(QApplication::translate("MainWindow", "Load", 0));
+        labelSuggestListCaption->setText(QApplication::translate("MainWindow", "Suggest tags", 0));
+        labelIncomingListCaption->setText(QApplication::translate("MainWindow", "Incoming tags", 0));
+        labelIncomingId->setText(QApplication::translate("MainWindow", "Id=", 0));
+        labelIncomingName->setText(QApplication::translate("MainWindow", "Name=", 0));
+        labelIncomingPath->setText(QApplication::translate("MainWindow", "Path=", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
         menuForms->setTitle(QApplication::translate("MainWindow", "Forms", 0));
