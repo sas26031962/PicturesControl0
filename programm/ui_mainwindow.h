@@ -40,6 +40,7 @@ public:
     QAction *actionViewPicture;
     QAction *actionLoaadHashTagListSubject;
     QAction *actionLoadHashTagListPlace;
+    QAction *actionRemoveMovie;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -86,6 +87,8 @@ public:
         actionLoaadHashTagListSubject->setObjectName(QString::fromUtf8("actionLoaadHashTagListSubject"));
         actionLoadHashTagListPlace = new QAction(MainWindow);
         actionLoadHashTagListPlace->setObjectName(QString::fromUtf8("actionLoadHashTagListPlace"));
+        actionRemoveMovie = new QAction(MainWindow);
+        actionRemoveMovie->setObjectName(QString::fromUtf8("actionRemoveMovie"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -144,6 +147,7 @@ public:
         menuBar->addAction(menuTags->menuAction());
         menuFile->addAction(actionImport);
         menuFile->addAction(actionLoad);
+        menuFile->addAction(actionRemoveMovie);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
         menuSelect_image->addAction(actionSelectImageNext);
@@ -172,6 +176,7 @@ public:
         actionViewPicture->setText(QCoreApplication::translate("MainWindow", "ViewPicture", nullptr));
         actionLoaadHashTagListSubject->setText(QCoreApplication::translate("MainWindow", "Subject", nullptr));
         actionLoadHashTagListPlace->setText(QCoreApplication::translate("MainWindow", "Place", nullptr));
+        actionRemoveMovie->setText(QCoreApplication::translate("MainWindow", "RemoveMovie", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
         pushButtonBegin->setText(QCoreApplication::translate("MainWindow", "|<", nullptr));
         pushButtonNext->setText(QCoreApplication::translate("MainWindow", ">", nullptr));

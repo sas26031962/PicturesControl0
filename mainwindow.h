@@ -74,6 +74,7 @@ private slots:
 
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
+    void execActionRemoveMovie();
 
 public slots:
 

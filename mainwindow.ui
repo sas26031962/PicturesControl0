@@ -154,6 +154,7 @@
     </property>
     <addaction name="actionImport"/>
     <addaction name="actionLoad"/>
+    <addaction name="actionRemoveMovie"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">
@@ -246,6 +247,11 @@
   <action name="actionLoadHashTagListPlace">
    <property name="text">
     <string>Place</string>
+   </property>
+  </action>
+  <action name="actionRemoveMovie">
+   <property name="text">
+    <string>RemoveMovie</string>
    </property>
   </action>
  </widget>

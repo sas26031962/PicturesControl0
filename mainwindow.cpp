@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
+    connect(ui->actionRemoveMovie, SIGNAL(triggered()), this, SLOT( execActionRemoveMovie()));
 
     connect(ui->pushButtonBegin, SIGNAL(pressed()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->pushButtonNext, SIGNAL(pressed()), this, SLOT( execActionSelectImageNext()));
@@ -566,6 +567,16 @@ void MainWindow::execActionLoadHashTagListPlace()
         ui->listWidgetSuggest->clear();
         qDebug() << s << ": loadHashTagListPlace is broken!!!";
     }
+    //---
+    labelExecStatus->setText(s);
+    //---
+
+}
+
+void MainWindow::execActionRemoveMovie()
+{
+    QString s = "ActionRemoveMovie()";
+
     //---
     labelExecStatus->setText(s);
     //---
