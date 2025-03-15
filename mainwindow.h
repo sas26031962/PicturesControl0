@@ -46,6 +46,7 @@ private:
     //Методы
     void showCurrentIndexPicture();
     bool loadHashTagListSubject();
+    bool loadHashTagListPlace();
 
 public:
     //Атрибуты

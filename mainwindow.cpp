@@ -74,8 +74,9 @@ MainWindow::MainWindow(QWidget *parent) :
     labelFileName = new QLabel("LoadedFileName");
     ui->statusBar->addWidget(labelFileName);
 
-    std::unique_ptr<QStringList> ptrHashTagList(new QStringList());
-    qslHashTagList = ptrHashTagList.get();
+    //std::unique_ptr<QStringList> ptrHashTagList(new QStringList());
+    //qslHashTagList = ptrHashTagList.get();
+    qslHashTagList = new QStringList();
 
     if(loadHashTagListSubject())
     {
@@ -101,6 +102,8 @@ MainWindow::~MainWindow()
     delete labelFileName;
 
     delete ViewPicture;
+
+    delete qslHashTagList;
 
     delete ui;
 }
@@ -455,10 +458,10 @@ bool MainWindow::loadHashTagListSubject()
 {
 
 #ifdef HOME_STORAGE
-    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPhotos.txt";
+    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListSubjectPhotos.txt";
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListShips.txt";
+    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -474,21 +477,62 @@ bool MainWindow::loadHashTagListSubject()
     in.setCodec("Windows-1251");
 #endif
 
-    while (!in.atEnd()) {
+    qslHashTagList->clear();
+
+    while (!in.atEnd())
+    {
         QString line = in.readLine();
         qslHashTagList->append(line);
     }
 
     file.close();
-
+    qDebug() << "Load " << qslHashTagList->count() << " strings";
     return true;
 }
+
+bool MainWindow::loadHashTagListPlace()
+{
+
+#ifdef HOME_STORAGE
+    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPlacesPhotos.txt";
+    qDebug() << "HOME_STORAGE";
+#else
+    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";
+    qDebug() << "WORK_STORAGE";
+#endif
+
+    QFile file(filePathSubject);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file: " << filePathSubject;
+        return false;
+    }
+
+    QTextStream in(&file);
+#ifndef HOME_STORAGE
+    in.setCodec("Windows-1251");
+#endif
+
+    qslHashTagList->clear();
+
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        qslHashTagList->append(line);
+    }
+
+    file.close();
+    qDebug() << "Load " << qslHashTagList->count() << " strings";
+    return true;
+}
+
 
 void MainWindow::execActionLoadHashTagListSubject()
 {
     QString s = "ActionLoadHashTagListSubject()";
     if(loadHashTagListSubject())
     {
+        qDebug() << s << ": loadHashTagListSubject is sucsess";
         ui->listWidgetSuggest->clear();
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
@@ -497,6 +541,7 @@ void MainWindow::execActionLoadHashTagListSubject()
     else
     {
         ui->listWidgetSuggest->clear();
+        qDebug() << s << ": loadHashTagListSubject is broken!!!";
     }
     //---
     labelExecStatus->setText(s);
@@ -508,6 +553,19 @@ void MainWindow::execActionLoadHashTagListPlace()
 {
     QString s = "ActionLoadHashTagListPlace()";
 
+    if(loadHashTagListPlace())
+    {
+        qDebug() << s << ": loadHashTagListPlace is sucsess";
+        ui->listWidgetSuggest->clear();
+        ui->listWidgetSuggest->addItems(*qslHashTagList);
+
+//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+    }
+    else
+    {
+        ui->listWidgetSuggest->clear();
+        qDebug() << s << ": loadHashTagListPlace is broken!!!";
+    }
     //---
     labelExecStatus->setText(s);
     //---
