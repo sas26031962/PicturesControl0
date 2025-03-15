@@ -70,7 +70,9 @@ private slots:
     void execActionLoad();
     void execActionFormViewPicture();
     void execListWidgetSuggestItemClicked();
+
     void execActionLoadHashTagListSubject();
+    void execActionLoadHashTagListPlace();
 
 public slots:
 

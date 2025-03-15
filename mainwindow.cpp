@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
+    connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
 
     ViewPicture = new fmView(this);
     ViewPicture->setWindowFlags(Qt::Window);//3 flags
@@ -497,6 +498,16 @@ void MainWindow::execActionLoadHashTagListSubject()
     {
         ui->listWidgetSuggest->clear();
     }
+    //---
+    labelExecStatus->setText(s);
+    //---
+
+}
+
+void MainWindow::execActionLoadHashTagListPlace()
+{
+    QString s = "ActionLoadHashTagListPlace()";
+
     //---
     labelExecStatus->setText(s);
     //---
