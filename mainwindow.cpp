@@ -98,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    cIniFile::settings.sync();
+
     delete progressBarProcess;
     delete labelExecStatus;
     delete labelFileName;
