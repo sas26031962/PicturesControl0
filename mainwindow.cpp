@@ -610,7 +610,9 @@ void MainWindow::execActionRemoveMovie()
             {
                 QString qsKey = readKeyIt.next();
                 qDebug() << qsKey;
+                settings.remove(qsKey);
             }
+            qDebug() << "All keys in section " << qsSection << " removed!";
         }
 
         settings.endGroup();
