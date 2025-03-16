@@ -576,9 +576,52 @@ void MainWindow::execActionLoadHashTagListPlace()
 void MainWindow::execActionRemoveMovie()
 {
     QString s = "ActionRemoveMovie()";
+    //===
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
+    QStringList GroupsLocal = settings.childGroups();
+
+    // Выводим значения
+    qDebug() << "childGroupsList length: " << GroupsLocal.count();
+    qDebug() << "----------------------------";
     //---
+
+    int iCount = 0;
+
+    QListIterator<QString> readIt(GroupsLocal);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+
+        settings.beginGroup(qsSection);
+        QList<QString> keys = settings.childKeys();
+        int iKeysCount = keys.count();
+
+        QString qsName = settings.value("name", "noName").toString();
+
+        if(qsName.toLower().indexOf(".mp4") >= 0)
+        {
+            iCount++;
+            qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+            // Перебор всей ключей в секции
+            QListIterator<QString> readKeyIt(keys);
+            while (readKeyIt.hasNext())
+            {
+                QString qsKey = readKeyIt.next();
+                qDebug() << qsKey;
+            }
+        }
+
+        settings.endGroup();
+    }
+    if(iCount > 0)
+        qDebug() << "Extension 'mp4' detected in " << iCount << " files";
+    else
+        qDebug() << "No 'mp4' in file names detected, Ok!";
+
+    //===
     labelExecStatus->setText(s);
-    //---
+    //===
 
 }
