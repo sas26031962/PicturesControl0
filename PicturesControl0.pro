@@ -30,3 +30,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     fmview.ui
+
+RESOURCES += \
+    resourcedata.qrc

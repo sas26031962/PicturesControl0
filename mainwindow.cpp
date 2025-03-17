@@ -461,10 +461,12 @@ bool MainWindow::loadHashTagListSubject()
 {
 
 #ifdef HOME_STORAGE
-    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListSubjectPhotos.txt";
+    //filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListSubjectPhotos.txt";// Прямой путь к файлу
+    filePathSubject = ":/new/hash_tag/programm/data/HashTagListSubjectPhotos.txt";// Путь через ресурсы
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";
+    //filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Прямой путь к файлу
+    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Путь через ресурсы
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -497,7 +499,8 @@ bool MainWindow::loadHashTagListPlace()
 {
 
 #ifdef HOME_STORAGE
-    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPlacesPhotos.txt";
+    //filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPlacesPhotos.txt";//Прямой путь к файлу
+    filePathSubject = ":/new/hash_tag/programm/data/HashTagListPlacesPhotos.txt";// Путь через ресурсы
     qDebug() << "HOME_STORAGE";
 #else
     filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";
