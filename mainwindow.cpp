@@ -503,7 +503,8 @@ bool MainWindow::loadHashTagListPlace()
     filePathSubject = ":/new/hash_tag/programm/data/HashTagListPlacesPhotos.txt";// Путь через ресурсы
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";
+    //filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";//Прямой путь к файлу
+    filePathSubject = ":/new/hash_tag/programm/data/HashTagListPlacesShips.txt";// Путь через ресурсы
     qDebug() << "WORK_STORAGE";
 #endif
 

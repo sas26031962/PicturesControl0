@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/new/hash_tag">
         <file>programm/data/HashTagListPlacesPhotos.txt</file>
-        <file>programm/data/HashTagListShips.txt</file>
+        <file>programm/data/HashTagListPlacesShips.txt</file>
         <file>programm/data/HashTagListSubjectPhotos.txt</file>
         <file>programm/data/HashTagListSubjectShips.txt</file>
     </qresource>
