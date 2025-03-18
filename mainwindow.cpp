@@ -680,6 +680,8 @@ void MainWindow::execActionRotate()
 
     rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
 
+    emit draw(rotatedImagePath);//Отображаем повёрнутое изображение на форме
+
     qDebug() << "Image rotated successfully";
     //===
     labelExecStatus->setText(s);
