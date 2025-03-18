@@ -13,6 +13,9 @@
 #include <QStringListIterator>
 #include <QFile>
 #include <QTextStream>
+#include <QPainter>
+#include <QImage>
+#include <QTransform>
 
 #include "cinifile.h"
 #include "fmview.h"
@@ -42,6 +45,7 @@ private:
     fmView * ViewPicture;
 
     QStringList * qslHashTagList;
+    QString rotatedImagePath = "./img/tmp/rotated_image.png";
 
     //Методы
     void showCurrentIndexPicture();
@@ -75,6 +79,7 @@ private slots:
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
     void execActionRemoveMovie();
+    void execActionRotate();
 
 public slots:
 

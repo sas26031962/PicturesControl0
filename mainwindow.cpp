@@ -14,12 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
     connect(ui->actionRemoveMovie, SIGNAL(triggered()), this, SLOT( execActionRemoveMovie()));
+    connect(ui->actionRotate, SIGNAL(triggered()), this, SLOT( execActionRotate()));
 
     connect(ui->pushButtonBegin, SIGNAL(pressed()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->pushButtonNext, SIGNAL(pressed()), this, SLOT( execActionSelectImageNext()));
     connect(ui->pushButtonPrevious, SIGNAL(pressed()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->pushButtonEnd, SIGNAL(pressed()), this, SLOT( execActionSelectImageEnd()));
     connect(ui->pushButtonLoad, SIGNAL(pressed()), this, SLOT( execActionLoad()));
+    connect(ui->pushButtonRotate, SIGNAL(pressed()), this, SLOT( execActionRotate()));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
@@ -628,6 +630,57 @@ void MainWindow::execActionRemoveMovie()
     else
         qDebug() << "No 'mp4' in file names detected, Ok!";
 
+    //===
+    labelExecStatus->setText(s);
+    //===
+
+}
+
+void MainWindow::execActionRotate()
+{
+    QString s = "ActionRotate()";
+
+    //--- Читаем значения из INI-файла
+    QString qsGroupName = Groups.at(CurrentIndex);
+
+    cIniFile::settings.beginGroup(qsGroupName);
+
+    QString qsPath = cIniFile::settings.value("path","").toString();
+    QString qsName = cIniFile::settings.value("name","").toString();
+
+    cIniFile::settings.endGroup();
+
+    QString imagePath = qsPath + '/' + qsName;
+    qDebug() << "Path:" << imagePath;
+    //---
+
+    QImage originalImage(imagePath);
+
+    // Создаем новое изображение для хранения повернутого изображения
+    QImage rotatedImage(originalImage.size(), originalImage.format());
+    rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
+
+    QPainter painter(&rotatedImage);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание для более качественного поворота
+
+    // Центр поворота (по умолчанию центр изображения)
+    QPoint center = originalImage.rect().center();
+    int iAngle = 90;
+
+    // Создаем матрицу трансформации
+    QTransform transform;
+    transform.translate(center.x(), center.y());    // Перемещаем систему координат в центр изображения
+    transform.rotate(iAngle);                       // Выполняем поворот
+    transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
+
+    painter.setTransform(transform);
+    painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
+
+    painter.end();
+
+    rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
+
+    qDebug() << "Image rotated successfully";
     //===
     labelExecStatus->setText(s);
     //===
