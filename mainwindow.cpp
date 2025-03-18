@@ -665,7 +665,7 @@ void MainWindow::execActionRotate()
 
     // Центр поворота (по умолчанию центр изображения)
     QPoint center = originalImage.rect().center();
-    int iAngle = 90;
+    iAngle = 270;
 
     // Создаем матрицу трансформации
     QTransform transform;

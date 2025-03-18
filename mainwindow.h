@@ -44,6 +44,8 @@ private:
 
     fmView * ViewPicture;
 
+    int iAngle = 90;
+
     QStringList * qslHashTagList;
     QString rotatedImagePath = "./img/tmp/rotated_image.png";
 
