@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonLoad, SIGNAL(pressed()), this, SLOT( execActionLoad()));
     connect(ui->pushButtonRotateCW, SIGNAL(pressed()), this, SLOT( execActionRotateCW()));
     connect(ui->pushButtonRotateCCW, SIGNAL(pressed()), this, SLOT( execActionRotateCCW()));
+    connect(ui->spinBoxAngle, SIGNAL(valueChanged(int)), this, SLOT( execSpinBoxAngle(int)));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
@@ -645,50 +646,7 @@ void MainWindow::execActionRotateCW()
     iAngle = 270;
 
     execRotate(iAngle);
-/*
-    //--- Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
 
-    cIniFile::settings.beginGroup(qsGroupName);
-
-    QString qsPath = cIniFile::settings.value("path","").toString();
-    QString qsName = cIniFile::settings.value("name","").toString();
-
-    cIniFile::settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    qDebug() << "Path:" << imagePath;
-    //---
-
-    QImage originalImage(imagePath);
-
-    // Создаем новое изображение для хранения повернутого изображения
-    QImage rotatedImage(originalImage.size(), originalImage.format());
-    rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
-
-    QPainter painter(&rotatedImage);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание для более качественного поворота
-
-    // Центр поворота (по умолчанию центр изображения)
-    QPoint center = originalImage.rect().center();
-
-    // Создаем матрицу трансформации
-    QTransform transform;
-    transform.translate(center.x(), center.y());    // Перемещаем систему координат в центр изображения
-    transform.rotate(iAngle);                       // Выполняем поворот
-    transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
-
-    painter.setTransform(transform);
-    painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
-
-    painter.end();
-
-    rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
-
-    emit draw(rotatedImagePath);//Отображаем повёрнутое изображение на форме
-
-    qDebug() << "Image rotated successfully";
-*/
     //===
     labelExecStatus->setText(s);
     //===
@@ -702,54 +660,18 @@ void MainWindow::execActionRotateCCW()
     iAngle = 90;
 
     execRotate(iAngle);
-/*
-    //--- Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
 
-    cIniFile::settings.beginGroup(qsGroupName);
-
-    QString qsPath = cIniFile::settings.value("path","").toString();
-    QString qsName = cIniFile::settings.value("name","").toString();
-
-    cIniFile::settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    qDebug() << "Path:" << imagePath;
-    //---
-
-    QImage originalImage(imagePath);
-
-    // Создаем новое изображение для хранения повернутого изображения
-    QImage rotatedImage(originalImage.size(), originalImage.format());
-    rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
-
-    QPainter painter(&rotatedImage);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание для более качественного поворота
-
-    // Центр поворота (по умолчанию центр изображения)
-    QPoint center = originalImage.rect().center();
-
-    // Создаем матрицу трансформации
-    QTransform transform;
-    transform.translate(center.x(), center.y());    // Перемещаем систему координат в центр изображения
-    transform.rotate(iAngle);                       // Выполняем поворот
-    transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
-
-    painter.setTransform(transform);
-    painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
-
-    painter.end();
-
-    rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
-
-    emit draw(rotatedImagePath);//Отображаем повёрнутое изображение на форме
-
-    qDebug() << "Image rotated successfully";
-*/
     //===
     labelExecStatus->setText(s);
     //===
 
+}
+
+void MainWindow::execSpinBoxAngle(int angle)
+{
+    qDebug() << "Angle:" << angle;
+    iAngle = angle;
+    execRotate(iAngle);
 }
 
 void MainWindow::execRotate(int angle)
@@ -798,3 +720,4 @@ void MainWindow::execRotate(int angle)
     qDebug() << "Image rotated successfully";
 
 }
+

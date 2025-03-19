@@ -84,6 +84,7 @@ private slots:
     void execActionRemoveMovie();
     void execActionRotateCW();
     void execActionRotateCCW();
+    void execSpinBoxAngle(int angle);
 
 public slots:
 

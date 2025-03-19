@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
@@ -53,6 +54,7 @@ public:
     QPushButton *pushButtonLoad;
     QPushButton *pushButtonRotateCW;
     QPushButton *pushButtonRotateCCW;
+    QSpinBox *spinBoxAngle;
     QListWidget *listWidgetSuggest;
     QLabel *labelSuggestListCaption;
     QLabel *labelIncomingListCaption;
@@ -102,7 +104,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
         groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
-        groupBoxControl->setGeometry(QRect(10, 380, 401, 51));
+        groupBoxControl->setGeometry(QRect(10, 380, 461, 51));
         pushButtonBegin = new QPushButton(groupBoxControl);
         pushButtonBegin->setObjectName(QStringLiteral("pushButtonBegin"));
         pushButtonBegin->setGeometry(QRect(100, 20, 23, 23));
@@ -124,6 +126,11 @@ public:
         pushButtonRotateCCW = new QPushButton(groupBoxControl);
         pushButtonRotateCCW->setObjectName(QStringLiteral("pushButtonRotateCCW"));
         pushButtonRotateCCW->setGeometry(QRect(310, 20, 75, 23));
+        spinBoxAngle = new QSpinBox(groupBoxControl);
+        spinBoxAngle->setObjectName(QStringLiteral("spinBoxAngle"));
+        spinBoxAngle->setGeometry(QRect(400, 20, 51, 22));
+        spinBoxAngle->setMinimum(-90);
+        spinBoxAngle->setMaximum(90);
         listWidgetSuggest = new QListWidget(centralWidget);
         listWidgetSuggest->setObjectName(QStringLiteral("listWidgetSuggest"));
         listWidgetSuggest->setGeometry(QRect(250, 30, 221, 341));

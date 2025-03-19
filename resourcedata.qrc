@@ -5,4 +5,7 @@
         <file>programm/data/HashTagListSubjectPhotos.txt</file>
         <file>programm/data/HashTagListSubjectShips.txt</file>
     </qresource>
+    <qresource prefix="/TODO">
+        <file>tmp/TODO_List.txt</file>
+    </qresource>
 </RCC>
