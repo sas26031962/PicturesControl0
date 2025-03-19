@@ -643,7 +643,7 @@ void MainWindow::execActionRotateCW()
 {
     QString s = "ActionRotateCW()";
 
-    iAngle = 270;
+    iAngle = 90;
 
     execRotate(iAngle);
 
@@ -657,7 +657,7 @@ void MainWindow::execActionRotateCCW()
 {
     QString s = "ActionRotateCCW()";
 
-    iAngle = 90;
+    iAngle = 270;
 
     execRotate(iAngle);
 
