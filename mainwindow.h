@@ -53,6 +53,7 @@ private:
     void showCurrentIndexPicture();
     bool loadHashTagListSubject();
     bool loadHashTagListPlace();
+    void execRotate(int angle);
 
 public:
     //Атрибуты
@@ -81,7 +82,8 @@ private slots:
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
     void execActionRemoveMovie();
-    void execActionRotate();
+    void execActionRotateCW();
+    void execActionRotateCCW();
 
 public slots:
 

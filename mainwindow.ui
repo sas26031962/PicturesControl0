@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>380</y>
-      <width>314</width>
+      <width>401</width>
       <height>51</height>
      </rect>
     </property>
@@ -91,7 +91,7 @@
       <string>Load</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButtonRotate">
+    <widget class="QPushButton" name="pushButtonRotateCW">
      <property name="geometry">
       <rect>
        <x>227</x>
@@ -101,7 +101,20 @@
       </rect>
      </property>
      <property name="text">
-      <string>Rotate</string>
+      <string>Rotate CW</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonRotateCCW">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rotate CCW</string>
      </property>
     </widget>
    </widget>
@@ -168,7 +181,8 @@
     <addaction name="actionImport"/>
     <addaction name="actionLoad"/>
     <addaction name="actionRemoveMovie"/>
-    <addaction name="actionRotate"/>
+    <addaction name="actionRotateCW"/>
+    <addaction name="actionRotateCCW"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">
@@ -268,9 +282,14 @@
     <string>RemoveMovie</string>
    </property>
   </action>
-  <action name="actionRotate">
+  <action name="actionRotateCW">
    <property name="text">
-    <string>Rotate</string>
+    <string>RotateCW</string>
+   </property>
+  </action>
+  <action name="actionRotateCCW">
+   <property name="text">
+    <string>RotateCCW</string>
    </property>
   </action>
  </widget>
