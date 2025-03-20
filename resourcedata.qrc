@@ -8,4 +8,8 @@
     <qresource prefix="/TODO">
         <file>tmp/TODO_List.txt</file>
     </qresource>
+    <qresource prefix="/tmp_files">
+        <file>programm/img/tmp/scaled_image.png</file>
+        <file>programm/img/tmp/rotated_image.png</file>
+    </qresource>
 </RCC>

@@ -17,6 +17,8 @@
 #include <QImage>
 #include <QTransform>
 
+//#include <fstream>
+
 #include "cinifile.h"
 #include "fmview.h"
 
@@ -48,6 +50,7 @@ private:
 
     QStringList * qslHashTagList;
     QString rotatedImagePath = "./img/tmp/rotated_image.png";
+    //QString rotatedImagePath = ":/tmp_files/programm/img/tmp/rotated_image.png";
 
     //Методы
     void showCurrentIndexPicture();

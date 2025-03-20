@@ -19,14 +19,16 @@ SOURCES += main.cpp\
     crecord.cpp \
     #programm/debug/moc_mainwindow.cpp \
     #programm/moc_mainwindow.cpp
-    fmview.cpp
+    fmview.cpp \
+    cimportfiles.cpp
 
 HEADERS  += mainwindow.h \
     cinifile.h \
     crecord.h \
     #programm/moc_predefs.h \
     #programm/ui_mainwindow.h
-    fmview.h
+    fmview.h \
+    cimportfiles.h
 
 FORMS    += mainwindow.ui \
     fmview.ui

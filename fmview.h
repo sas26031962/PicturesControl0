@@ -14,6 +14,7 @@ class fmView : public QDialog
 
 public:
     QString scaledImagePath = "./img/tmp/scaled_image.png";
+    //QString scaledImagePath = ":/tmp_files/programm/img/tmp/scaled_image.png";
 
     explicit fmView(QWidget *parent = 0);
     ~fmView();
