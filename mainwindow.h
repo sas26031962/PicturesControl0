@@ -16,6 +16,7 @@
 #include <QPainter>
 #include <QImage>
 #include <QTransform>
+#include <QTimer>
 
 //#include <fstream>
 
@@ -40,6 +41,7 @@ private:
     QLabel * labelExecStatus;
     QLabel * labelFileName;
     QProgressBar * progressBarProcess;
+    QTimer * timerUpdate;
 
     int CurrentIndex = 0;
     QStringList Groups;
@@ -81,6 +83,7 @@ private slots:
     void execActionLoad();
     void execActionFormViewPicture();
     void execListWidgetSuggestItemClicked();
+    void execTimerUpdate();
 
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();

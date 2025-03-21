@@ -69,6 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
     cRecord::RecordList = ptrRecordList.get();
 
+    timerUpdate = new QTimer(this);
+    connect(timerUpdate, SIGNAL(timeout()), this, SLOT( execTimerUpdate()));
+    timerUpdate->start(100);
+
     progressBarProcess = new QProgressBar();
     progressBarProcess->setOrientation(Qt::Horizontal);
     progressBarProcess->setRange(0, 100);
@@ -104,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     cIniFile::settings.sync();
+    timerUpdate->stop();
 
     delete progressBarProcess;
     delete labelExecStatus;
@@ -177,7 +182,6 @@ void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
     CurrentIndex = 0;
-    progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -193,7 +197,6 @@ void MainWindow::execActionSelectImageBegin()
 void MainWindow::execActionSelectImageNext()
 {
     if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
-    progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -209,7 +212,6 @@ void MainWindow::execActionSelectImageNext()
 void MainWindow::execActionSelectImagePrevious()
 {
     if(CurrentIndex > 0) CurrentIndex--;
-    progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -225,7 +227,6 @@ void MainWindow::execActionSelectImagePrevious()
 void MainWindow::execActionSelectImageEnd()
 {
     CurrentIndex = Groups.count() - 1;
-    progressBarProcess->setValue(CurrentIndex);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -275,7 +276,7 @@ void MainWindow::execActionImport()
      {
         cIniFile::IniFile.Id++;//Счётчик записей
 
-        progressBarProcess->setValue(cIniFile::IniFile.Id);
+        CurrentIndex = cIniFile::IniFile.Id;
 
         const cRecord rec = *it;
 
@@ -371,12 +372,11 @@ void MainWindow::execActionLoad()
     qDebug() << "----------------------------";
     progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
-    int iProgress = 0;
+    CurrentIndex = 0;
     QListIterator<QString> readIt(Groups);
     while (readIt.hasNext())
     {
-        iProgress++;
-        progressBarProcess->setValue(iProgress);
+        CurrentIndex++;
 
         QString qsSection = readIt.next();
         //qDebug() << qsSection;
@@ -408,6 +408,8 @@ void MainWindow::execActionLoad()
         qDebug() << "Space character in file name detected in " << iCount << " files";
     else
         qDebug() << "No errors in file names detected, Ok!";
+
+    CurrentIndex = 0;
 
     execActionSelectImageNext();
 
@@ -721,3 +723,8 @@ void MainWindow::execRotate(int angle)
 
 }
 
+void MainWindow::execTimerUpdate()
+{
+    //qDebug() << "execTimerUpdate()";
+    progressBarProcess->setValue(CurrentIndex);
+}
