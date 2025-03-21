@@ -44,6 +44,9 @@ private:
     QTimer * timerUpdate;
 
     int CurrentIndex = 0;
+    QString labelExecStatusText = "";
+    bool IslabelExecStatusTextChacnged = false;
+
     QStringList Groups;
 
     fmView * ViewPicture;
