@@ -47,6 +47,9 @@ private:
     QString labelExecStatusText = "";
     bool IslabelExecStatusTextChacnged = false;
 
+    QString labelFileNameText = "";
+    bool IslabelFileNameTextChanged = false;
+
     QStringList Groups;
 
     fmView * ViewPicture;

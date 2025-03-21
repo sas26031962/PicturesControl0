@@ -168,7 +168,8 @@ void MainWindow::showCurrentIndexPicture()
     {
         emit draw(imagePath);
     }
-      labelFileName->setText(qsName);
+      labelFileNameText = qsName;
+      IslabelFileNameTextChanged = true;
 
       //Сохранение текущего индекса
       cIniFile::settings.beginGroup("RecordList");
@@ -747,4 +748,11 @@ void MainWindow::execTimerUpdate()
         labelExecStatus->setText(labelExecStatusText);
         IslabelExecStatusTextChacnged = false;
     }
+
+    if(IslabelFileNameTextChanged)
+    {
+        labelFileName->setText(labelFileNameText);
+        IslabelFileNameTextChanged = false;
+    }
+
 }
