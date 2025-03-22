@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
     connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
 
+    connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
+
     ViewPicture = new fmView(this);
     ViewPicture->setWindowFlags(Qt::Window);//3 flags
     //ViewPicture->setWindowFlags(Qt::Drawer);//1 flag
@@ -190,8 +192,7 @@ void MainWindow::execActionSelectImageBegin()
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
     s += QString::number(CurrentIndex);
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }//End of void MainWindow::execActionSelectImageBegin()
@@ -206,8 +207,7 @@ void MainWindow::execActionSelectImageNext()
     //---
     QString s = "execActionSelectImageNext(), goto index:";
     s += QString::number(CurrentIndex);
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }
@@ -222,8 +222,7 @@ void MainWindow::execActionSelectImagePrevious()
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
     s += QString::number(CurrentIndex);
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }
@@ -238,8 +237,7 @@ void MainWindow::execActionSelectImageEnd()
     //---
     QString s = "execActionSelectImageEnd(), goto index";
     s += QString::number(CurrentIndex);
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }
@@ -248,8 +246,7 @@ void MainWindow::execActionImport()
 {
     //---
     QString s = "execActionImport()";
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
     //---Создание рабочего списка
@@ -342,8 +339,8 @@ void MainWindow::execActionImport()
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
 
     //qDebug() << "==================Task is done!!!=========================";
-    labelExecStatusText = "File import complete!";
-    IslabelExecStatusTextChacnged = true;
+
+    emit execShowExecStatus("File import complete!");
 
     execActionLoad();//Выполнить загрузку изображений
 
@@ -423,8 +420,7 @@ void MainWindow::execActionLoad()
     //---
     QString s = "execActionLoad(), goto index:";
     s += QString::number(CurrentIndex);
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }//End of void MainWindow::execActionLoad()
@@ -442,9 +438,8 @@ void MainWindow::execActionFormViewPicture()
     }
     //---
     QString s = "execActionFormViewPicture()";
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
-    //---
+    emit execShowExecStatus(s);
+   //---
 }
 
 void MainWindow::execListWidgetSuggestItemClicked()
@@ -469,8 +464,7 @@ void MainWindow::execListWidgetSuggestItemClicked()
     // Отобразить картинку
     showCurrentIndexPicture();
     //---
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 }
 
@@ -568,8 +562,7 @@ void MainWindow::execActionLoadHashTagListSubject()
         qDebug() << s << ": loadHashTagListSubject is broken!!!";
     }
     //---
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;;
+    emit execShowExecStatus(s);
     //---
 
 }
@@ -592,8 +585,7 @@ void MainWindow::execActionLoadHashTagListPlace()
         qDebug() << s << ": loadHashTagListPlace is broken!!!";
     }
     //---
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //---
 
 }
@@ -648,9 +640,8 @@ void MainWindow::execActionRemoveMovie()
         qDebug() << "No 'mp4' in file names detected, Ok!";
 
     //===
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
-    //===
+    emit execShowExecStatus(s);
+   //===
 
 }
 
@@ -663,8 +654,7 @@ void MainWindow::execActionRotateCW()
     execRotate(iAngle);
 
     //===
-    labelExecStatusText =s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //===
 
 }
@@ -678,8 +668,7 @@ void MainWindow::execActionRotateCCW()
     execRotate(iAngle);
 
     //===
-    labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    emit execShowExecStatus(s);
     //===
 
 }
@@ -755,4 +744,9 @@ void MainWindow::execTimerUpdate()
         IslabelFileNameTextChanged = false;
     }
 
+}
+void MainWindow::execShowExecStatus(QString s)
+{
+    labelExecStatusText = s;
+    IslabelExecStatusTextChacnged = true;
 }

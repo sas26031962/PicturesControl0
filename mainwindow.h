@@ -97,11 +97,13 @@ private slots:
     void execActionRotateCW();
     void execActionRotateCCW();
     void execSpinBoxAngle(int angle);
+    void execShowExecStatus(QString s);
 
 public slots:
 
 signals:
     void draw(QString s);
+    void showExecStatus(QString s);
 };
 
 #endif // MAINWINDOW_H
