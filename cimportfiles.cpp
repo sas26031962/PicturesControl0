@@ -1,5 +1,14 @@
 #include "cimportfiles.h"
 
+int cImportFiles::CurrentIndex = 0;
+
+QString cImportFiles::labelExecStatusText = "";
+bool cImportFiles::IslabelExecStatusTextChacnged = false;
+
+QString cImportFiles::labelFileNameText = "";
+bool cImportFiles::IslabelFileNameTextChanged = false;
+
+
 cImportFiles::cImportFiles()
 {
 
