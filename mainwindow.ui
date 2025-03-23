@@ -187,7 +187,7 @@
      <x>0</x>
      <y>0</y>
      <width>481</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -222,6 +222,7 @@
     </property>
     <addaction name="actionLoaadHashTagListSubject"/>
     <addaction name="actionLoadHashTagListPlace"/>
+    <addaction name="actionLoadHashTagListProperty"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
@@ -306,6 +307,11 @@
   <action name="actionRotateCCW">
    <property name="text">
     <string>RotateCCW</string>
+   </property>
+  </action>
+  <action name="actionLoadHashTagListProperty">
+   <property name="text">
+    <string>Property</string>
    </property>
   </action>
  </widget>

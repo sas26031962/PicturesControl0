@@ -379,7 +379,9 @@ qrc_resourcedata.cpp: ../resourcedata.qrc \
 		img/tmp/scaled_image.png \
 		img/tmp/rotated_image.png \
 		data/HashTagListSubjectShips.txt \
+		data/HashTagListPropertyesPhotos.txt \
 		data/HashTagListPlacesPhotos.txt \
+		data/HashTagListPropertyesShips\ .txt \
 		data/HashTagListPlacesShips.txt \
 		data/HashTagListSubjectPhotos.txt \
 		../tmp/TODO_List.txt

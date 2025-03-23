@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
     connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
+    connect(ui->actionLoadHashTagListProperty, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListProperty()));
 
     connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
 
@@ -544,6 +545,42 @@ bool MainWindow::loadHashTagListPlace()
     return true;
 }
 
+bool MainWindow::loadHashTagListProperty()
+{
+
+#ifdef HOME_STORAGE
+    filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesPhotos.txt";// Путь через ресурсы
+    qDebug() << "HOME_STORAGE";
+#else
+    filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesShips.txt";// Путь через ресурсы
+    qDebug() << "WORK_STORAGE";
+#endif
+
+    QFile file(filePathSubject);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file: " << filePathSubject;
+        return false;
+    }
+
+    QTextStream in(&file);
+#ifndef HOME_STORAGE
+    in.setCodec("Windows-1251");
+#endif
+
+    qslHashTagList->clear();
+
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        qslHashTagList->append(line);
+    }
+
+    file.close();
+    qDebug() << "Load " << qslHashTagList->count() << " strings";
+    return true;
+}
+
 
 void MainWindow::execActionLoadHashTagListSubject()
 {
@@ -589,6 +626,30 @@ void MainWindow::execActionLoadHashTagListPlace()
     //---
 
 }
+
+void MainWindow::execActionLoadHashTagListProperty()
+{
+    QString s = "ActionLoadHashTagListProperty()";
+
+    if(loadHashTagListProperty())
+    {
+        qDebug() << s << ": loadHashTagListProperty is sucsess";
+        ui->listWidgetSuggest->clear();
+        ui->listWidgetSuggest->addItems(*qslHashTagList);
+
+//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+    }
+    else
+    {
+        ui->listWidgetSuggest->clear();
+        qDebug() << s << ": loadHashTagListPrperty is broken!!!";
+    }
+    //---
+    emit execShowExecStatus(s);
+    //---
+
+}
+
 
 void MainWindow::execActionRemoveMovie()
 {

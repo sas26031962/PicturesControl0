@@ -64,6 +64,7 @@ private:
     void showCurrentIndexPicture();
     bool loadHashTagListSubject();
     bool loadHashTagListPlace();
+    bool loadHashTagListProperty();
     void execRotate(int angle);
 
 public:
@@ -93,6 +94,8 @@ private slots:
 
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
+    void execActionLoadHashTagListProperty();
+
     void execActionRemoveMovie();
     void execActionRotateCW();
     void execActionRotateCCW();
