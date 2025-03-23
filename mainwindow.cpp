@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonLoad, SIGNAL(pressed()), this, SLOT( execActionLoad()));
     connect(ui->pushButtonRotateCW, SIGNAL(pressed()), this, SLOT( execActionRotateCW()));
     connect(ui->pushButtonRotateCCW, SIGNAL(pressed()), this, SLOT( execActionRotateCCW()));
+    connect(ui->pushButtonMemo, SIGNAL(pressed()), this, SLOT( execActionMemo()));
     connect(ui->spinBoxAngle, SIGNAL(valueChanged(int)), this, SLOT( execSpinBoxAngle(int)));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
@@ -819,4 +820,10 @@ void MainWindow::execShowExecStatus(QString s)
 {
     labelExecStatusText = s;
     IslabelExecStatusTextChacnged = true;
+}
+
+void MainWindow::execActionMemo()
+{
+    qDebug() << "execActionMemo():" << ui->lineEditMemo->text();
+
 }

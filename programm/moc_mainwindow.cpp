@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[23];
-    char stringdata0[450];
+    QByteArrayData data[24];
+    char stringdata0[465];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,17 +44,18 @@ QT_MOC_LITERAL(8, 117, 24), // "execActionSelectImageEnd"
 QT_MOC_LITERAL(9, 142, 16), // "execActionImport"
 QT_MOC_LITERAL(10, 159, 14), // "execActionLoad"
 QT_MOC_LITERAL(11, 174, 25), // "execActionFormViewPicture"
-QT_MOC_LITERAL(12, 200, 32), // "execListWidgetSuggestItemClicked"
-QT_MOC_LITERAL(13, 233, 15), // "execTimerUpdate"
-QT_MOC_LITERAL(14, 249, 32), // "execActionLoadHashTagListSubject"
-QT_MOC_LITERAL(15, 282, 30), // "execActionLoadHashTagListPlace"
-QT_MOC_LITERAL(16, 313, 33), // "execActionLoadHashTagListProp..."
-QT_MOC_LITERAL(17, 347, 21), // "execActionRemoveMovie"
-QT_MOC_LITERAL(18, 369, 18), // "execActionRotateCW"
-QT_MOC_LITERAL(19, 388, 19), // "execActionRotateCCW"
-QT_MOC_LITERAL(20, 408, 16), // "execSpinBoxAngle"
-QT_MOC_LITERAL(21, 425, 5), // "angle"
-QT_MOC_LITERAL(22, 431, 18) // "execShowExecStatus"
+QT_MOC_LITERAL(12, 200, 14), // "execActionMemo"
+QT_MOC_LITERAL(13, 215, 32), // "execListWidgetSuggestItemClicked"
+QT_MOC_LITERAL(14, 248, 15), // "execTimerUpdate"
+QT_MOC_LITERAL(15, 264, 32), // "execActionLoadHashTagListSubject"
+QT_MOC_LITERAL(16, 297, 30), // "execActionLoadHashTagListPlace"
+QT_MOC_LITERAL(17, 328, 33), // "execActionLoadHashTagListProp..."
+QT_MOC_LITERAL(18, 362, 21), // "execActionRemoveMovie"
+QT_MOC_LITERAL(19, 384, 18), // "execActionRotateCW"
+QT_MOC_LITERAL(20, 403, 19), // "execActionRotateCCW"
+QT_MOC_LITERAL(21, 423, 16), // "execSpinBoxAngle"
+QT_MOC_LITERAL(22, 440, 5), // "angle"
+QT_MOC_LITERAL(23, 446, 18) // "execShowExecStatus"
 
     },
     "MainWindow\0draw\0\0s\0showExecStatus\0"
@@ -63,7 +64,7 @@ QT_MOC_LITERAL(22, 431, 18) // "execShowExecStatus"
     "execActionSelectImagePrevious\0"
     "execActionSelectImageEnd\0execActionImport\0"
     "execActionLoad\0execActionFormViewPicture\0"
-    "execListWidgetSuggestItemClicked\0"
+    "execActionMemo\0execListWidgetSuggestItemClicked\0"
     "execTimerUpdate\0execActionLoadHashTagListSubject\0"
     "execActionLoadHashTagListPlace\0"
     "execActionLoadHashTagListProperty\0"
@@ -79,7 +80,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -87,27 +88,28 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  109,    2, 0x06 /* Public */,
-       4,    1,  112,    2, 0x06 /* Public */,
+       1,    1,  114,    2, 0x06 /* Public */,
+       4,    1,  117,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  115,    2, 0x08 /* Private */,
-       6,    0,  116,    2, 0x08 /* Private */,
-       7,    0,  117,    2, 0x08 /* Private */,
-       8,    0,  118,    2, 0x08 /* Private */,
-       9,    0,  119,    2, 0x08 /* Private */,
-      10,    0,  120,    2, 0x08 /* Private */,
-      11,    0,  121,    2, 0x08 /* Private */,
-      12,    0,  122,    2, 0x08 /* Private */,
-      13,    0,  123,    2, 0x08 /* Private */,
-      14,    0,  124,    2, 0x08 /* Private */,
-      15,    0,  125,    2, 0x08 /* Private */,
-      16,    0,  126,    2, 0x08 /* Private */,
-      17,    0,  127,    2, 0x08 /* Private */,
-      18,    0,  128,    2, 0x08 /* Private */,
-      19,    0,  129,    2, 0x08 /* Private */,
-      20,    1,  130,    2, 0x08 /* Private */,
-      22,    1,  133,    2, 0x08 /* Private */,
+       5,    0,  120,    2, 0x08 /* Private */,
+       6,    0,  121,    2, 0x08 /* Private */,
+       7,    0,  122,    2, 0x08 /* Private */,
+       8,    0,  123,    2, 0x08 /* Private */,
+       9,    0,  124,    2, 0x08 /* Private */,
+      10,    0,  125,    2, 0x08 /* Private */,
+      11,    0,  126,    2, 0x08 /* Private */,
+      12,    0,  127,    2, 0x08 /* Private */,
+      13,    0,  128,    2, 0x08 /* Private */,
+      14,    0,  129,    2, 0x08 /* Private */,
+      15,    0,  130,    2, 0x08 /* Private */,
+      16,    0,  131,    2, 0x08 /* Private */,
+      17,    0,  132,    2, 0x08 /* Private */,
+      18,    0,  133,    2, 0x08 /* Private */,
+      19,    0,  134,    2, 0x08 /* Private */,
+      20,    0,  135,    2, 0x08 /* Private */,
+      21,    1,  136,    2, 0x08 /* Private */,
+      23,    1,  139,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -129,7 +131,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   21,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   22,
     QMetaType::Void, QMetaType::QString,    3,
 
        0        // eod
@@ -150,16 +153,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->execActionImport(); break;
         case 7: _t->execActionLoad(); break;
         case 8: _t->execActionFormViewPicture(); break;
-        case 9: _t->execListWidgetSuggestItemClicked(); break;
-        case 10: _t->execTimerUpdate(); break;
-        case 11: _t->execActionLoadHashTagListSubject(); break;
-        case 12: _t->execActionLoadHashTagListPlace(); break;
-        case 13: _t->execActionLoadHashTagListProperty(); break;
-        case 14: _t->execActionRemoveMovie(); break;
-        case 15: _t->execActionRotateCW(); break;
-        case 16: _t->execActionRotateCCW(); break;
-        case 17: _t->execSpinBoxAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->execShowExecStatus((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 9: _t->execActionMemo(); break;
+        case 10: _t->execListWidgetSuggestItemClicked(); break;
+        case 11: _t->execTimerUpdate(); break;
+        case 12: _t->execActionLoadHashTagListSubject(); break;
+        case 13: _t->execActionLoadHashTagListPlace(); break;
+        case 14: _t->execActionLoadHashTagListProperty(); break;
+        case 15: _t->execActionRemoveMovie(); break;
+        case 16: _t->execActionRotateCW(); break;
+        case 17: _t->execActionRotateCCW(); break;
+        case 18: _t->execSpinBoxAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->execShowExecStatus((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -210,13 +214,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 19)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 19;
+        _id -= 20;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 19)
+        if (_id < 20)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 19;
+        _id -= 20;
     }
     return _id;
 }

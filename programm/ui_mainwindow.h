@@ -15,6 +15,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -51,14 +52,18 @@ public:
     QPushButton *pushButtonNext;
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
-    QPushButton *pushButtonLoad;
-    QPushButton *pushButtonRotateCW;
-    QPushButton *pushButtonRotateCCW;
-    QSpinBox *spinBoxAngle;
     QListWidget *listWidgetSuggest;
     QLabel *labelSuggestListCaption;
     QLabel *labelIncomingListCaption;
     QTableView *tableViewCurrent;
+    QGroupBox *groupBoxEdit;
+    QPushButton *pushButtonLoad;
+    QLineEdit *lineEditMemo;
+    QPushButton *pushButtonMemo;
+    QGroupBox *groupBoxRotate;
+    QPushButton *pushButtonRotateCCW;
+    QSpinBox *spinBoxAngle;
+    QPushButton *pushButtonRotateCW;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuSelect_image;
@@ -71,7 +76,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(481, 495);
+        MainWindow->resize(481, 583);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionSelectImageBegin = new QAction(MainWindow);
@@ -106,33 +111,19 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
         groupBoxControl->setObjectName(QString::fromUtf8("groupBoxControl"));
-        groupBoxControl->setGeometry(QRect(10, 380, 461, 51));
+        groupBoxControl->setGeometry(QRect(10, 380, 191, 51));
         pushButtonBegin = new QPushButton(groupBoxControl);
         pushButtonBegin->setObjectName(QString::fromUtf8("pushButtonBegin"));
-        pushButtonBegin->setGeometry(QRect(100, 20, 23, 23));
+        pushButtonBegin->setGeometry(QRect(20, 20, 23, 23));
         pushButtonNext = new QPushButton(groupBoxControl);
         pushButtonNext->setObjectName(QString::fromUtf8("pushButtonNext"));
-        pushButtonNext->setGeometry(QRect(160, 20, 23, 23));
+        pushButtonNext->setGeometry(QRect(80, 20, 23, 23));
         pushButtonPrevious = new QPushButton(groupBoxControl);
         pushButtonPrevious->setObjectName(QString::fromUtf8("pushButtonPrevious"));
-        pushButtonPrevious->setGeometry(QRect(130, 20, 23, 23));
+        pushButtonPrevious->setGeometry(QRect(50, 20, 23, 23));
         pushButtonEnd = new QPushButton(groupBoxControl);
         pushButtonEnd->setObjectName(QString::fromUtf8("pushButtonEnd"));
-        pushButtonEnd->setGeometry(QRect(190, 20, 23, 23));
-        pushButtonLoad = new QPushButton(groupBoxControl);
-        pushButtonLoad->setObjectName(QString::fromUtf8("pushButtonLoad"));
-        pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
-        pushButtonRotateCW = new QPushButton(groupBoxControl);
-        pushButtonRotateCW->setObjectName(QString::fromUtf8("pushButtonRotateCW"));
-        pushButtonRotateCW->setGeometry(QRect(227, 20, 75, 23));
-        pushButtonRotateCCW = new QPushButton(groupBoxControl);
-        pushButtonRotateCCW->setObjectName(QString::fromUtf8("pushButtonRotateCCW"));
-        pushButtonRotateCCW->setGeometry(QRect(310, 20, 75, 23));
-        spinBoxAngle = new QSpinBox(groupBoxControl);
-        spinBoxAngle->setObjectName(QString::fromUtf8("spinBoxAngle"));
-        spinBoxAngle->setGeometry(QRect(400, 20, 51, 22));
-        spinBoxAngle->setMinimum(-90);
-        spinBoxAngle->setMaximum(90);
+        pushButtonEnd->setGeometry(QRect(110, 20, 23, 23));
         listWidgetSuggest = new QListWidget(centralWidget);
         listWidgetSuggest->setObjectName(QString::fromUtf8("listWidgetSuggest"));
         listWidgetSuggest->setGeometry(QRect(250, 30, 221, 341));
@@ -145,6 +136,32 @@ public:
         tableViewCurrent = new QTableView(centralWidget);
         tableViewCurrent->setObjectName(QString::fromUtf8("tableViewCurrent"));
         tableViewCurrent->setGeometry(QRect(10, 30, 231, 341));
+        groupBoxEdit = new QGroupBox(centralWidget);
+        groupBoxEdit->setObjectName(QString::fromUtf8("groupBoxEdit"));
+        groupBoxEdit->setGeometry(QRect(20, 430, 451, 51));
+        pushButtonLoad = new QPushButton(groupBoxEdit);
+        pushButtonLoad->setObjectName(QString::fromUtf8("pushButtonLoad"));
+        pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
+        lineEditMemo = new QLineEdit(groupBoxEdit);
+        lineEditMemo->setObjectName(QString::fromUtf8("lineEditMemo"));
+        lineEditMemo->setGeometry(QRect(90, 20, 301, 23));
+        pushButtonMemo = new QPushButton(groupBoxEdit);
+        pushButtonMemo->setObjectName(QString::fromUtf8("pushButtonMemo"));
+        pushButtonMemo->setGeometry(QRect(400, 20, 31, 23));
+        groupBoxRotate = new QGroupBox(centralWidget);
+        groupBoxRotate->setObjectName(QString::fromUtf8("groupBoxRotate"));
+        groupBoxRotate->setGeometry(QRect(210, 380, 261, 51));
+        pushButtonRotateCCW = new QPushButton(groupBoxRotate);
+        pushButtonRotateCCW->setObjectName(QString::fromUtf8("pushButtonRotateCCW"));
+        pushButtonRotateCCW->setGeometry(QRect(93, 20, 75, 23));
+        spinBoxAngle = new QSpinBox(groupBoxRotate);
+        spinBoxAngle->setObjectName(QString::fromUtf8("spinBoxAngle"));
+        spinBoxAngle->setGeometry(QRect(183, 20, 51, 22));
+        spinBoxAngle->setMinimum(-90);
+        spinBoxAngle->setMaximum(90);
+        pushButtonRotateCW = new QPushButton(groupBoxRotate);
+        pushButtonRotateCW->setObjectName(QString::fromUtf8("pushButtonRotateCW"));
+        pushButtonRotateCW->setGeometry(QRect(10, 20, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -208,15 +225,42 @@ public:
         actionRotateCCW->setText(QCoreApplication::translate("MainWindow", "RotateCCW", nullptr));
         actionLoadHashTagListProperty->setText(QCoreApplication::translate("MainWindow", "Property", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonBegin->setToolTip(QCoreApplication::translate("MainWindow", "Goto head of list", nullptr));
+#endif // QT_CONFIG(tooltip)
         pushButtonBegin->setText(QCoreApplication::translate("MainWindow", "|<", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonNext->setToolTip(QCoreApplication::translate("MainWindow", "Goto next record", nullptr));
+#endif // QT_CONFIG(tooltip)
         pushButtonNext->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonPrevious->setToolTip(QCoreApplication::translate("MainWindow", "Goto previous record", nullptr));
+#endif // QT_CONFIG(tooltip)
         pushButtonPrevious->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonEnd->setToolTip(QCoreApplication::translate("MainWindow", "Goto tail of list", nullptr));
+#endif // QT_CONFIG(tooltip)
         pushButtonEnd->setText(QCoreApplication::translate("MainWindow", ">|", nullptr));
-        pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
-        pushButtonRotateCW->setText(QCoreApplication::translate("MainWindow", "Rotate CW", nullptr));
-        pushButtonRotateCCW->setText(QCoreApplication::translate("MainWindow", "Rotate CCW", nullptr));
         labelSuggestListCaption->setText(QCoreApplication::translate("MainWindow", "Suggest tags", nullptr));
         labelIncomingListCaption->setText(QCoreApplication::translate("MainWindow", "Incoming tag", nullptr));
+        groupBoxEdit->setTitle(QCoreApplication::translate("MainWindow", "Edit", nullptr));
+        pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonMemo->setToolTip(QCoreApplication::translate("MainWindow", "Memo record", nullptr));
+#endif // QT_CONFIG(tooltip)
+        pushButtonMemo->setText(QCoreApplication::translate("MainWindow", "M", nullptr));
+        groupBoxRotate->setTitle(QCoreApplication::translate("MainWindow", "Rotate", nullptr));
+#if QT_CONFIG(tooltip)
+        pushButtonRotateCCW->setToolTip(QCoreApplication::translate("MainWindow", "Rotate on contra clock wice", nullptr));
+#endif // QT_CONFIG(tooltip)
+        pushButtonRotateCCW->setText(QCoreApplication::translate("MainWindow", "Rotate CCW", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxAngle->setToolTip(QCoreApplication::translate("MainWindow", "Angle to rotate", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        pushButtonRotateCW->setToolTip(QCoreApplication::translate("MainWindow", "Rotate on clock wice", nullptr));
+#endif // QT_CONFIG(tooltip)
+        pushButtonRotateCW->setText(QCoreApplication::translate("MainWindow", "Rotate CW", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuSelect_image->setTitle(QCoreApplication::translate("MainWindow", "Select image", nullptr));
         menuForms->setTitle(QCoreApplication::translate("MainWindow", "Forms", nullptr));

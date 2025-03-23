@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>481</width>
-    <height>495</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>380</y>
-      <width>461</width>
+      <width>191</width>
       <height>51</height>
      </rect>
     </property>
@@ -29,11 +29,14 @@
     <widget class="QPushButton" name="pushButtonBegin">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>20</x>
        <y>20</y>
        <width>23</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Goto head of list</string>
      </property>
      <property name="text">
       <string>|&lt;</string>
@@ -42,11 +45,14 @@
     <widget class="QPushButton" name="pushButtonNext">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>80</x>
        <y>20</y>
        <width>23</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Goto next record</string>
      </property>
      <property name="text">
       <string>&gt;</string>
@@ -55,11 +61,14 @@
     <widget class="QPushButton" name="pushButtonPrevious">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>50</x>
        <y>20</y>
        <width>23</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Goto previous record</string>
      </property>
      <property name="text">
       <string>&lt;</string>
@@ -68,69 +77,17 @@
     <widget class="QPushButton" name="pushButtonEnd">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>110</x>
        <y>20</y>
        <width>23</width>
        <height>23</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Goto tail of list</string>
+     </property>
      <property name="text">
       <string>&gt;|</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonLoad">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Load</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonRotateCW">
-     <property name="geometry">
-      <rect>
-       <x>227</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Rotate CW</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonRotateCCW">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Rotate CCW</string>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBoxAngle">
-     <property name="geometry">
-      <rect>
-       <x>400</x>
-       <y>20</y>
-       <width>51</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>-90</number>
-     </property>
-     <property name="maximum">
-      <number>90</number>
      </property>
     </widget>
    </widget>
@@ -179,6 +136,122 @@
       <height>341</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>430</y>
+      <width>451</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <widget class="QPushButton" name="pushButtonLoad">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Load</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditMemo">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>301</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonMemo">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>20</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Memo record</string>
+     </property>
+     <property name="text">
+      <string>M</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxRotate">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>380</y>
+      <width>261</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Rotate</string>
+    </property>
+    <widget class="QPushButton" name="pushButtonRotateCCW">
+     <property name="geometry">
+      <rect>
+       <x>93</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Rotate on contra clock wice</string>
+     </property>
+     <property name="text">
+      <string>Rotate CCW</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxAngle">
+     <property name="geometry">
+      <rect>
+       <x>183</x>
+       <y>20</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Angle to rotate</string>
+     </property>
+     <property name="minimum">
+      <number>-90</number>
+     </property>
+     <property name="maximum">
+      <number>90</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonRotateCW">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Rotate on clock wice</string>
+     </property>
+     <property name="text">
+      <string>Rotate CW</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

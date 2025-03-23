@@ -92,6 +92,7 @@ private slots:
     void execActionImport();
     void execActionLoad();
     void execActionFormViewPicture();
+    void execActionMemo();
     void execListWidgetSuggestItemClicked();
     void execTimerUpdate();
 
