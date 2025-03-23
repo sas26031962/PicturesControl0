@@ -24,7 +24,8 @@
 #include "fmview.h"
 
 #define STATUS_BAR_DELAY 500
-#define WINDOW_MARGING 20
+#define WINDOW_LEFT_MARGING 40
+#define WINDOW_TOP_MARGING 65
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +42,9 @@ private:
     QLabel * labelExecStatus;
     QLabel * labelFileName;
     QProgressBar * progressBarProcess;
+
     QTimer * timerUpdate;
+    int iTimerUpdateCounter = 0;
 
     int CurrentIndex = 0;
     QString labelExecStatusText = "";
@@ -52,7 +55,7 @@ private:
 
     QStringList Groups;
 
-    fmView * ViewPicture;
+    fmView * fmViewPicture;
 
     int iAngle = 90;
 

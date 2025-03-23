@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
 
-    ViewPicture = new fmView(this);
-    ViewPicture->setWindowFlags(Qt::Window);//3 flags
+    fmViewPicture = new fmView(this);
+    fmViewPicture->setWindowFlags(Qt::Window);//3 flags
     //ViewPicture->setWindowFlags(Qt::Drawer);//1 flag
     //ViewPicture->setWindowFlags(Qt::Sheet);//1 flag + ?
     //ViewPicture->setWindowFlags(Qt::Dialog);//1 flag + ?
@@ -44,21 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //ViewPicture->setWindowFlags(Qt::ToolTip);//no flags, immobil
     //ViewPicture->setWindowFlags(Qt::SplashScreen);//no flags, immobil
 
-    /*
-    int windowX = this->x();
-    windowX = windowX + this->width();
-    windowX = windowX + WINDOW_MARGING;
-
-    int windowY = this->y();
-
-    int windowWidth = ViewPicture->width();
-    int windowHeight = ViewPicture->height();
-
-    QRect windowPlace = QRect(windowX, windowY, windowWidth, windowHeight);
-    ViewPicture->setGeometry(windowPlace);
-    */
-
-    connect(this, SIGNAL(draw(QString)), ViewPicture, SLOT( execDraw(QString)));
+    connect(this, SIGNAL(draw(QString)), fmViewPicture, SLOT( execDraw(QString)));
 
     ui->actionViewPicture->setChecked(false);
     //ViewPicture->show();
@@ -117,7 +103,7 @@ MainWindow::~MainWindow()
     delete labelExecStatus;
     delete labelFileName;
 
-    delete ViewPicture;
+    delete fmViewPicture;
 
     delete qslHashTagList;
 
@@ -431,11 +417,11 @@ void MainWindow::execActionFormViewPicture()
 {
     if(ui->actionViewPicture->isChecked())
     {
-        ViewPicture->show();
+        fmViewPicture->show();
     }
     else
     {
-        ViewPicture->hide();
+        fmViewPicture->hide();
     }
     //---
     QString s = "execActionFormViewPicture()";
@@ -791,6 +777,29 @@ void MainWindow::execRotate(int angle)
 void MainWindow::execTimerUpdate()
 {
     //qDebug() << "CurrentIndex=" << CurrentIndex;
+    iTimerUpdateCounter++;
+    if(iTimerUpdateCounter == 1)
+    {
+        qDebug() << "CurrentIndex=" << CurrentIndex << " Action: open ViewPictureForm";
+        int windowX = this->x();
+        windowX = windowX + this->width();
+        windowX = windowX + WINDOW_LEFT_MARGING;
+
+        int windowY = this->y() + WINDOW_TOP_MARGING;
+
+        int windowWidth = fmViewPicture->width();
+        int windowHeight = fmViewPicture->height();
+
+        QRect windowPlace = QRect(windowX, windowY, windowWidth, windowHeight);
+        fmViewPicture->setGeometry(windowPlace);
+
+        fmViewPicture->show();
+        ui->actionViewPicture->setChecked(true);
+
+        qDebug() << "CurrentIndex=" << CurrentIndex << " Action: Load";
+        execActionLoad();
+    }
+
     progressBarProcess->setValue(CurrentIndex);
 
     if(IslabelExecStatusTextChacnged)
