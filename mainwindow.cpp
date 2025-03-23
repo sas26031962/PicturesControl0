@@ -824,6 +824,37 @@ void MainWindow::execShowExecStatus(QString s)
 
 void MainWindow::execActionMemo()
 {
-    qDebug() << "execActionMemo():" << ui->lineEditMemo->text();
+    QString s;
+    QString item = ui->lineEditMemo->text();
+    if(item.length() > 0)
+    {
+        qDebug() << "execActionMemo():" << item;
 
+        s = "execInsertMemoKeyValue()";
+
+        // Сохранение параметра в INI-файле
+        if(Groups.count() > 0)
+        {
+            QString qsGroupName = Groups.at(CurrentIndex);
+            cIniFile::settings.beginGroup(qsGroupName);
+            cIniFile::settings.setValue("memo", item);
+            cIniFile::settings.endGroup();
+
+        }
+        else
+        {
+            s = "List is empty, exec Load function!!!";
+        }
+        // Отобразить картинку
+        showCurrentIndexPicture();
+    }
+    else
+    {
+        qDebug() << "execActionMemo(): nothing to do";
+
+        s = "Memo is emtpy, nothing to do!";
+    }
+    //---
+    emit execShowExecStatus(s);
+    //---
 }
