@@ -1,17 +1,5 @@
 <RCC>
-    <qresource prefix="/new/hash_tag">
-        <file>programm/data/HashTagListPlacesPhotos.txt</file>
-        <file>programm/data/HashTagListPlacesShips.txt</file>
-        <file>programm/data/HashTagListSubjectPhotos.txt</file>
-        <file>programm/data/HashTagListSubjectShips.txt</file>
-        <file>programm/data/HashTagListPropertyesShips .txt</file>
-        <file>programm/data/HashTagListPropertyesPhotos.txt</file>
-    </qresource>
     <qresource prefix="/TODO">
         <file>tmp/TODO_List.txt</file>
-    </qresource>
-    <qresource prefix="/tmp_files">
-        <file>programm/img/tmp/scaled_image.png</file>
-        <file>programm/img/tmp/rotated_image.png</file>
     </qresource>
 </RCC>
