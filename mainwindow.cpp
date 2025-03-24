@@ -537,7 +537,7 @@ bool MainWindow::loadHashTagListProperty()
 
 #ifdef HOME_STORAGE
     //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesPhotos.txt";// Путь через ресурсы
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPropertyesPhotos.txt";// Путь прямой
+    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0//programm/data/HashTagListPropertyesPhotos.txt";// Путь прямой
     qDebug() << "HOME_STORAGE";
 #else
     //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesShips.txt";// Путь через ресурсы
