@@ -158,7 +158,7 @@ void MainWindow::showCurrentIndexPicture()
     {
         emit draw(imagePath);
     }
-      labelFileNameText = qsName;
+      cImportFiles::labelFileNameText = qsName;
       cImportFiles::IslabelFileNameTextChanged = true;
 
       //Сохранение текущего индекса
@@ -807,20 +807,20 @@ void MainWindow::execTimerUpdate()
 
     if(cImportFiles::IslabelExecStatusTextChacnged)
     {
-        labelExecStatus->setText(labelExecStatusText);
+        labelExecStatus->setText(cImportFiles::labelExecStatusText);
         cImportFiles::IslabelExecStatusTextChacnged = false;
     }
 
     if(cImportFiles::IslabelFileNameTextChanged)
     {
-        labelFileName->setText(labelFileNameText);
+        labelFileName->setText(cImportFiles::labelFileNameText);
         cImportFiles::IslabelFileNameTextChanged = false;
     }
 
 }
 void MainWindow::execShowExecStatus(QString s)
 {
-    labelExecStatusText = s;
+    cImportFiles::labelExecStatusText = s;
     cImportFiles::IslabelExecStatusTextChacnged = true;
 }
 

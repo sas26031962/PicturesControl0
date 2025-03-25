@@ -46,10 +46,10 @@ private:
     int iTimerUpdateCounter = 0;
     //---
     //int CurrentIndex = 0;
-    QString labelExecStatusText = "";
+    //QString labelExecStatusText = "";
     //bool IslabelExecStatusTextChacnged = false;
 
-    QString labelFileNameText = "";
+    //QString labelFileNameText = "";
     //bool IslabelFileNameTextChanged = false;
     //---
 
