@@ -159,7 +159,7 @@ void MainWindow::showCurrentIndexPicture()
         emit draw(imagePath);
     }
       labelFileNameText = qsName;
-      IslabelFileNameTextChanged = true;
+      cImportFiles::IslabelFileNameTextChanged = true;
 
       //Сохранение текущего индекса
       cIniFile::settings.beginGroup("RecordList");
@@ -805,23 +805,23 @@ void MainWindow::execTimerUpdate()
 
     progressBarProcess->setValue(cImportFiles::CurrentIndex);
 
-    if(IslabelExecStatusTextChacnged)
+    if(cImportFiles::IslabelExecStatusTextChacnged)
     {
         labelExecStatus->setText(labelExecStatusText);
-        IslabelExecStatusTextChacnged = false;
+        cImportFiles::IslabelExecStatusTextChacnged = false;
     }
 
-    if(IslabelFileNameTextChanged)
+    if(cImportFiles::IslabelFileNameTextChanged)
     {
         labelFileName->setText(labelFileNameText);
-        IslabelFileNameTextChanged = false;
+        cImportFiles::IslabelFileNameTextChanged = false;
     }
 
 }
 void MainWindow::execShowExecStatus(QString s)
 {
     labelExecStatusText = s;
-    IslabelExecStatusTextChacnged = true;
+    cImportFiles::IslabelExecStatusTextChacnged = true;
 }
 
 void MainWindow::execActionMemo()

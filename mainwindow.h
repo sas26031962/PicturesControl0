@@ -47,10 +47,10 @@ private:
     //---
     //int CurrentIndex = 0;
     QString labelExecStatusText = "";
-    bool IslabelExecStatusTextChacnged = false;
+    //bool IslabelExecStatusTextChacnged = false;
 
     QString labelFileNameText = "";
-    bool IslabelFileNameTextChanged = false;
+    //bool IslabelFileNameTextChanged = false;
     //---
 
     QStringList Groups;
