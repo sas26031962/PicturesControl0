@@ -115,7 +115,7 @@ void MainWindow::showCurrentIndexPicture()
 {
 
     // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
+    QString qsGroupName = Groups.at(cImportFiles::CurrentIndex);
     cIniFile::settings.beginGroup(qsGroupName);
 
     QString qsPath, qsName, qsError;
@@ -163,23 +163,23 @@ void MainWindow::showCurrentIndexPicture()
 
       //Сохранение текущего индекса
       cIniFile::settings.beginGroup("RecordList");
-      cIniFile::settings.setValue("index", CurrentIndex);
+      cIniFile::settings.setValue("index", cImportFiles::CurrentIndex);
       cIniFile::settings.endGroup();
 
-      qDebug() << "Store CurrentIndex:" << CurrentIndex;
+      qDebug() << "Store CurrentIndex:" << cImportFiles::CurrentIndex;
 }
 
 void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
-    CurrentIndex = 0;
+    cImportFiles::CurrentIndex = 0;
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
-    s += QString::number(CurrentIndex);
+    s += QString::number(cImportFiles::CurrentIndex);
     emit execShowExecStatus(s);
     //---
 
@@ -187,14 +187,14 @@ void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
-    if(CurrentIndex < Groups.count() - 1) CurrentIndex++;
+    if(cImportFiles::CurrentIndex < Groups.count() - 1) cImportFiles::CurrentIndex++;
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImageNext(), goto index:";
-    s += QString::number(CurrentIndex);
+    s += QString::number(cImportFiles::CurrentIndex);
     emit execShowExecStatus(s);
     //---
 
@@ -202,14 +202,14 @@ void MainWindow::execActionSelectImageNext()
 
 void MainWindow::execActionSelectImagePrevious()
 {
-    if(CurrentIndex > 0) CurrentIndex--;
+    if(cImportFiles::CurrentIndex > 0) cImportFiles::CurrentIndex--;
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
-    s += QString::number(CurrentIndex);
+    s += QString::number(cImportFiles::CurrentIndex);
     emit execShowExecStatus(s);
     //---
 
@@ -217,14 +217,14 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    CurrentIndex = Groups.count() - 1;
+    cImportFiles::CurrentIndex = Groups.count() - 1;
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImageEnd(), goto index";
-    s += QString::number(CurrentIndex);
+    s += QString::number(cImportFiles::CurrentIndex);
     emit execShowExecStatus(s);
     //---
 
@@ -267,7 +267,7 @@ void MainWindow::execActionImport()
      {
         cIniFile::IniFile.Id++;//Счётчик записей
 
-        CurrentIndex = cIniFile::IniFile.Id;
+        cImportFiles::CurrentIndex = cIniFile::IniFile.Id;
 
         const cRecord rec = *it;
 
@@ -364,11 +364,11 @@ void MainWindow::execActionLoad()
     qDebug() << "----------------------------";
     progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
-    CurrentIndex = 0;
+    cImportFiles::CurrentIndex = 0;
     QListIterator<QString> readIt(Groups);
     while (readIt.hasNext())
     {
-        CurrentIndex++;
+        cImportFiles::CurrentIndex++;
 
         QString qsSection = readIt.next();
         //qDebug() << qsSection;
@@ -401,13 +401,13 @@ void MainWindow::execActionLoad()
     else
         qDebug() << "No errors in file names detected, Ok!";
 
-    CurrentIndex = LoadedCurrentIndex;
+    cImportFiles::CurrentIndex = LoadedCurrentIndex;
 
     execActionSelectImageNext();
 
     //---
     QString s = "execActionLoad(), goto index:";
-    s += QString::number(CurrentIndex);
+    s += QString::number(cImportFiles::CurrentIndex);
     emit execShowExecStatus(s);
     //---
 
@@ -439,7 +439,7 @@ void MainWindow::execListWidgetSuggestItemClicked()
     // Сохранение параметра в INI-файле
     if(Groups.count() > 0)
     {
-        QString qsGroupName = Groups.at(CurrentIndex);
+        QString qsGroupName = Groups.at(cImportFiles::CurrentIndex);
         cIniFile::settings.beginGroup(qsGroupName);
         cIniFile::settings.setValue(item, "true");
         cIniFile::settings.endGroup();
@@ -733,7 +733,7 @@ void MainWindow::execSpinBoxAngle(int angle)
 void MainWindow::execRotate(int angle)
 {
     //--- Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(CurrentIndex);
+    QString qsGroupName = Groups.at(cImportFiles::CurrentIndex);
 
     cIniFile::settings.beginGroup(qsGroupName);
 
@@ -783,7 +783,7 @@ void MainWindow::execTimerUpdate()
     iTimerUpdateCounter++;
     if(iTimerUpdateCounter == 1)
     {
-        qDebug() << "CurrentIndex=" << CurrentIndex << " Action: open ViewPictureForm";
+        qDebug() << "CurrentIndex=" << cImportFiles::CurrentIndex << " Action: open ViewPictureForm";
         int windowX = this->x();
         windowX = windowX + this->width();
         windowX = windowX + WINDOW_LEFT_MARGING;
@@ -799,11 +799,11 @@ void MainWindow::execTimerUpdate()
         fmViewPicture->show();
         ui->actionViewPicture->setChecked(true);
 
-        qDebug() << "CurrentIndex=" << CurrentIndex << " Action: Load";
+        qDebug() << "CurrentIndex=" << cImportFiles::CurrentIndex << " Action: Load";
         //execActionLoad();
     }
 
-    progressBarProcess->setValue(CurrentIndex);
+    progressBarProcess->setValue(cImportFiles::CurrentIndex);
 
     if(IslabelExecStatusTextChacnged)
     {
@@ -837,7 +837,7 @@ void MainWindow::execActionMemo()
         // Сохранение параметра в INI-файле
         if(Groups.count() > 0)
         {
-            QString qsGroupName = Groups.at(CurrentIndex);
+            QString qsGroupName = Groups.at(cImportFiles::CurrentIndex);
             cIniFile::settings.beginGroup(qsGroupName);
             cIniFile::settings.setValue("memo", item);
             cIniFile::settings.endGroup();
