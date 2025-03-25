@@ -1,6 +1,7 @@
 #include "cimportfiles.h"
 
 int cImportFiles::CurrentIndex = 0;
+int cImportFiles::MaxIndexValue = MAX_INDEX_DEFAULT_VALUE;
 
 QString cImportFiles::labelExecStatusText = "";
 bool cImportFiles::IslabelExecStatusTextChacnged = false;
@@ -38,9 +39,8 @@ bool cImportFiles::execImport()
     //cRecord::showList();
 
     //---Добавление идентификационной секции
-    int iRecordsCount = cRecord::RecordList->count();
-    cIniFile::IniFile.addInitalSection(iRecordsCount);
-    //progressBarProcess->setRange(0, cRecord::RecordList->count());
+    cImportFiles::MaxIndexValue = cRecord::RecordList->count();
+    cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
 
     //---Добавление данных в файл конфигурации
     //cIniFile::IniFile.addRecordListData();
@@ -50,6 +50,7 @@ bool cImportFiles::execImport()
         cIniFile::IniFile.Id++;//Счётчик записей
 
         //progressBarProcess->setValue(cIniFile::IniFile.Id);
+        cImportFiles::CurrentIndex = cIniFile::IniFile.Id;
 
         const cRecord rec = *it;
 

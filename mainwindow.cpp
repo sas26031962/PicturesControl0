@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     progressBarProcess = new QProgressBar();
     progressBarProcess->setOrientation(Qt::Horizontal);
-    progressBarProcess->setRange(0, 100);
+    progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
     ui->statusBar->addWidget(progressBarProcess);
 
     labelExecStatus = new QLabel("ExecStatus");
@@ -257,8 +257,9 @@ void MainWindow::execActionImport()
     //cRecord::showList();
 
     //---Добавление идентификационной секции
-    cIniFile::IniFile.addInitalSection(cRecord::RecordList->count());
-    progressBarProcess->setRange(0, cRecord::RecordList->count());
+    cImportFiles::MaxIndexValue = cRecord::RecordList->count();
+    cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
+    //progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
 
     //---Добавление данных в файл конфигурации
     //cIniFile::IniFile.addRecordListData();
@@ -362,7 +363,8 @@ void MainWindow::execActionLoad()
     qDebug() << "length: " << iLength;
     qDebug() << "childGroupsList length: " << Groups.count();
     qDebug() << "----------------------------";
-    progressBarProcess->setRange(0, Groups.count());
+    cImportFiles::MaxIndexValue = Groups.count();
+    //progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
     cImportFiles::CurrentIndex = 0;
     QListIterator<QString> readIt(Groups);
@@ -461,11 +463,9 @@ bool MainWindow::loadHashTagListSubject()
 
 #ifdef HOME_STORAGE
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListSubjectPhotos.txt";// Прямой путь к файлу
-    //filePathSubject = ":/new/hash_tag/programm/data/HashTagListSubjectPhotos.txt";// Путь через ресурсы
     qDebug() << "HOME_STORAGE";
 #else
     filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Прямой путь к файлу
-    //filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Путь через ресурсы
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -499,11 +499,9 @@ bool MainWindow::loadHashTagListPlace()
 
 #ifdef HOME_STORAGE
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPlacesPhotos.txt";//Прямой путь к файлу
-    //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPlacesPhotos.txt";// Путь через ресурсы
     qDebug() << "HOME_STORAGE";
 #else
     filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";//Прямой путь к файлу
-    //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPlacesShips.txt";// Путь через ресурсы
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -536,11 +534,9 @@ bool MainWindow::loadHashTagListProperty()
 {
 
 #ifdef HOME_STORAGE
-    //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesPhotos.txt";// Путь через ресурсы
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0//programm/data/HashTagListPropertyesPhotos.txt";// Путь прямой
     qDebug() << "HOME_STORAGE";
 #else
-    //filePathSubject = ":/new/hash_tag/programm/data/HashTagListPropertyesShips.txt";// Путь через ресурсы
     filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPropertyesShips.txt";// Путь прямой
     qDebug() << "WORK_STORAGE";
 #endif
@@ -803,6 +799,7 @@ void MainWindow::execTimerUpdate()
         //execActionLoad();
     }
 
+    progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
     progressBarProcess->setValue(cImportFiles::CurrentIndex);
 
     if(cImportFiles::IslabelExecStatusTextChacnged)

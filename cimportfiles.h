@@ -7,10 +7,13 @@
 #include "crecord.h"
 #include "cinifile.h"
 
+#define MAX_INDEX_DEFAULT_VALUE 100
+
 class cImportFiles
 {
 //    bool IsError = false;
 public:
+    static int MaxIndexValue;
     static int CurrentIndex;
     static QString labelExecStatusText;
     static bool IslabelExecStatusTextChacnged;

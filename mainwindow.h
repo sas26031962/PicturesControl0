@@ -44,14 +44,6 @@ private:
 
     QTimer * timerUpdate;
     int iTimerUpdateCounter = 0;
-    //---
-    //int CurrentIndex = 0;
-    //QString labelExecStatusText = "";
-    //bool IslabelExecStatusTextChacnged = false;
-
-    //QString labelFileNameText = "";
-    //bool IslabelFileNameTextChanged = false;
-    //---
 
     QStringList Groups;
 
@@ -61,7 +53,6 @@ private:
 
     QStringList * qslHashTagList;
     QString rotatedImagePath = "./img/tmp/rotated_image.png";
-    //QString rotatedImagePath = ":/tmp_files/programm/img/tmp/rotated_image.png";
 
     //Методы
     void showCurrentIndexPicture();
