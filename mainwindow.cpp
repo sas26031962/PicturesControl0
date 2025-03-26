@@ -27,7 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonMemo, SIGNAL(pressed()), this, SLOT( execActionMemo()));
     connect(ui->spinBoxAngle, SIGNAL(valueChanged(int)), this, SLOT( execSpinBoxAngle(int)));
 
-    connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImport()));
+    connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImportInitial()));
+    connect(ui->actionImportFiles, SIGNAL(triggered()), this, SLOT( execActionImportFiles()));
+
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
     connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
@@ -230,7 +232,7 @@ void MainWindow::execActionSelectImageEnd()
 
 }
 
-void MainWindow::execActionImport()
+void MainWindow::execActionImportInitial()
 {
     //---
     QString s = "execActionImport()";
@@ -853,6 +855,17 @@ void MainWindow::execActionMemo()
 
         s = "Memo is emtpy, nothing to do!";
     }
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+void MainWindow::execActionImportFiles()
+{
+    QString s = "execActionImportFiles()";
+
+    if(cImportFiles::execImport()) s += ": Ok"; else s += ": Failure";
+
     //---
     emit execShowExecStatus(s);
     //---

@@ -80,7 +80,8 @@ private slots:
     void execActionSelectImageNext();
     void execActionSelectImagePrevious();
     void execActionSelectImageEnd();
-    void execActionImport();
+    void execActionImportInitial();
+    void execActionImportFiles();
     void execActionLoad();
     void execActionFormViewPicture();
     void execActionMemo();

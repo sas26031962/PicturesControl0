@@ -260,7 +260,7 @@
      <x>0</x>
      <y>0</y>
      <width>481</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -273,6 +273,7 @@
     <addaction name="actionRotateCW"/>
     <addaction name="actionRotateCCW"/>
     <addaction name="actionExit"/>
+    <addaction name="actionImportFiles"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">
     <property name="title">
@@ -338,7 +339,7 @@
   </action>
   <action name="actionImport">
    <property name="text">
-    <string>Import</string>
+    <string>ImportInitial</string>
    </property>
   </action>
   <action name="actionLoad">
@@ -385,6 +386,11 @@
   <action name="actionLoadHashTagListProperty">
    <property name="text">
     <string>Property</string>
+   </property>
+  </action>
+  <action name="actionImportFiles">
+   <property name="text">
+    <string>ImportFiles</string>
    </property>
   </action>
  </widget>
