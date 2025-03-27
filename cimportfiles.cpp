@@ -27,56 +27,17 @@ cImportFiles::cImportFiles()
  * Удалять файлы из каталога - источника запрещается!
  * Удалять секции из целевого ini файла запрещается!
  * Приведённая ниже функция производит добавление секций в целевой ini файл
+ * СОДЕРЖИМОЕ КОНФИГУРАЦИОННОГО ФАЙЛА ОБНОВЛЯЕТСЯ, НО НЕ ПЕРЕЗАПИСЫВАЕТСЯ
  *****************************************************************************/
-bool cImportFiles::execImport()
+void cImportFiles::execImport()
 {
-    bool IsError = false;
-
-    //-------------------------------------------------------------------------
-    // Получить текущее содержимое директория (операция безопасная)
-    //-------------------------------------------------------------------------
-    //---Создание рабочего списка
-    std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
-    cRecord::RecordList = ptrRecordList.get();
-
-    //---Очистка рабочего списка
-    cRecord::RecordList->clear();
-
-    //---Чтение содержимого каталога ---
-
-    if(cRecord::readDirectory(cIniFile::IniFile.getDirectoryPah()) > 0)
-    {
-        //qDebug() << "Directory not found: " << directoryPath;
-        IsError = true;
-        return IsError;
-    }
-
-    //---Отображение даных
-    //cRecord::showList();
-
-    //-------------------------------------------------------------------------
-    // Добавление данных в файл конфигурации (операция потенциально опасная)
-    //-------------------------------------------------------------------------
-    /*     ПЕРЕНЕСТИ В КОНЕЦ ПРОЦЕДУРЫ
-     *
     //---Добавление идентификационной секции
     cImportFiles::MaxIndexValue = cRecord::RecordList->count();
     cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
 
     //---Добавление данных в файл конфигурации
     //cIniFile::IniFile.addRecordListData();
-    */
-    //-- Перед началом процедуры импорта следует получить список имён групп
 
-    if(getGroupsList())
-    {
-        qDebug() << "File " << cIniFile::iniFilePath<< " not found, groups list is empty";
-    }
-    else
-    {
-        qDebug() << "Groups list length: " << cImportFiles::Groups.count();
-    }
-    //--- Главный цикл переборки файлов: начало
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
      {
         cIniFile::IniFile.Id++;//Счётчик записей
@@ -87,37 +48,34 @@ bool cImportFiles::execImport()
 
         QString name = rec.qsName;
         int iDotPosition = name.indexOf('.');
-        // Имя группы получается из имени файла путём отбрасывания точки и всего, что после неё
-        // На этом этапе необходимо проверять наличие такого имени группы в списке
         QString groupName = name.mid(0, iDotPosition);
-
-        if (!cImportFiles::Groups.contains(groupName))
-        {
-            //cImportFiles::Groups << groupName; // Добавляем в список, если еще не существует
-            qDebug() << "New section found: " << groupName;
-        }
-//        else
-//        {
-//            qDebug() << "Section already exist: " << groupName;
-//        }
 
         QString path = rec.qsPath;
         int iNamePosition = path.indexOf(name);
         QString PathWithoutName = path.mid(0, iNamePosition - 1);
 
-        /*
         int size = rec.iSize;
 
         int iExtensionPosition = path.indexOf('.');
         QString qsExtension = path.mid(iExtensionPosition + 1);
 
-        IsError = false;
+        bool IsError = false;
         int width = 0;
         int height = 0;
 
         if(qsExtension.toLower() == "mp4")
         {
             qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: mp4";
+            IsError = true;
+        }
+        else if(qsExtension.toLower() == "tif")
+        {
+            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: tif";
+            IsError = true;
+        }
+        else if(qsExtension.toLower() == "txt")
+        {
+            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: txt";
             IsError = true;
         }
         else
@@ -134,9 +92,7 @@ bool cImportFiles::execImport()
                 height = image.height();
             }
         }
-        */
-        /*
-            //Запись данных в файл (очень опасная операция)
+
             cIniFile::settings.beginGroup(groupName);
             cIniFile::settings.setValue("Id", cIniFile::IniFile.Id);
             cIniFile::settings.setValue("name", name);
@@ -152,13 +108,10 @@ bool cImportFiles::execImport()
                 cIniFile::settings.setValue("height", height);
             }
             cIniFile::settings.endGroup();
-        */
+
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
 
-    //--- Главный цикл переборки файлов: начало
-
-    return IsError;
-}
+}//End of bool cImportFiles::execImport()
 
 
 //-------------------------------------------------------------------------

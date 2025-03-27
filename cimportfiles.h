@@ -30,7 +30,7 @@ public:
 
     cImportFiles();
 
-    static bool execImport();
+    static void execImport();
     static bool getGroupsList();
 
 };

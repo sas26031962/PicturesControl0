@@ -195,7 +195,6 @@ public:
         menuFile->addAction(actionRemoveMovie);
         menuFile->addAction(actionRotateCW);
         menuFile->addAction(actionRotateCCW);
-        menuFile->addAction(actionImportFiles);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
         menuSelect_image->addAction(actionSelectImageNext);

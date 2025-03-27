@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBoxAngle, SIGNAL(valueChanged(int)), this, SLOT( execSpinBoxAngle(int)));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImportInitial()));
-    connect(ui->actionImportFiles, SIGNAL(triggered()), this, SLOT( execActionImportFiles()));
 
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
@@ -48,15 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //ViewPicture->setWindowFlags(Qt::SplashScreen);//no flags, immobil
 
     connect(this, SIGNAL(draw(QString)), fmViewPicture, SLOT( execDraw(QString)));
+    connect(fmViewPicture, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
 
     ui->actionViewPicture->setChecked(false);
-    //ViewPicture->show();
-
-    //this->setFocus();
-    //this->raise();
-    //this->activateWindow();
-    //this->show();
-
     //---Создание рабочего списка
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
     cRecord::RecordList = ptrRecordList.get();
@@ -112,6 +105,8 @@ MainWindow::~MainWindow()
 
     delete ui;
 }
+
+//=============================================================================
 
 void MainWindow::showCurrentIndexPicture()
 {
@@ -171,6 +166,8 @@ void MainWindow::showCurrentIndexPicture()
       qDebug() << "Store CurrentIndex:" << cImportFiles::CurrentIndex;
 }
 
+//=============================================================================
+
 void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
@@ -187,6 +184,8 @@ void MainWindow::execActionSelectImageBegin()
 
 }//End of void MainWindow::execActionSelectImageBegin()
 
+//=============================================================================
+
 void MainWindow::execActionSelectImageNext()
 {
     if(cImportFiles::CurrentIndex < Groups.count() - 1) cImportFiles::CurrentIndex++;
@@ -201,6 +200,8 @@ void MainWindow::execActionSelectImageNext()
     //---
 
 }
+
+//=============================================================================
 
 void MainWindow::execActionSelectImagePrevious()
 {
@@ -217,6 +218,8 @@ void MainWindow::execActionSelectImagePrevious()
 
 }
 
+//=============================================================================
+
 void MainWindow::execActionSelectImageEnd()
 {
     cImportFiles::CurrentIndex = Groups.count() - 1;
@@ -231,6 +234,8 @@ void MainWindow::execActionSelectImageEnd()
     //---
 
 }
+
+//=============================================================================
 
 void MainWindow::execActionImportInitial()
 {
@@ -255,87 +260,15 @@ void MainWindow::execActionImportInitial()
         return;
     }
 
-    //---Отображение даных
-    //cRecord::showList();
-
-    //---Добавление идентификационной секции
-    cImportFiles::MaxIndexValue = cRecord::RecordList->count();
-    cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
-    //progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
-
-    //---Добавление данных в файл конфигурации
-    //cIniFile::IniFile.addRecordListData();
-
-    for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
-     {
-        cIniFile::IniFile.Id++;//Счётчик записей
-
-        cImportFiles::CurrentIndex = cIniFile::IniFile.Id;
-
-        const cRecord rec = *it;
-
-        QString name = rec.qsName;
-        int iDotPosition = name.indexOf('.');
-        QString groupName = name.mid(0, iDotPosition);
-
-        QString path = rec.qsPath;
-        int iNamePosition = path.indexOf(name);
-        QString PathWithoutName = path.mid(0, iNamePosition - 1);
-
-        int size = rec.iSize;
-
-        int iExtensionPosition = path.indexOf('.');
-        QString qsExtension = path.mid(iExtensionPosition + 1);
-
-        bool IsError = false;
-        int width = 0;
-        int height = 0;
-
-        if(qsExtension.toLower() == "mp4")
-        {
-            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: mp4";
-            IsError = true;
-        }
-        else
-        {
-            //Фрагмент для обработки файлов изображений
-            QImage image(path);//name
-            if(image.isNull())
-            {
-                IsError = true;
-            }
-            else
-            {
-                width = image.width();
-                height = image.height();
-            }
-        }
-
-            cIniFile::settings.beginGroup(groupName);
-            cIniFile::settings.setValue("Id", cIniFile::IniFile.Id);
-            cIniFile::settings.setValue("name", name);
-            cIniFile::settings.setValue("path", PathWithoutName);
-            cIniFile::settings.setValue("size", size);
-            if(IsError)
-            {
-                cIniFile::settings.setValue("error", true);
-            }
-            else
-            {
-                cIniFile::settings.setValue("width", width);
-                cIniFile::settings.setValue("height", height);
-            }
-            cIniFile::settings.endGroup();
-
-    }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
-
-    //qDebug() << "==================Task is done!!!=========================";
+    cImportFiles::execImport();
 
     emit execShowExecStatus("File import complete!");
 
     execActionLoad();//Выполнить загрузку изображений
 
 }//End of void MainWindow::execActionImport()
+
+//=============================================================================
 
 void MainWindow::execActionLoad()
 {
@@ -417,6 +350,7 @@ void MainWindow::execActionLoad()
 
 }//End of void MainWindow::execActionLoad()
 
+//=============================================================================
 
 void MainWindow::execActionFormViewPicture()
 {
@@ -433,6 +367,8 @@ void MainWindow::execActionFormViewPicture()
     emit execShowExecStatus(s);
    //---
 }
+
+//=============================================================================
 
 void MainWindow::execListWidgetSuggestItemClicked()
 {
@@ -459,6 +395,8 @@ void MainWindow::execListWidgetSuggestItemClicked()
     emit execShowExecStatus(s);
     //---
 }
+
+//=============================================================================
 
 bool MainWindow::loadHashTagListSubject()
 {
@@ -496,6 +434,8 @@ bool MainWindow::loadHashTagListSubject()
     return true;
 }
 
+//=============================================================================
+
 bool MainWindow::loadHashTagListPlace()
 {
 
@@ -532,6 +472,8 @@ bool MainWindow::loadHashTagListPlace()
     return true;
 }
 
+//=============================================================================
+
 bool MainWindow::loadHashTagListProperty()
 {
 
@@ -548,6 +490,10 @@ bool MainWindow::loadHashTagListProperty()
     {
         qDebug() << "Error: Could not open file: " << filePathSubject;
         return false;
+    }
+    else
+    {
+        qDebug() << "File: " << filePathSubject << " is loaded!";
     }
 
     QTextStream in(&file);
@@ -568,6 +514,7 @@ bool MainWindow::loadHashTagListProperty()
     return true;
 }
 
+//=============================================================================
 
 void MainWindow::execActionLoadHashTagListSubject()
 {
@@ -590,6 +537,8 @@ void MainWindow::execActionLoadHashTagListSubject()
     //---
 
 }
+
+//=============================================================================
 
 void MainWindow::execActionLoadHashTagListPlace()
 {
@@ -614,6 +563,8 @@ void MainWindow::execActionLoadHashTagListPlace()
 
 }
 
+//=============================================================================
+
 void MainWindow::execActionLoadHashTagListProperty()
 {
     QString s = "ActionLoadHashTagListProperty()";
@@ -636,6 +587,8 @@ void MainWindow::execActionLoadHashTagListProperty()
     //---
 
 }
+
+//=============================================================================
 
 
 void MainWindow::execActionRemoveMovie()
@@ -693,6 +646,8 @@ void MainWindow::execActionRemoveMovie()
 
 }
 
+//=============================================================================
+
 void MainWindow::execActionRotateCW()
 {
     QString s = "ActionRotateCW()";
@@ -707,6 +662,8 @@ void MainWindow::execActionRotateCW()
 
 }
 
+//=============================================================================
+
 void MainWindow::execActionRotateCCW()
 {
     QString s = "ActionRotateCCW()";
@@ -720,6 +677,8 @@ void MainWindow::execActionRotateCCW()
     //===
 
 }
+
+//=============================================================================
 
 void MainWindow::execSpinBoxAngle(int angle)
 {
@@ -775,6 +734,8 @@ void MainWindow::execRotate(int angle)
 
 }
 
+//=============================================================================
+
 void MainWindow::execTimerUpdate()
 {
     //qDebug() << "CurrentIndex=" << CurrentIndex;
@@ -817,11 +778,16 @@ void MainWindow::execTimerUpdate()
     }
 
 }
+
+//=============================================================================
+
 void MainWindow::execShowExecStatus(QString s)
 {
     cImportFiles::labelExecStatusText = s;
     cImportFiles::IslabelExecStatusTextChacnged = true;
 }
+
+//=============================================================================
 
 void MainWindow::execActionMemo()
 {
@@ -860,13 +826,4 @@ void MainWindow::execActionMemo()
     //---
 }
 
-void MainWindow::execActionImportFiles()
-{
-    QString s = "execActionImportFiles()";
-
-    if(cImportFiles::execImport()) s += ": Ok"; else s += ": Failure";
-
-    //---
-    emit execShowExecStatus(s);
-    //---
-}
+//=============================================================================

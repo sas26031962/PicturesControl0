@@ -272,7 +272,6 @@
     <addaction name="actionRemoveMovie"/>
     <addaction name="actionRotateCW"/>
     <addaction name="actionRotateCCW"/>
-    <addaction name="actionImportFiles"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">

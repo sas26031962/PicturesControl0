@@ -29,6 +29,9 @@ private slots:
 
     void execDraw(QString s);
 
+signals:
+    void showExecStatus(QString s);
+
 };
 
 #endif // FMVIEW_H

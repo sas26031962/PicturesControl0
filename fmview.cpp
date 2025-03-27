@@ -30,10 +30,15 @@ void fmView::scaleImage(QString path)
 
     QImage originalImage(path);
 
+    QString status;
+
     if (originalImage.isNull())
     {
         ui->labelMain->setText(path);
         qDebug() << "Error: Could not load image: " << path;
+
+        status = "Error: Could not load image: " + path;
+        emit showExecStatus(status);
         return;
     }
 
@@ -46,5 +51,9 @@ void fmView::scaleImage(QString path)
     );
     // Сохранение масштабированного изображения
     scaledImage.save(scaledImagePath);
+
+    status = "Image scaling sucsess!";
+    emit showExecStatus(status);
+
 }
 
