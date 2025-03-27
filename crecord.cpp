@@ -43,6 +43,7 @@ int cRecord::readDirectory(QString directoryPath)
         return result;
     }
 
+    qDebug() << ">>>readDirectory from " << directoryPath << " begin";
     // Фильтры для выбора нужных файлов и каталогов.
     QDir::Filters filters = QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot;
     directory.setFilter(filters);
@@ -84,6 +85,7 @@ int cRecord::readDirectory(QString directoryPath)
             cRecord::RecordList->append(Record);
         }
     }
+    qDebug() << ">>>readDirectory from " << directoryPath << " complete";
 
     return result;
 }

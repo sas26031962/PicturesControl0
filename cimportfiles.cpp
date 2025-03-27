@@ -57,7 +57,7 @@ bool cImportFiles::execImport()
     //-------------------------------------------------------------------------
     // Добавление данных в файл конфигурации (операция потенциально опасная)
     //-------------------------------------------------------------------------
-    /*     ПЕРЕНЕСТИ В КОНЕЦ ПРОДЕДУРЫ
+    /*     ПЕРЕНЕСТИ В КОНЕЦ ПРОЦЕДУРЫ
      *
     //---Добавление идентификационной секции
     cImportFiles::MaxIndexValue = cRecord::RecordList->count();
@@ -91,9 +91,20 @@ bool cImportFiles::execImport()
         // На этом этапе необходимо проверять наличие такого имени группы в списке
         QString groupName = name.mid(0, iDotPosition);
 
+        if (!cImportFiles::Groups.contains(groupName))
+        {
+            //cImportFiles::Groups << groupName; // Добавляем в список, если еще не существует
+            qDebug() << "New section found: " << groupName;
+        }
+//        else
+//        {
+//            qDebug() << "Section already exist: " << groupName;
+//        }
+
         QString path = rec.qsPath;
         int iNamePosition = path.indexOf(name);
         QString PathWithoutName = path.mid(0, iNamePosition - 1);
+
         /*
         int size = rec.iSize;
 
@@ -165,6 +176,7 @@ bool cImportFiles::getGroupsList()
         return IsError; // Возвращаем флаг ошибки
     }
 
+    qDebug() << "###getGroupsList from " << cIniFile::iniFilePath << " begin";
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed(); // Читаем строку и убираем пробелы в начале и конце
@@ -175,10 +187,16 @@ bool cImportFiles::getGroupsList()
             {
                 cImportFiles::Groups << groupName; // Добавляем в список, если еще не существует
             }
+            else
+            {
+                qDebug() << "Section already exist: " << groupName;
+            }
         }
     }
 
     file.close();
+
+    qDebug() << "###getGroupsList from " << cIniFile::iniFilePath << " complete";
 
     return IsError;//Возвращаем флаг ошибки
 

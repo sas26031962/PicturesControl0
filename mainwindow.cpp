@@ -797,8 +797,8 @@ void MainWindow::execTimerUpdate()
         fmViewPicture->show();
         ui->actionViewPicture->setChecked(true);
 
-        qDebug() << "CurrentIndex=" << cImportFiles::CurrentIndex << " Action: Load";
-        //execActionLoad();
+        qDebug() << "CurrentIndex=" << cImportFiles::CurrentIndex;// << " Action: Load";
+        execActionLoad();
     }
 
     progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
