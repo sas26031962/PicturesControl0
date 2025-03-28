@@ -23,15 +23,19 @@ class Ui_fmView
 {
 public:
     QLabel *labelMain;
+    QLabel *label;
 
     void setupUi(QDialog *fmView)
     {
         if (fmView->objectName().isEmpty())
             fmView->setObjectName(QStringLiteral("fmView"));
-        fmView->resize(830, 543);
+        fmView->resize(830, 575);
         labelMain = new QLabel(fmView);
         labelMain->setObjectName(QStringLiteral("labelMain"));
         labelMain->setGeometry(QRect(5, 5, 821, 531));
+        label = new QLabel(fmView);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(10, 550, 811, 16));
 
         retranslateUi(fmView);
 
@@ -42,6 +46,7 @@ public:
     {
         fmView->setWindowTitle(QApplication::translate("fmView", "ViewPicture", 0));
         labelMain->setText(QString());
+        label->setText(QApplication::translate("fmView", "TextLabel", 0));
     } // retranslateUi
 
 };

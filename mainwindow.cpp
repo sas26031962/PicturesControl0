@@ -726,9 +726,9 @@ void MainWindow::execRotate(int angle)
 
     painter.end();
 
-    rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
+    rotatedImage.save(cIniFile::rotatedImagePath); // Сохраняем повернутое изображение
 
-    emit draw(rotatedImagePath);//Отображаем повёрнутое изображение на форме
+    emit draw(cIniFile::rotatedImagePath);//Отображаем повёрнутое изображение на форме
 
     qDebug() << "Image rotated successfully";
 

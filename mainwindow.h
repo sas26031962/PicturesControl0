@@ -52,7 +52,7 @@ private:
     int iAngle = 90;
 
     QStringList * qslHashTagList;
-    QString rotatedImagePath = "./img/tmp/rotated_image.png";
+    //QString rotatedImagePath = "./img/tmp/rotated_image.png";
 
     //Методы
     void showCurrentIndexPicture();

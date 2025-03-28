@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 class cIniFile
 {
@@ -25,6 +25,8 @@ private:
 public:
     //Атрибуты
     static QString iniFilePath;
+    static QString rotatedImagePath;
+    static QString scaledImagePath;
     static QSettings settings;
     static cIniFile IniFile;
 

@@ -6,6 +6,9 @@ fmView::fmView(QWidget *parent) :
     ui(new Ui::fmView)
 {
     ui->setupUi(this);
+
+    connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
+
 }
 
 fmView::~fmView()
@@ -18,7 +21,7 @@ void fmView::execDraw(QString s)
     //ui->labelMain->setText(s);
     //Вывод картинки на форму
     scaleImage(s);
-    QPixmap pmMain(scaledImagePath);//
+    QPixmap pmMain(cIniFile::scaledImagePath);//
     //QPixmap pmMain(s);//
     ui->labelMain->setPixmap(pmMain);
 }
@@ -50,10 +53,14 @@ void fmView::scaleImage(QString path)
         Qt::SmoothTransformation // Использовать сглаживание
     );
     // Сохранение масштабированного изображения
-    scaledImage.save(scaledImagePath);
+    scaledImage.save(cIniFile::scaledImagePath);
 
     status = "Image scaling sucsess!";
     emit showExecStatus(status);
 
 }
 
+void fmView::execShowExecStatus(QString s)
+{
+    ui->label->setText(s);
+}

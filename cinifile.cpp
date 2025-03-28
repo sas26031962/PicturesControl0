@@ -7,8 +7,12 @@
 // Путь к INI-файлу
 #ifdef HOME_STORAGE
     QString cIniFile::iniFilePath = "/home/andy/MyQtProjects/PicturesControl0/programm/data/FilesConfigPhotos.ini";
+    QString cIniFile::rotatedImagePath = "/home/andy/MyQtProjects/PicturesControl0/programm/img/tmp/rotated_image.png";
+    QString cIniFile::scaledImagePath = "/home/andy/MyQtProjects/PicturesControl0/programm/img/tmp/scaled_image.png";
 #else
     QString cIniFile::iniFilePath = "C:/WORK/PicturesControl0/programm/data/FilesConfigShips.ini";
+    QString cIniFile::rotatedImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/rotated_image.png";
+    QString cIniFile::scaledImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/scaled_image.png";
 #endif
 
 QList<cRecord> * cRecord::RecordList;
