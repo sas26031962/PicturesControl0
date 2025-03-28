@@ -48,6 +48,11 @@ public:
     QAction *actionRotateCCW;
     QAction *actionLoadHashTagListProperty;
     QAction *actionImportFiles;
+    QAction *actionRotateCW_2;
+    QAction *actionRotateCCW_2;
+    QAction *actionRemoveText;
+    QAction *actionRemoveTif;
+    QAction *actionGetGroupsList;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -111,6 +116,16 @@ public:
         actionLoadHashTagListProperty->setObjectName(QStringLiteral("actionLoadHashTagListProperty"));
         actionImportFiles = new QAction(MainWindow);
         actionImportFiles->setObjectName(QStringLiteral("actionImportFiles"));
+        actionRotateCW_2 = new QAction(MainWindow);
+        actionRotateCW_2->setObjectName(QStringLiteral("actionRotateCW_2"));
+        actionRotateCCW_2 = new QAction(MainWindow);
+        actionRotateCCW_2->setObjectName(QStringLiteral("actionRotateCCW_2"));
+        actionRemoveText = new QAction(MainWindow);
+        actionRemoveText->setObjectName(QStringLiteral("actionRemoveText"));
+        actionRemoveTif = new QAction(MainWindow);
+        actionRemoveTif->setObjectName(QStringLiteral("actionRemoveTif"));
+        actionGetGroupsList = new QAction(MainWindow);
+        actionGetGroupsList->setObjectName(QStringLiteral("actionGetGroupsList"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -193,13 +208,16 @@ public:
         menuFile->addAction(actionImport);
         menuFile->addAction(actionLoad);
         menuFile->addAction(actionRemoveMovie);
-        menuFile->addAction(actionRotateCW);
-        menuFile->addAction(actionRotateCCW);
+        menuFile->addAction(actionRemoveText);
+        menuFile->addAction(actionRemoveTif);
+        menuFile->addAction(actionGetGroupsList);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
         menuSelect_image->addAction(actionSelectImageNext);
         menuSelect_image->addAction(actionSelectImagePrevious);
         menuSelect_image->addAction(actionSelectImageEnd);
+        menuSelect_image->addAction(actionRotateCW_2);
+        menuSelect_image->addAction(actionRotateCCW_2);
         menuForms->addAction(actionViewPicture);
         menuTags->addAction(actionLoaadHashTagListSubject);
         menuTags->addAction(actionLoadHashTagListPlace);
@@ -219,7 +237,7 @@ public:
         actionSelectImageNext->setText(QApplication::translate("MainWindow", "Next", 0));
         actionSelectImagePrevious->setText(QApplication::translate("MainWindow", "Previous", 0));
         actionSelectImageEnd->setText(QApplication::translate("MainWindow", "End", 0));
-        actionImport->setText(QApplication::translate("MainWindow", "ImportInitial", 0));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
         actionLoad->setText(QApplication::translate("MainWindow", "Load", 0));
         actionViewPicture->setText(QApplication::translate("MainWindow", "ViewPicture", 0));
         actionLoaadHashTagListSubject->setText(QApplication::translate("MainWindow", "Subject", 0));
@@ -229,6 +247,11 @@ public:
         actionRotateCCW->setText(QApplication::translate("MainWindow", "RotateCCW", 0));
         actionLoadHashTagListProperty->setText(QApplication::translate("MainWindow", "Property", 0));
         actionImportFiles->setText(QApplication::translate("MainWindow", "ImportFiles", 0));
+        actionRotateCW_2->setText(QApplication::translate("MainWindow", "RotateCW", 0));
+        actionRotateCCW_2->setText(QApplication::translate("MainWindow", "RotateCCW", 0));
+        actionRemoveText->setText(QApplication::translate("MainWindow", "RemoveText", 0));
+        actionRemoveTif->setText(QApplication::translate("MainWindow", "RemoveTif", 0));
+        actionGetGroupsList->setText(QApplication::translate("MainWindow", "GetGroupsList", 0));
         groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
 #ifndef QT_NO_TOOLTIP
         pushButtonBegin->setToolTip(QString());

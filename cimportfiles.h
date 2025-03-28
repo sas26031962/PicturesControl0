@@ -22,7 +22,7 @@ public:
     static int CurrentIndex;
     static QString labelExecStatusText;
     static bool IslabelExecStatusTextChacnged;
-    static QStringList Groups;
+    static QStringList * Groups;
 
 
     static QString labelFileNameText;

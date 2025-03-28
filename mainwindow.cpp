@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    cImportFiles::Groups = new QStringList();
+
     ui->setupUi(this);
 
 
@@ -13,7 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
     connect(ui->actionSelectImageEnd, SIGNAL(triggered()), this, SLOT( execActionSelectImageEnd()));
+
     connect(ui->actionRemoveMovie, SIGNAL(triggered()), this, SLOT( execActionRemoveMovie()));
+    connect(ui->actionRemoveText, SIGNAL(triggered()), this, SLOT( execActionRemoveText()));
+    connect(ui->actionRemoveTif, SIGNAL(triggered()), this, SLOT( execActionRemoveTif()));
+
+    connect(ui->actionRotateCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCW()));
+    connect(ui->actionRotateCCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCCW()));
     connect(ui->actionRotateCW, SIGNAL(triggered()), this, SLOT( execActionRotateCW()));
     connect(ui->actionRotateCCW, SIGNAL(triggered()), this, SLOT( execActionRotateCCW()));
 
@@ -28,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBoxAngle, SIGNAL(valueChanged(int)), this, SLOT( execSpinBoxAngle(int)));
 
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImportInitial()));
+
+    connect(ui->actionGetGroupsList, SIGNAL(triggered()), this, SLOT( execActionGetGroupsList()));
 
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
@@ -102,6 +112,8 @@ MainWindow::~MainWindow()
     delete fmViewPicture;
 
     delete qslHashTagList;
+
+    if(cImportFiles::Groups != nullptr) delete cImportFiles::Groups;
 
     delete ui;
 }
@@ -264,7 +276,7 @@ void MainWindow::execActionImportInitial()
 
     emit execShowExecStatus("File import complete!");
 
-    execActionLoad();//Выполнить загрузку изображений
+    //execActionLoad();//Выполнить загрузку изображений
 
 }//End of void MainWindow::execActionImport()
 
@@ -589,7 +601,120 @@ void MainWindow::execActionLoadHashTagListProperty()
 }
 
 //=============================================================================
+void MainWindow::execActionRemoveText()
+{
+    QString s = "ActionRemoveText()";
+    //===
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
+    QStringList GroupsLocal = settings.childGroups();
+
+    // Выводим значения
+    qDebug() << "childGroupsList length: " << GroupsLocal.count();
+    qDebug() << "----------------------------";
+    //---
+
+    int iCount = 0;
+
+    QListIterator<QString> readIt(GroupsLocal);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+
+        settings.beginGroup(qsSection);
+        QList<QString> keys = settings.childKeys();
+        int iKeysCount = keys.count();
+
+        QString qsName = settings.value("name", "noName").toString();
+
+        if(qsName.toLower().indexOf(".txt") >= 0)
+        {
+            iCount++;
+            qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+            // Перебор всей ключей в секции
+            QListIterator<QString> readKeyIt(keys);
+            while (readKeyIt.hasNext())
+            {
+                QString qsKey = readKeyIt.next();
+                qDebug() << qsKey;
+                settings.remove(qsKey);
+            }
+            qDebug() << "All keys in section " << qsSection << " removed!";
+        }
+
+        settings.endGroup();
+    }
+    if(iCount > 0)
+        qDebug() << "Extension 'txt' detected in " << iCount << " files";
+    else
+        qDebug() << "No 'txt' in file names detected, Ok!";
+
+    //===
+    emit execShowExecStatus(s);
+   //===
+
+}
+
+//=============================================================================
+
+void MainWindow::execActionRemoveTif()
+{
+
+    QString s = "ActionRemoveTif()";
+    //===
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    QStringList GroupsLocal = settings.childGroups();
+
+    // Выводим значения
+    qDebug() << "childGroupsList length: " << GroupsLocal.count();
+    qDebug() << "----------------------------";
+    //---
+
+    int iCount = 0;
+
+    QListIterator<QString> readIt(GroupsLocal);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+
+        settings.beginGroup(qsSection);
+        QList<QString> keys = settings.childKeys();
+        int iKeysCount = keys.count();
+
+        QString qsName = settings.value("name", "noName").toString();
+
+        if(qsName.toLower().indexOf(".tif") >= 0)
+        {
+            iCount++;
+            qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+            // Перебор всей ключей в секции
+            QListIterator<QString> readKeyIt(keys);
+            while (readKeyIt.hasNext())
+            {
+                QString qsKey = readKeyIt.next();
+                qDebug() << qsKey;
+                settings.remove(qsKey);
+            }
+            qDebug() << "All keys in section " << qsSection << " removed!";
+        }
+
+        settings.endGroup();
+    }
+    if(iCount > 0)
+        qDebug() << "Extension 'tif' detected in " << iCount << " files";
+    else
+        qDebug() << "No 'tif' in file names detected, Ok!";
+
+    //===
+    emit execShowExecStatus(s);
+   //===
+
+}
+
+//=============================================================================
 
 void MainWindow::execActionRemoveMovie()
 {
@@ -785,6 +910,31 @@ void MainWindow::execShowExecStatus(QString s)
 {
     cImportFiles::labelExecStatusText = s;
     cImportFiles::IslabelExecStatusTextChacnged = true;
+}
+
+//=============================================================================
+
+void MainWindow::execActionGetGroupsList()
+{
+    QString s = "execActionGetGroupsList()";
+
+    bool x = cImportFiles::getGroupsList();
+    if(x)
+    {
+        s += ": error detected!";
+    }
+    else
+    {
+        s += ": sucsess!";
+
+        ui->listWidgetSuggest->clear();
+        //ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetSuggest->addItems(*cImportFiles::Groups);
+    }
+
+    //---
+    emit execShowExecStatus(s);
+    //---
 }
 
 //=============================================================================

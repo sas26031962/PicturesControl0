@@ -92,6 +92,11 @@ private slots:
     void execActionLoadHashTagListProperty();
 
     void execActionRemoveMovie();
+    void execActionRemoveText();
+    void execActionRemoveTif();
+
+    void execActionGetGroupsList();
+
     void execActionRotateCW();
     void execActionRotateCCW();
     void execSpinBoxAngle(int angle);

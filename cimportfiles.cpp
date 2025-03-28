@@ -2,7 +2,7 @@
 
 int cImportFiles::CurrentIndex = 0;
 int cImportFiles::MaxIndexValue = MAX_INDEX_DEFAULT_VALUE;
-QStringList cImportFiles::Groups;
+QStringList * cImportFiles::Groups = nullptr;
 
 QString cImportFiles::labelExecStatusText = "";
 bool cImportFiles::IslabelExecStatusTextChacnged = false;
@@ -28,6 +28,7 @@ cImportFiles::cImportFiles()
  * Удалять секции из целевого ini файла запрещается!
  * Приведённая ниже функция производит добавление секций в целевой ini файл
  * СОДЕРЖИМОЕ КОНФИГУРАЦИОННОГО ФАЙЛА ОБНОВЛЯЕТСЯ, НО НЕ ПЕРЕЗАПИСЫВАЕТСЯ
+ * Файлы с расширениями "mp4", "tif", "txt" в конфигурационный файл не добавляются
  *****************************************************************************/
 void cImportFiles::execImport()
 {
@@ -120,7 +121,7 @@ void cImportFiles::execImport()
 bool cImportFiles::getGroupsList()
 {
     bool IsError = false;
-    cImportFiles::Groups.clear();
+    cImportFiles::Groups->clear();
     QFile file(cIniFile::iniFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -136,9 +137,19 @@ bool cImportFiles::getGroupsList()
         if (line.startsWith("[") && line.endsWith("]"))
         {
             QString groupName = line.mid(1, line.length() - 2); // Извлекаем имя секции
-            if (!cImportFiles::Groups.contains(groupName))
+            if (!cImportFiles::Groups->contains(groupName))
             {
-                cImportFiles::Groups << groupName; // Добавляем в список, если еще не существует
+                //Чтение списка ключей
+                cIniFile::settings.beginGroup(groupName);
+                QList<QString> keys = cIniFile::settings.childKeys();
+                int iKeysCount = keys.count();
+                cIniFile::settings.endGroup();
+                //Формирование сообщения
+                QString s = groupName;
+                s += ": ";
+                s += QString::number(iKeysCount);
+                //Вывод сообщения в список
+                cImportFiles::Groups->append(s); // Добавляем в список, если еще не существует
             }
             else
             {

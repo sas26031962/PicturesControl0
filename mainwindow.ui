@@ -270,8 +270,9 @@
     <addaction name="actionImport"/>
     <addaction name="actionLoad"/>
     <addaction name="actionRemoveMovie"/>
-    <addaction name="actionRotateCW"/>
-    <addaction name="actionRotateCCW"/>
+    <addaction name="actionRemoveText"/>
+    <addaction name="actionRemoveTif"/>
+    <addaction name="actionGetGroupsList"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">
@@ -282,6 +283,8 @@
     <addaction name="actionSelectImageNext"/>
     <addaction name="actionSelectImagePrevious"/>
     <addaction name="actionSelectImageEnd"/>
+    <addaction name="actionRotateCW_2"/>
+    <addaction name="actionRotateCCW_2"/>
    </widget>
    <widget class="QMenu" name="menuForms">
     <property name="title">
@@ -338,7 +341,7 @@
   </action>
   <action name="actionImport">
    <property name="text">
-    <string>ImportInitial</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="actionLoad">
@@ -390,6 +393,31 @@
   <action name="actionImportFiles">
    <property name="text">
     <string>ImportFiles</string>
+   </property>
+  </action>
+  <action name="actionRotateCW_2">
+   <property name="text">
+    <string>RotateCW</string>
+   </property>
+  </action>
+  <action name="actionRotateCCW_2">
+   <property name="text">
+    <string>RotateCCW</string>
+   </property>
+  </action>
+  <action name="actionRemoveText">
+   <property name="text">
+    <string>RemoveText</string>
+   </property>
+  </action>
+  <action name="actionRemoveTif">
+   <property name="text">
+    <string>RemoveTif</string>
+   </property>
+  </action>
+  <action name="actionGetGroupsList">
+   <property name="text">
+    <string>GetGroupsList</string>
    </property>
   </action>
  </widget>

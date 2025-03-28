@@ -48,7 +48,10 @@ void cIniFile::addInitalSection(int n)
     cIniFile::settings.setValue("index", 0);
     cIniFile::settings.endGroup();
 }
-
+/******************************************************************************
+ * Функция добавления данных из списка QList<cRecord> в конфигурационный файл
+ *
+ *****************************************************************************/
 void cIniFile::addRecordListData()
 {
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
@@ -65,7 +68,7 @@ void cIniFile::addRecordListData()
         int iNamePosition = path.indexOf(name);
         QString PathWithoutName = path.mid(0, iNamePosition - 1);
 
-        int size = rec.iSize;
+        int size = rec.iSize ;
 
         int iExtensionPosition = path.indexOf('.');
         QString qsExtension = path.mid(iExtensionPosition + 1);
