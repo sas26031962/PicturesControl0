@@ -7,6 +7,7 @@ My_Electronix
 My_Photo_Archive
 My_Hobby
 My_Avito
+My_bicycle
 Maps
 IsRotated
 Document
