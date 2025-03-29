@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
+#include <atomic>
 
 #include "crecord.h"
 #include "cinifile.h"

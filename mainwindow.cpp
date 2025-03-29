@@ -1,6 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//-----------------------------------------------------------------------------
+//Глобальные переменные
+//-----------------------------------------------------------------------------
+
+std::atomic<int> iCurrentIndexGlobal(0); //Индекс для отображения
+
+
+//-----------------------------------------------------------------------------
+//Реализации элементов класса
+//-----------------------------------------------------------------------------
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -43,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
     connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
     connect(ui->actionLoadHashTagListProperty, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListProperty()));
+    connect(ui->actionLoadHashTagListTheame, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListTheame()));
 
     connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
 
@@ -485,6 +497,46 @@ bool MainWindow::loadHashTagListPlace()
 }
 
 //=============================================================================
+bool MainWindow::loadHashTagListTheame()
+{
+
+#ifdef HOME_STORAGE
+    filePathSubject = "/home/andy/MyQtProjects/PicturesControl0//programm/data/HashTagListTheamsPhotos.txt";// Путь прямой
+    qDebug() << "HOME_STORAGE";
+#else
+    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListTheamsShips.txt";// Путь прямой
+    qDebug() << "WORK_STORAGE";
+#endif
+
+    QFile file(filePathSubject);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: Could not open file: " << filePathSubject;
+        return false;
+    }
+    else
+    {
+        qDebug() << "File: " << filePathSubject << " is loaded!";
+    }
+
+    QTextStream in(&file);
+#ifndef HOME_STORAGE
+    in.setCodec("Windows-1251");
+#endif
+
+    qslHashTagList->clear();
+
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        qslHashTagList->append(line);
+    }
+
+    file.close();
+    qDebug() << "Load " << qslHashTagList->count() << " strings";
+    return true;
+
+}
 
 bool MainWindow::loadHashTagListProperty()
 {
@@ -593,6 +645,32 @@ void MainWindow::execActionLoadHashTagListProperty()
     {
         ui->listWidgetSuggest->clear();
         qDebug() << s << ": loadHashTagListPrperty is broken!!!";
+    }
+    //---
+    emit execShowExecStatus(s);
+    //---
+
+}
+
+//=============================================================================
+
+void MainWindow::execActionLoadHashTagListTheame()
+{
+
+    QString s = "ActionLoadHashTagListTheame()";
+
+    if(loadHashTagListTheame())
+    {
+        qDebug() << s << ": loadHashTagListTheame is sucsess";
+        ui->listWidgetSuggest->clear();
+        ui->listWidgetSuggest->addItems(*qslHashTagList);
+
+//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+    }
+    else
+    {
+        ui->listWidgetSuggest->clear();
+        qDebug() << s << ": loadHashTagListTheame is broken!!!";
     }
     //---
     emit execShowExecStatus(s);

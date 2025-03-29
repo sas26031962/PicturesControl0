@@ -260,7 +260,7 @@
      <x>0</x>
      <y>0</y>
      <width>481</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -299,6 +299,7 @@
     <addaction name="actionLoaadHashTagListSubject"/>
     <addaction name="actionLoadHashTagListPlace"/>
     <addaction name="actionLoadHashTagListProperty"/>
+    <addaction name="actionLoadHashTagListTheame"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
@@ -418,6 +419,11 @@
   <action name="actionGetGroupsList">
    <property name="text">
     <string>GetGroupsList</string>
+   </property>
+  </action>
+  <action name="actionLoadHashTagListTheame">
+   <property name="text">
+    <string>Theame</string>
    </property>
   </action>
  </widget>

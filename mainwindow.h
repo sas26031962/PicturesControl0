@@ -17,6 +17,7 @@
 #include <QImage>
 #include <QTransform>
 #include <QTimer>
+#include <atomic>
 
 #include "cinifile.h"
 #include "fmview.h"
@@ -59,6 +60,7 @@ private:
     bool loadHashTagListSubject();
     bool loadHashTagListPlace();
     bool loadHashTagListProperty();
+    bool loadHashTagListTheame();
     void execRotate(int angle);
 
 public:
@@ -90,6 +92,7 @@ private slots:
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
     void execActionLoadHashTagListProperty();
+    void execActionLoadHashTagListTheame();
 
     void execActionRemoveMovie();
     void execActionRemoveText();
