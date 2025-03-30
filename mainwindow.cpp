@@ -589,7 +589,6 @@ void MainWindow::execActionLoadHashTagListSubject()
         ui->listWidgetSuggest->clear();
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
-//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
     }
     else
     {
@@ -614,7 +613,6 @@ void MainWindow::execActionLoadHashTagListPlace()
         ui->listWidgetSuggest->clear();
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
-//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
     }
     else
     {
@@ -639,7 +637,6 @@ void MainWindow::execActionLoadHashTagListProperty()
         ui->listWidgetSuggest->clear();
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
-//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
     }
     else
     {
@@ -665,7 +662,6 @@ void MainWindow::execActionLoadHashTagListTheame()
         ui->listWidgetSuggest->clear();
         ui->listWidgetSuggest->addItems(*qslHashTagList);
 
-//        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
     }
     else
     {
