@@ -15,12 +15,19 @@
 
 #define MAX_INDEX_DEFAULT_VALUE 100
 
+
+//-----------------------------------------------------------------------------
+//Глобальные переменные
+//-----------------------------------------------------------------------------
+
+extern std::atomic<int> iCurrentIndexGlobal;
+
 class cImportFiles
 {
 
 public:
     static int MaxIndexValue;
-    static int CurrentIndex;
+//    static int CurrentIndex;
     static QString labelExecStatusText;
     static bool IslabelExecStatusTextChacnged;
     static QStringList * Groups;

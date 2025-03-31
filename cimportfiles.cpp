@@ -1,6 +1,7 @@
 #include "cimportfiles.h"
 
-int cImportFiles::CurrentIndex = 0;
+//int cImportFiles::CurrentIndex = 0;
+
 int cImportFiles::MaxIndexValue = MAX_INDEX_DEFAULT_VALUE;
 QStringList * cImportFiles::Groups = nullptr;
 
@@ -36,14 +37,13 @@ void cImportFiles::execImport()
     cImportFiles::MaxIndexValue = cRecord::RecordList->count();
     cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
 
-    //---Добавление данных в файл конфигурации
-    //cIniFile::IniFile.addRecordListData();
+    iCurrentIndexGlobal = 0;
+    cIniFile::Id = 0;
 
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
      {
-        cIniFile::IniFile.Id++;//Счётчик записей
-
-        cImportFiles::CurrentIndex = cIniFile::IniFile.Id;
+        iCurrentIndexGlobal.fetch_add(1);
+        cIniFile::Id = iCurrentIndexGlobal;//Счётчик записей
 
         const cRecord rec = *it;
 
@@ -66,17 +66,17 @@ void cImportFiles::execImport()
 
         if(qsExtension.toLower() == "mp4")
         {
-            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: mp4";
+            qDebug() << "Id=" << cIniFile::Id << "Extension: mp4";
             IsError = true;
         }
         else if(qsExtension.toLower() == "tif")
         {
-            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: tif";
+            qDebug() << "Id=" << cIniFile::Id << "Extension: tif";
             IsError = true;
         }
         else if(qsExtension.toLower() == "txt")
         {
-            qDebug() << "Id=" << cIniFile::IniFile.Id << "Extension: txt";
+            qDebug() << "Id=" << cIniFile::Id << "Extension: txt";
             IsError = true;
         }
         else
@@ -95,7 +95,7 @@ void cImportFiles::execImport()
         }
 
             cIniFile::settings.beginGroup(groupName);
-            cIniFile::settings.setValue("Id", cIniFile::IniFile.Id);
+            cIniFile::settings.setValue("Id", cIniFile::Id);
             cIniFile::settings.setValue("name", name);
             cIniFile::settings.setValue("path", PathWithoutName);
             cIniFile::settings.setValue("size", size);

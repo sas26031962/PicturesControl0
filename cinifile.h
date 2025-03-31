@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 class cIniFile
 {
@@ -29,9 +29,9 @@ public:
     static QString scaledImagePath;
     static QSettings settings;
     static cIniFile IniFile;
+    static int Id;                 //Идентификатор - счётчик записей
 
     int iRecordListLength = 0;  //Полное число записей
-    int Id = 0;                 //Идентификатор - счётчик записей
 
     //Конструктор
     cIniFile(QString sourcePath);
