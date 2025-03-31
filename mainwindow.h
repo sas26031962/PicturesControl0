@@ -42,6 +42,7 @@ private:
     QLabel * labelExecStatus;
     QLabel * labelFileName;
     QProgressBar * progressBarProcess;
+    QLabel * labelRotator;
 
     QTimer * timerUpdate;
     int iTimerUpdateCounter = 0;

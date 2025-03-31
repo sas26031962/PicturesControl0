@@ -80,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timerUpdate, SIGNAL(timeout()), this, SLOT( execTimerUpdate()));
     timerUpdate->start(100);
 
+    labelRotator = new QLabel("|");
+    ui->statusBar->addWidget(labelRotator);
+
     progressBarProcess = new QProgressBar();
     progressBarProcess->setOrientation(Qt::Horizontal);
     progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
@@ -120,6 +123,7 @@ MainWindow::~MainWindow()
     delete progressBarProcess;
     delete labelExecStatus;
     delete labelFileName;
+    delete labelRotator;
 
     delete fmViewPicture;
 
@@ -136,7 +140,7 @@ void MainWindow::showCurrentIndexPicture()
 {
 
     // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(iCurrentIndexGlobal);
+    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     cIniFile::settings.beginGroup(qsGroupName);
 
     QString qsPath, qsName, qsError;
@@ -183,12 +187,12 @@ void MainWindow::showCurrentIndexPicture()
       cImportFiles::IslabelFileNameTextChanged = true;
 
       //Сохранение текущего индекса
-      int x = iCurrentIndexGlobal;
+      int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
       cIniFile::settings.beginGroup("RecordList");
       cIniFile::settings.setValue("index", x);
       cIniFile::settings.endGroup();
 
-      qDebug() << "Store CurrentIndex:" << iCurrentIndexGlobal;
+      qDebug() << "Store CurrentIndex:" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
 }
 
 //=============================================================================
@@ -196,14 +200,14 @@ void MainWindow::showCurrentIndexPicture()
 void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
-    iCurrentIndexGlobal = 0;
+    iCurrentIndexGlobal.store(0);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
-    s += QString::number(iCurrentIndexGlobal);
+    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     emit execShowExecStatus(s);
     //---
 
@@ -213,9 +217,9 @@ void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
-    if(iCurrentIndexGlobal < Groups.count() - 1)
+    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < Groups.count() - 1)
     {
-        iCurrentIndexGlobal.fetch_add(1);
+        iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
     }
 
     // Отобразить картинку
@@ -223,7 +227,7 @@ void MainWindow::execActionSelectImageNext()
 
     //---
     QString s = "execActionSelectImageNext(), goto index:";
-    s += QString::number(iCurrentIndexGlobal);
+    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     emit execShowExecStatus(s);
     //---
 
@@ -233,9 +237,9 @@ void MainWindow::execActionSelectImageNext()
 
 void MainWindow::execActionSelectImagePrevious()
 {
-    if(iCurrentIndexGlobal > 0)
+    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) > 0)
     {
-        iCurrentIndexGlobal.fetch_sub(1);
+        iCurrentIndexGlobal.fetch_sub(1, std::memory_order_relaxed);
     }
 
     // Отобразить картинку
@@ -243,7 +247,7 @@ void MainWindow::execActionSelectImagePrevious()
 
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
-    s += QString::number(iCurrentIndexGlobal);
+    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     emit execShowExecStatus(s);
     //---
 
@@ -253,14 +257,14 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    iCurrentIndexGlobal = Groups.count() - 1;
+    iCurrentIndexGlobal.store(Groups.count() - 1);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
     //---
     QString s = "execActionSelectImageEnd(), goto index";
-    s += QString::number(iCurrentIndexGlobal);
+    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     emit execShowExecStatus(s);
     //---
 
@@ -332,11 +336,11 @@ void MainWindow::execActionLoad()
     cImportFiles::MaxIndexValue = Groups.count();
     //progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
-    iCurrentIndexGlobal = 0;
+    iCurrentIndexGlobal.store(0);
     QListIterator<QString> readIt(Groups);
     while (readIt.hasNext())
     {
-        iCurrentIndexGlobal.fetch_add(1);
+        iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
 
         QString qsSection = readIt.next();
         //qDebug() << qsSection;
@@ -369,13 +373,13 @@ void MainWindow::execActionLoad()
     else
         qDebug() << "No errors in file names detected, Ok!";
 
-    iCurrentIndexGlobal = LoadedCurrentIndex;
+    iCurrentIndexGlobal.store(LoadedCurrentIndex);
 
     execActionSelectImageNext();
 
     //---
     QString s = "execActionLoad(), goto index:";
-    s += QString::number(iCurrentIndexGlobal);
+    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     emit execShowExecStatus(s);
     //---
 
@@ -410,7 +414,7 @@ void MainWindow::execListWidgetSuggestItemClicked()
     // Сохранение параметра в INI-файле
     if(Groups.count() > 0)
     {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal);
+        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         cIniFile::settings.beginGroup(qsGroupName);
         cIniFile::settings.setValue(item, "true");
         cIniFile::settings.endGroup();
@@ -896,7 +900,7 @@ void MainWindow::execSpinBoxAngle(int angle)
 void MainWindow::execRotate(int angle)
 {
     //--- Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(iCurrentIndexGlobal);
+    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
     cIniFile::settings.beginGroup(qsGroupName);
 
@@ -948,7 +952,7 @@ void MainWindow::execTimerUpdate()
     iTimerUpdateCounter++;
     if(iTimerUpdateCounter == 1)
     {
-        qDebug() << "CurrentIndex=" << iCurrentIndexGlobal << " Action: open ViewPictureForm";
+        qDebug() << "CurrentIndex=" << iCurrentIndexGlobal.load(std::memory_order_relaxed) << " Action: open ViewPictureForm";
         int windowX = this->x();
         windowX = windowX + this->width();
         windowX = windowX + WINDOW_LEFT_MARGING;
@@ -964,12 +968,12 @@ void MainWindow::execTimerUpdate()
         fmViewPicture->show();
         ui->actionViewPicture->setChecked(true);
 
-        qDebug() << "CurrentIndex=" << iCurrentIndexGlobal;// << " Action: Load";
+        qDebug() << "CurrentIndex=" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
         execActionLoad();
     }
 
     progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
-    int x = iCurrentIndexGlobal;
+    int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
     progressBarProcess->setValue(x);
 
     if(cImportFiles::IslabelExecStatusTextChacnged)
@@ -983,6 +987,16 @@ void MainWindow::execTimerUpdate()
         labelFileName->setText(cImportFiles::labelFileNameText);
         cImportFiles::IslabelFileNameTextChanged = false;
     }
+
+    switch (x % 4)
+    {
+        case 0: labelRotator->setText("-"); break;
+        case 1: labelRotator->setText("\\"); break;
+        case 2: labelRotator->setText("|"); break;
+        case 3: labelRotator->setText("/"); break;
+        default:  break;
+    }
+
 
 }
 
@@ -1034,7 +1048,7 @@ void MainWindow::execActionMemo()
         // Сохранение параметра в INI-файле
         if(Groups.count() > 0)
         {
-            QString qsGroupName = Groups.at(iCurrentIndexGlobal);
+            QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
             cIniFile::settings.beginGroup(qsGroupName);
             cIniFile::settings.setValue("memo", item);
             cIniFile::settings.endGroup();

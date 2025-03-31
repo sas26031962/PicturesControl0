@@ -15,8 +15,6 @@
     QString cIniFile::scaledImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/scaled_image.png";
 #endif
 
-int cIniFile::Id = 0;                 //Идентификатор - счётчик записей
-
 QList<cRecord> * cRecord::RecordList;
 
 QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);
@@ -56,9 +54,10 @@ void cIniFile::addInitalSection(int n)
  *****************************************************************************/
 void cIniFile::addRecordListData()
 {
+    iCurrentIndexGlobal.store(0);
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
      {
-        cIniFile::Id++;//Счётчик записей
+        iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
 
         const cRecord rec = *it;
 
@@ -81,7 +80,7 @@ void cIniFile::addRecordListData()
 
         if(qsExtension.toLower() == "mp4")
         {
-            qDebug() << "Id=" << cIniFile::Id << "Extension: mp4";
+            qDebug() << "Id=" << iCurrentIndexGlobal.load(std::memory_order_relaxed) << "Extension: mp4";
             IsError = true;
         }
         else
@@ -91,10 +90,13 @@ void cIniFile::addRecordListData()
 
             width = image.width();
             height = image.height();
+            qDebug() << "Id=" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
         }
 
+            int id = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+
             cIniFile::settings.beginGroup(groupName);
-            cIniFile::settings.setValue("Id", cIniFile::Id);
+            cIniFile::settings.setValue("Id", id);
             cIniFile::settings.setValue("name", name);
             cIniFile::settings.setValue("path", PathWithoutName);
             cIniFile::settings.setValue("size", size);

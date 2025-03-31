@@ -5,6 +5,8 @@
 #include <QSettings>
 #include <QDebug>
 #include <QImage>
+#include <atomic>
+
 #include "crecord.h"
 
 /******************************************************************************
@@ -18,6 +20,12 @@
 
 //#define HOME_STORAGE YES
 
+//-----------------------------------------------------------------------------
+//Глобальные переменные
+//-----------------------------------------------------------------------------
+
+extern std::atomic<int> iCurrentIndexGlobal;
+
 class cIniFile
 {
 private:
@@ -29,7 +37,6 @@ public:
     static QString scaledImagePath;
     static QSettings settings;
     static cIniFile IniFile;
-    static int Id;                 //Идентификатор - счётчик записей
 
     int iRecordListLength = 0;  //Полное число записей
 
