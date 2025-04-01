@@ -98,13 +98,40 @@ MainWindow::MainWindow(QWidget *parent) :
     //qslHashTagList = ptrHashTagList.get();
     qslHashTagList = new QStringList();
 
+    //Загрузка списка хеш-тегов Subject
     if(loadHashTagListSubject())
     {
-        ui->listWidgetSuggest->clear();
-        //ui->listWidgetSuggest->setSelectionMode(QAbstractItemView::MultiSelection);
-        ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetSubject->clear();
+        ui->listWidgetSubject->addItems(*qslHashTagList);
 
-        connect(ui->listWidgetSuggest, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSuggestItemClicked()));
+        connect(ui->listWidgetSubject, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSubjectItemClicked()));
+    }
+
+    //Загрузка списка хеш-тегов Propertyes
+    if(loadHashTagListProperty())
+    {
+        ui->listWidgetPropertyes->clear();
+        ui->listWidgetPropertyes->addItems(*qslHashTagList);
+
+        connect(ui->listWidgetPropertyes, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetPropertyItemClicked()));
+    }
+
+    //Загрузка списка хеш-тегов Places
+    if(loadHashTagListPlace())
+    {
+        ui->listWidgetPlaces->clear();
+        ui->listWidgetPlaces->addItems(*qslHashTagList);
+
+        connect(ui->listWidgetPlaces, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetPlaceItemClicked()));
+    }
+
+    //Загрузка списка хеш-тегов Theams
+    if(loadHashTagListTheame())
+    {
+        ui->listWidgetTheams->clear();
+        ui->listWidgetTheams->addItems(*qslHashTagList);
+
+        connect(ui->listWidgetTheams, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetTheameItemClicked()));
     }
 
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
@@ -405,32 +432,6 @@ void MainWindow::execActionFormViewPicture()
 
 //=============================================================================
 
-void MainWindow::execListWidgetSuggestItemClicked()
-{
-    QString s = "execInsertNewKeyValue()";
-    QString item = ui->listWidgetSuggest->currentItem()->text();
-    qDebug() << "listWidgetSuggest: item=" << item;
-
-    // Сохранение параметра в INI-файле
-    if(Groups.count() > 0)
-    {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-        cIniFile::settings.beginGroup(qsGroupName);
-        cIniFile::settings.setValue(item, "true");
-        cIniFile::settings.endGroup();
-
-    }
-    else
-    {
-        s = "List is empty, exec Load function!!!";
-    }
-    // Отобразить картинку
-    showCurrentIndexPicture();
-    //---
-    emit execShowExecStatus(s);
-    //---
-}
-
 //=============================================================================
 
 bool MainWindow::loadHashTagListSubject()
@@ -597,13 +598,13 @@ void MainWindow::execActionLoadHashTagListSubject()
     if(loadHashTagListSubject())
     {
         qDebug() << s << ": loadHashTagListSubject is sucsess";
-        ui->listWidgetSuggest->clear();
-        ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetSubject->clear();
+        ui->listWidgetSubject->addItems(*qslHashTagList);
 
     }
     else
     {
-        ui->listWidgetSuggest->clear();
+        ui->listWidgetSubject->clear();
         qDebug() << s << ": loadHashTagListSubject is broken!!!";
     }
     //---
@@ -621,13 +622,13 @@ void MainWindow::execActionLoadHashTagListPlace()
     if(loadHashTagListPlace())
     {
         qDebug() << s << ": loadHashTagListPlace is sucsess";
-        ui->listWidgetSuggest->clear();
-        ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetPlaces->clear();
+        ui->listWidgetPlaces->addItems(*qslHashTagList);
 
     }
     else
     {
-        ui->listWidgetSuggest->clear();
+        ui->listWidgetPlaces->clear();
         qDebug() << s << ": loadHashTagListPlace is broken!!!";
     }
     //---
@@ -645,13 +646,13 @@ void MainWindow::execActionLoadHashTagListProperty()
     if(loadHashTagListProperty())
     {
         qDebug() << s << ": loadHashTagListProperty is sucsess";
-        ui->listWidgetSuggest->clear();
-        ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetPropertyes->clear();
+        ui->listWidgetPropertyes->addItems(*qslHashTagList);
 
     }
     else
     {
-        ui->listWidgetSuggest->clear();
+        ui->listWidgetPropertyes->clear();
         qDebug() << s << ": loadHashTagListPrperty is broken!!!";
     }
     //---
@@ -670,13 +671,13 @@ void MainWindow::execActionLoadHashTagListTheame()
     if(loadHashTagListTheame())
     {
         qDebug() << s << ": loadHashTagListTheame is sucsess";
-        ui->listWidgetSuggest->clear();
-        ui->listWidgetSuggest->addItems(*qslHashTagList);
+        ui->listWidgetTheams->clear();
+        ui->listWidgetTheams->addItems(*qslHashTagList);
 
     }
     else
     {
-        ui->listWidgetSuggest->clear();
+        ui->listWidgetTheams->clear();
         qDebug() << s << ": loadHashTagListTheame is broken!!!";
     }
     //---
@@ -1023,9 +1024,9 @@ void MainWindow::execActionGetGroupsList()
     {
         s += ": sucsess!";
 
-        ui->listWidgetSuggest->clear();
+        ui->listWidgetOther->clear();
         //ui->listWidgetSuggest->addItems(*qslHashTagList);
-        ui->listWidgetSuggest->addItems(*cImportFiles::Groups);
+        ui->listWidgetOther->addItems(*cImportFiles::Groups);
     }
 
     //---
@@ -1073,3 +1074,116 @@ void MainWindow::execActionMemo()
 }
 
 //=============================================================================
+
+void MainWindow::execListWidgetSubjectItemClicked()
+{
+    QString s = "execSubjectItemClicked()";
+    QString item = ui->listWidgetSubject->currentItem()->text();
+    qDebug() << "listWidgetSubject: item=" << item;
+
+    // Сохранение параметра в INI-файле
+    if(Groups.count() > 0)
+    {
+        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        cIniFile::settings.beginGroup(qsGroupName);
+        cIniFile::settings.setValue(item, "true");
+        cIniFile::settings.endGroup();
+
+    }
+    else
+    {
+        s = "List is empty, exec Load function!!!";
+    }
+    // Отобразить картинку
+    showCurrentIndexPicture();
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execListWidgetPropertyItemClicked()
+{
+    QString s = "execPropertyItemClicked()";
+    QString item = ui->listWidgetPropertyes->currentItem()->text();
+    qDebug() << "listWidgetProperty: item=" << item;
+
+    // Сохранение параметра в INI-файле
+    if(Groups.count() > 0)
+    {
+        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        cIniFile::settings.beginGroup(qsGroupName);
+        cIniFile::settings.setValue(item, "true");
+        cIniFile::settings.endGroup();
+
+    }
+    else
+    {
+        s = "List is empty, exec Load function!!!";
+    }
+    // Отобразить картинку
+    showCurrentIndexPicture();
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execListWidgetTheameItemClicked()
+{
+    QString s = "execTheameItemClicked()";
+    QString item = ui->listWidgetTheams->currentItem()->text();
+    qDebug() << "listWidgetTheame: item=" << item;
+
+    // Сохранение параметра в INI-файле
+    if(Groups.count() > 0)
+    {
+        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        cIniFile::settings.beginGroup(qsGroupName);
+        cIniFile::settings.setValue(item, "true");
+        cIniFile::settings.endGroup();
+
+    }
+    else
+    {
+        s = "List is empty, exec Load function!!!";
+    }
+    // Отобразить картинку
+    showCurrentIndexPicture();
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execListWidgetPlaceItemClicked()
+{
+    QString s = "execPlaceItemClicked()";
+    QString item = ui->listWidgetPlaces->currentItem()->text();
+    qDebug() << "listWidgetPlace: item=" << item;
+
+    // Сохранение параметра в INI-файле
+    if(Groups.count() > 0)
+    {
+        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        cIniFile::settings.beginGroup(qsGroupName);
+        cIniFile::settings.setValue(item, "true");
+        cIniFile::settings.endGroup();
+
+    }
+    else
+    {
+        s = "List is empty, exec Load function!!!";
+    }
+    // Отобразить картинку
+    showCurrentIndexPicture();
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+

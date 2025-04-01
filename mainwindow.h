@@ -87,8 +87,12 @@ private slots:
     void execActionLoad();
     void execActionFormViewPicture();
     void execActionMemo();
-    void execListWidgetSuggestItemClicked();
     void execTimerUpdate();
+
+    void execListWidgetSubjectItemClicked();
+    void execListWidgetPropertyItemClicked();
+    void execListWidgetTheameItemClicked();
+    void execListWidgetPlaceItemClicked();
 
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
