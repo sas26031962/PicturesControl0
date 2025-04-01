@@ -1052,8 +1052,21 @@ void MainWindow::execActionMemo()
         if(Groups.count() > 0)
         {
             QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+            //cIniFile::settings.beginGroup(qsGroupName);
+            //cIniFile::settings.setValue("memo", item);
             cIniFile::settings.beginGroup(qsGroupName);
-            cIniFile::settings.setValue("memo", item);
+            QString key = "memo";
+            QStringList list = cIniFile::settings.childKeys();
+            if(list.contains(key))
+            {
+                qDebug() << qsGroupName << " contains " << key;
+                cIniFile::settings.remove(key);
+            }
+            else
+            {
+                qDebug() << qsGroupName << " not contains " << key;
+                cIniFile::settings.setValue(key, item);
+            }
             cIniFile::settings.endGroup();
 
         }
