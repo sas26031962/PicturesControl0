@@ -51,10 +51,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGetGroupsList, SIGNAL(triggered()), this, SLOT( execActionGetGroupsList()));
 
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
+    //---Для удаления
     connect(ui->actionLoaadHashTagListSubject, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListSubject()));
     connect(ui->actionLoadHashTagListPlace, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListPlace()));
     connect(ui->actionLoadHashTagListProperty, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListProperty()));
     connect(ui->actionLoadHashTagListTheame, SIGNAL(triggered()), this, SLOT( execActionLoadHashTagListTheame()));
+    //---
 
     connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
 
@@ -1085,8 +1087,20 @@ void MainWindow::execListWidgetSubjectItemClicked()
     if(Groups.count() > 0)
     {
         QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        //cIniFile::settings.beginGroup(qsGroupName);
+        //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
-        cIniFile::settings.setValue(item, "true");
+        QStringList list = cIniFile::settings.childKeys();
+        if(list.contains(item))
+        {
+            qDebug() << qsGroupName << " contains " << item;
+            cIniFile::settings.remove(item);
+        }
+        else
+        {
+            qDebug() << qsGroupName << " not contains " << item;
+            cIniFile::settings.setValue(item, "true");
+        }
         cIniFile::settings.endGroup();
 
     }
@@ -1113,8 +1127,20 @@ void MainWindow::execListWidgetPropertyItemClicked()
     if(Groups.count() > 0)
     {
         QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        //cIniFile::settings.beginGroup(qsGroupName);
+        //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
-        cIniFile::settings.setValue(item, "true");
+        QStringList list = cIniFile::settings.childKeys();
+        if(list.contains(item))
+        {
+            qDebug() << qsGroupName << " contains " << item;
+            cIniFile::settings.remove(item);
+        }
+        else
+        {
+            qDebug() << qsGroupName << " not contains " << item;
+            cIniFile::settings.setValue(item, "true");
+        }
         cIniFile::settings.endGroup();
 
     }
@@ -1141,8 +1167,20 @@ void MainWindow::execListWidgetTheameItemClicked()
     if(Groups.count() > 0)
     {
         QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        //cIniFile::settings.beginGroup(qsGroupName);
+        //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
-        cIniFile::settings.setValue(item, "true");
+        QStringList list = cIniFile::settings.childKeys();
+        if(list.contains(item))
+        {
+            qDebug() << qsGroupName << " contains " << item;
+            cIniFile::settings.remove(item);
+        }
+        else
+        {
+            qDebug() << qsGroupName << " not contains " << item;
+            cIniFile::settings.setValue(item, "true");
+        }
         cIniFile::settings.endGroup();
 
     }
@@ -1170,7 +1208,17 @@ void MainWindow::execListWidgetPlaceItemClicked()
     {
         QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         cIniFile::settings.beginGroup(qsGroupName);
-        cIniFile::settings.setValue(item, "true");
+        QStringList list = cIniFile::settings.childKeys();
+        if(list.contains(item))
+        {
+            qDebug() << qsGroupName << " contains " << item;
+            cIniFile::settings.remove(item);
+        }
+        else
+        {
+            qDebug() << qsGroupName << " not contains " << item;
+            cIniFile::settings.setValue(item, "true");
+        }
         cIniFile::settings.endGroup();
 
     }
