@@ -21,6 +21,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
@@ -61,6 +62,7 @@ public:
     QPushButton *pushButtonNext;
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
+    QProgressBar *progressBarNavigation;
     QLabel *labelIncomingListCaption;
     QTableView *tableViewCurrent;
     QGroupBox *groupBoxEdit;
@@ -143,7 +145,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
         groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
-        groupBoxControl->setGeometry(QRect(10, 380, 191, 51));
+        groupBoxControl->setGeometry(QRect(10, 380, 271, 51));
         pushButtonBegin = new QPushButton(groupBoxControl);
         pushButtonBegin->setObjectName(QStringLiteral("pushButtonBegin"));
         pushButtonBegin->setGeometry(QRect(20, 20, 23, 23));
@@ -156,6 +158,10 @@ public:
         pushButtonEnd = new QPushButton(groupBoxControl);
         pushButtonEnd->setObjectName(QStringLiteral("pushButtonEnd"));
         pushButtonEnd->setGeometry(QRect(110, 20, 23, 23));
+        progressBarNavigation = new QProgressBar(groupBoxControl);
+        progressBarNavigation->setObjectName(QStringLiteral("progressBarNavigation"));
+        progressBarNavigation->setGeometry(QRect(140, 20, 118, 23));
+        progressBarNavigation->setValue(24);
         labelIncomingListCaption = new QLabel(centralWidget);
         labelIncomingListCaption->setObjectName(QStringLiteral("labelIncomingListCaption"));
         labelIncomingListCaption->setGeometry(QRect(10, 10, 221, 20));
@@ -176,7 +182,7 @@ public:
         pushButtonMemo->setGeometry(QRect(400, 20, 31, 23));
         groupBoxRotate = new QGroupBox(centralWidget);
         groupBoxRotate->setObjectName(QStringLiteral("groupBoxRotate"));
-        groupBoxRotate->setGeometry(QRect(210, 380, 261, 51));
+        groupBoxRotate->setGeometry(QRect(330, 380, 261, 51));
         pushButtonRotateCCW = new QPushButton(groupBoxRotate);
         pushButtonRotateCCW->setObjectName(QStringLiteral("pushButtonRotateCCW"));
         pushButtonRotateCCW->setGeometry(QRect(93, 20, 75, 23));

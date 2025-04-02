@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
+    progressBarNavigation = ui->progressBarNavigation;
 
     connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
@@ -234,6 +235,7 @@ void MainWindow::execActionSelectImageBegin()
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -254,6 +256,7 @@ void MainWindow::execActionSelectImageNext()
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     //---
     QString s = "execActionSelectImageNext(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -274,6 +277,7 @@ void MainWindow::execActionSelectImagePrevious()
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -291,6 +295,7 @@ void MainWindow::execActionSelectImageEnd()
     // Отобразить картинку
     showCurrentIndexPicture();
 
+    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
     //---
     QString s = "execActionSelectImageEnd(), goto index";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -363,13 +368,27 @@ void MainWindow::execActionLoad()
     qDebug() << "childGroupsList length: " << Groups.count();
     qDebug() << "----------------------------";
     cImportFiles::MaxIndexValue = Groups.count();
-    //progressBarProcess->setRange(0, Groups.count());
+    progressBarProcess->setRange(0, Groups.count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
     QListIterator<QString> readIt(Groups);
     while (readIt.hasNext())
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
+
+        //---Отображение состояния загрузки
+        int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+        progressBarProcess->setValue(x);
+
+        switch (x % 4)
+        {
+            case 0: labelRotator->setText("-"); break;
+            case 1: labelRotator->setText("\\"); break;
+            case 2: labelRotator->setText("|"); break;
+            case 3: labelRotator->setText("/"); break;
+            default:  break;
+        }
+        //---
 
         QString qsSection = readIt.next();
         //qDebug() << qsSection;
@@ -403,6 +422,10 @@ void MainWindow::execActionLoad()
         qDebug() << "No errors in file names detected, Ok!";
 
     iCurrentIndexGlobal.store(LoadedCurrentIndex);
+
+    //Установка навигации
+    progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);
+    progressBarNavigation->setValue(LoadedCurrentIndex);
 
     execActionSelectImageNext();
 
@@ -973,11 +996,12 @@ void MainWindow::execTimerUpdate()
 
         qDebug() << "CurrentIndex=" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
         execActionLoad();
+
     }
 
-    progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
-    int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-    progressBarProcess->setValue(x);
+//    progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
+//    int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+//    progressBarProcess->setValue(x);
 
     if(cImportFiles::IslabelExecStatusTextChacnged)
     {
@@ -990,16 +1014,6 @@ void MainWindow::execTimerUpdate()
         labelFileName->setText(cImportFiles::labelFileNameText);
         cImportFiles::IslabelFileNameTextChanged = false;
     }
-
-    switch (x % 4)
-    {
-        case 0: labelRotator->setText("-"); break;
-        case 1: labelRotator->setText("\\"); break;
-        case 2: labelRotator->setText("|"); break;
-        case 3: labelRotator->setText("/"); break;
-        default:  break;
-    }
-
 
 }
 
@@ -1027,7 +1041,6 @@ void MainWindow::execActionGetGroupsList()
         s += ": sucsess!";
 
         ui->listWidgetOther->clear();
-        //ui->listWidgetSuggest->addItems(*qslHashTagList);
         ui->listWidgetOther->addItems(*cImportFiles::Groups);
     }
 
