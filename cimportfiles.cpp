@@ -31,17 +31,19 @@ cImportFiles::cImportFiles()
  * СОДЕРЖИМОЕ КОНФИГУРАЦИОННОГО ФАЙЛА ОБНОВЛЯЕТСЯ, НО НЕ ПЕРЕЗАПИСЫВАЕТСЯ
  * Файлы с расширениями "mp4", "tif", "txt" в конфигурационный файл не добавляются
  *****************************************************************************/
-void cImportFiles::execImport()
+void cImportFiles::execImport(QProgressBar * bar)
 {
     //---Добавление идентификационной секции
     cImportFiles::MaxIndexValue = cRecord::RecordList->count();
     cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
-
+    bar->setRange(1, cImportFiles::MaxIndexValue);
+    bar->setValue(0);
     iCurrentIndexGlobal.store(0);
 
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
      {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
+        bar->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
         const cRecord rec = *it;
 
@@ -79,7 +81,7 @@ void cImportFiles::execImport()
         }
         else
         {
-            qDebug() << "Id=" << iCurrentIndexGlobal;
+            //qDebug() << "Id=" << iCurrentIndexGlobal;
 
             //Фрагмент для обработки файлов изображений
             QImage image(path);//name

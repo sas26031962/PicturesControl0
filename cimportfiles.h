@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <atomic>
 
+#include <QProgressBar>
 #include "crecord.h"
 #include "cinifile.h"
 
@@ -27,7 +28,6 @@ class cImportFiles
 
 public:
     static int MaxIndexValue;
-//    static int CurrentIndex;
     static QString labelExecStatusText;
     static bool IslabelExecStatusTextChacnged;
     static QStringList * Groups;
@@ -38,7 +38,7 @@ public:
 
     cImportFiles();
 
-    static void execImport();
+    static void execImport(QProgressBar * bar);
     static bool getGroupsList();
 
 };

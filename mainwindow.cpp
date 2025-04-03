@@ -222,7 +222,6 @@ void MainWindow::showCurrentIndexPicture()
       cIniFile::settings.setValue("index", x);
       cIniFile::settings.endGroup();
 
-      qDebug() << "Store CurrentIndex:" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
 }
 
 //=============================================================================
@@ -317,7 +316,7 @@ void MainWindow::execActionImportInitial()
     std::unique_ptr<QList<cRecord> > ptrRecordList(new QList<cRecord>());
     cRecord::RecordList = ptrRecordList.get();
 
-    //---Очистка рабочего списка
+    //--- Очистка рабочего списка
     cRecord::RecordList->clear();
 
     //---Чтение содержимого каталога ---
@@ -329,7 +328,9 @@ void MainWindow::execActionImportInitial()
         return;
     }
 
-    cImportFiles::execImport();
+    //--- Импорт данных в конфигурационный файл ---
+
+    cImportFiles::execImport(progressBarProcess);
 
     emit execShowExecStatus("File import complete!");
 

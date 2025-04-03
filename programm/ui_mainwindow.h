@@ -281,7 +281,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "PicturesControl0 ", 0));
         actionExit->setText(QApplication::translate("MainWindow", "Exit", 0));
         actionSelectImageBegin->setText(QApplication::translate("MainWindow", "Begin", 0));
         actionSelectImageNext->setText(QApplication::translate("MainWindow", "Next", 0));
