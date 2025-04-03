@@ -893,16 +893,24 @@ void MainWindow::execActionRemoveMovie()
     QStringList GroupsLocal = settings.childGroups();
 
     // Выводим значения
+    //ui->listWidgetOther->clear();
+    //ui->listWidgetOther->addItems(GroupsLocal);
+
     qDebug() << "childGroupsList length: " << GroupsLocal.count();
     qDebug() << "----------------------------";
     //---
 
     int iCount = 0;
 
+    QStringList GroupsResult;//Список - результат
+    GroupsResult.clear();
+
     QListIterator<QString> readIt(GroupsLocal);
     while (readIt.hasNext())
     {
         QString qsSection = readIt.next();
+
+        bool IsSign = false;
 
         settings.beginGroup(qsSection);
         QList<QString> keys = settings.childKeys();
@@ -913,6 +921,11 @@ void MainWindow::execActionRemoveMovie()
         if(qsName.toLower().indexOf(".mp4") >= 0)
         {
             iCount++;
+
+            IsSign = true;
+
+            GroupsResult.append(qsSection);//Добавление секции в список - результат
+
             qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
             // Перебор всей ключей в секции
             QListIterator<QString> readKeyIt(keys);
@@ -926,7 +939,20 @@ void MainWindow::execActionRemoveMovie()
         }
 
         settings.endGroup();
-    }
+
+        //--- Удаление секции совсем ---
+        if(IsSign)
+        {
+            settings.remove(qsSection);
+            qDebug() << "Section " << qsSection << " removed!";
+        }
+
+    }//End of while (readIt.hasNext())
+
+    // Выводим имена обрабатываемых файлов
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(GroupsResult);
+
     if(iCount > 0)
         qDebug() << "Extension 'mp4' detected in " << iCount << " files";
     else
@@ -1316,4 +1342,66 @@ void MainWindow::execListWidgetPlaceItemClicked()
 }
 
 //=============================================================================
+
+void MainWindow::keyPressEvent(QKeyEvent * e)
+{
+    switch(e->key())
+    {
+        case 16777249://Qt::CTRL:
+            qDebug() << "CTRL pressed";
+            KeyPressed.push(e->key());
+        break;
+        //Key_B
+        case 1048:
+        case 66:
+            qDebug() << "B pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+B pressed";
+                emit ui->actionSelectImageBegin->triggered();// pushButtonBegin->pressed();
+            }
+        break;
+        //Key_P
+        case 1047:
+        case 80:
+            qDebug() << "P pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+P pressed";
+                emit ui->actionSelectImagePrevious->triggered();// pushButtonPrevious->pressed();
+            }
+        break;
+
+        //Key_N
+        case 1058:
+        case 78:
+            qDebug() << "N pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+N pressed";
+                emit ui->actionSelectImageNext->triggered();// pushButtonNext->pressed();
+            }
+        break;
+
+        //Key_E
+        case 1059:
+        case 69:
+            qDebug() << "E pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+E pressed";
+                emit ui->actionSelectImageEnd->triggered();// pushButtonEnd->pressed();
+            }
+        break;
+
+        default:
+            qDebug() << "Key press:" << e->key();
+        break;
+    }
+
+}
 
