@@ -723,16 +723,24 @@ void MainWindow::execActionRemoveText()
     QStringList GroupsLocal = settings.childGroups();
 
     // Выводим значения
+    //ui->listWidgetOther->clear();
+    //ui->listWidgetOther->addItems(GroupsLocal);
+
     qDebug() << "childGroupsList length: " << GroupsLocal.count();
     qDebug() << "----------------------------";
     //---
 
     int iCount = 0;
 
+    QStringList GroupsResult;//Список - результат
+    GroupsResult.clear();
+
     QListIterator<QString> readIt(GroupsLocal);
     while (readIt.hasNext())
     {
         QString qsSection = readIt.next();
+
+        bool IsSign = false;
 
         settings.beginGroup(qsSection);
         QList<QString> keys = settings.childKeys();
@@ -743,7 +751,14 @@ void MainWindow::execActionRemoveText()
         if(qsName.toLower().indexOf(".txt") >= 0)
         {
             iCount++;
+
+            IsSign = true;
+
+            GroupsResult.append(qsSection);//Добавление секции в список - результат
+
             qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+
+            //--- Удаление ключей секции: начало ---
             // Перебор всей ключей в секции
             QListIterator<QString> readKeyIt(keys);
             while (readKeyIt.hasNext())
@@ -753,10 +768,24 @@ void MainWindow::execActionRemoveText()
                 settings.remove(qsKey);
             }
             qDebug() << "All keys in section " << qsSection << " removed!";
+            //--- Удаление ключей секции: конец ---
         }
 
         settings.endGroup();
-    }
+
+        //--- Удаление секции совсем ---
+        if(IsSign)
+        {
+            settings.remove(qsSection);
+            qDebug() << "Section " << qsSection << " removed!";
+        }
+
+    }//End of while (readIt.hasNext())
+
+    // Выводим имена обрабатываемых файлов
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(GroupsResult);
+
     if(iCount > 0)
         qDebug() << "Extension 'txt' detected in " << iCount << " files";
     else
@@ -781,16 +810,24 @@ void MainWindow::execActionRemoveTif()
     QStringList GroupsLocal = settings.childGroups();
 
     // Выводим значения
+    //ui->listWidgetOther->clear();
+    //ui->listWidgetOther->addItems(GroupsLocal);
+
     qDebug() << "childGroupsList length: " << GroupsLocal.count();
     qDebug() << "----------------------------";
     //---
 
     int iCount = 0;
 
+    QStringList GroupsResult;//Список - результат
+    GroupsResult.clear();
+
     QListIterator<QString> readIt(GroupsLocal);
     while (readIt.hasNext())
     {
         QString qsSection = readIt.next();
+
+        bool IsSign = false;
 
         settings.beginGroup(qsSection);
         QList<QString> keys = settings.childKeys();
@@ -801,6 +838,11 @@ void MainWindow::execActionRemoveTif()
         if(qsName.toLower().indexOf(".tif") >= 0)
         {
             iCount++;
+
+            IsSign = true;
+
+            GroupsResult.append(qsSection);//Добавление секции в список - результат
+
             qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
             // Перебор всей ключей в секции
             QListIterator<QString> readKeyIt(keys);
@@ -814,7 +856,20 @@ void MainWindow::execActionRemoveTif()
         }
 
         settings.endGroup();
-    }
+
+        //--- Удаление секции совсем ---
+        if(IsSign)
+        {
+            settings.remove(qsSection);
+            qDebug() << "Section " << qsSection << " removed!";
+        }
+
+    }//End of while (readIt.hasNext())
+
+    // Выводим имена обрабатываемых файлов
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(GroupsResult);
+
     if(iCount > 0)
         qDebug() << "Extension 'tif' detected in " << iCount << " files";
     else
