@@ -59,6 +59,9 @@ private:
     int iAngle = 90;
 
     QStringList * qslHashTagList;
+
+    QStringList * qslDeletedSections;
+
     //QString rotatedImagePath = "./img/tmp/rotated_image.png";
 
     //Методы
@@ -68,6 +71,7 @@ private:
     bool loadHashTagListProperty();
     bool loadHashTagListTheame();
     void execRotate(int angle);
+    bool deleteSection(QSettings settings, QString s);
 
 public:
     //Атрибуты

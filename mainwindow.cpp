@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     cImportFiles::Groups = new QStringList();
+    qslDeletedSections = new QStringList();
 
     ui->setupUi(this);
 
@@ -158,11 +159,76 @@ MainWindow::~MainWindow()
     delete fmViewPicture;
 
     delete qslHashTagList;
+    delete qslDeletedSections;
 
     if(cImportFiles::Groups != nullptr) delete cImportFiles::Groups;
 
     delete ui;
 }
+
+//=============================================================================
+
+void MainWindow::keyPressEvent(QKeyEvent * e)
+{
+    switch(e->key())
+    {
+        case 16777249://Qt::CTRL:
+            qDebug() << "CTRL pressed";
+            KeyPressed.push(e->key());
+        break;
+        //Key_B
+        case 1048:
+        case 66:
+            qDebug() << "B pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+B pressed";
+                emit ui->actionSelectImageBegin->triggered();// pushButtonBegin->pressed();
+            }
+        break;
+        //Key_P
+        case 1047:
+        case 80:
+            qDebug() << "P pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+P pressed";
+                emit ui->actionSelectImagePrevious->triggered();// pushButtonPrevious->pressed();
+            }
+        break;
+
+        //Key_N
+        case 1058:
+        case 78:
+            qDebug() << "N pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+N pressed";
+                emit ui->actionSelectImageNext->triggered();// pushButtonNext->pressed();
+            }
+        break;
+
+        //Key_E
+        case 1059:
+        case 69:
+            qDebug() << "E pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+E pressed";
+                emit ui->actionSelectImageEnd->triggered();// pushButtonEnd->pressed();
+            }
+        break;
+
+        default:
+            qDebug() << "Key press:" << e->key();
+        break;
+    }
+
+}//End of void MainWindow::keyPressEvent(QKeyEvent * e)
 
 //=============================================================================
 
@@ -713,6 +779,47 @@ void MainWindow::execActionLoadHashTagListTheame()
 }
 
 //=============================================================================
+
+//
+// Удалить секцию из ini файла
+//
+bool MainWindow::deleteSection(QSettings settings, QString s)
+{
+    bool Error = false;
+
+    settings.beginGroup(s);
+    QList<QString> keys = settings.childKeys();
+    int iKeysCount = keys.count();
+
+    if(iKeysCount > 0)
+    {
+        // Перебор всей ключей в секции
+        QListIterator<QString> readKeyIt(keys);
+        while (readKeyIt.hasNext())
+        {
+            QString qsKey = readKeyIt.next();
+            qDebug() << qsKey;
+            settings.remove(qsKey);
+        }
+        qDebug() << "All keys in section " << s << " removed!";
+
+    }
+    else
+    {
+        qDebug() << "No keys in section " << s << " found!";
+    }
+    settings.endGroup();
+
+    settings.remove(s);
+    qDebug() << "Section " << s << " removed!";
+
+    qslDeletedSections->append(s);//Добавление секции в список - результат
+
+    return Error;
+}
+
+//=============================================================================
+
 void MainWindow::execActionRemoveText()
 {
     QString s = "ActionRemoveText()";
@@ -910,6 +1017,7 @@ void MainWindow::execActionRemoveMovie()
     {
         QString qsSection = readIt.next();
 
+        //---
         bool IsSign = false;
 
         settings.beginGroup(qsSection);
@@ -946,7 +1054,7 @@ void MainWindow::execActionRemoveMovie()
             settings.remove(qsSection);
             qDebug() << "Section " << qsSection << " removed!";
         }
-
+        //---
     }//End of while (readIt.hasNext())
 
     // Выводим имена обрабатываемых файлов
@@ -1343,65 +1451,4 @@ void MainWindow::execListWidgetPlaceItemClicked()
 
 //=============================================================================
 
-void MainWindow::keyPressEvent(QKeyEvent * e)
-{
-    switch(e->key())
-    {
-        case 16777249://Qt::CTRL:
-            qDebug() << "CTRL pressed";
-            KeyPressed.push(e->key());
-        break;
-        //Key_B
-        case 1048:
-        case 66:
-            qDebug() << "B pressed";
-            KeyPressed.push(e->key());
-            if(KeyPressed.Previous == 16777249)
-            {
-                qDebug() << "CTRL+B pressed";
-                emit ui->actionSelectImageBegin->triggered();// pushButtonBegin->pressed();
-            }
-        break;
-        //Key_P
-        case 1047:
-        case 80:
-            qDebug() << "P pressed";
-            KeyPressed.push(e->key());
-            if(KeyPressed.Previous == 16777249)
-            {
-                qDebug() << "CTRL+P pressed";
-                emit ui->actionSelectImagePrevious->triggered();// pushButtonPrevious->pressed();
-            }
-        break;
-
-        //Key_N
-        case 1058:
-        case 78:
-            qDebug() << "N pressed";
-            KeyPressed.push(e->key());
-            if(KeyPressed.Previous == 16777249)
-            {
-                qDebug() << "CTRL+N pressed";
-                emit ui->actionSelectImageNext->triggered();// pushButtonNext->pressed();
-            }
-        break;
-
-        //Key_E
-        case 1059:
-        case 69:
-            qDebug() << "E pressed";
-            KeyPressed.push(e->key());
-            if(KeyPressed.Previous == 16777249)
-            {
-                qDebug() << "CTRL+E pressed";
-                emit ui->actionSelectImageEnd->triggered();// pushButtonEnd->pressed();
-            }
-        break;
-
-        default:
-            qDebug() << "Key press:" << e->key();
-        break;
-    }
-
-}
 
