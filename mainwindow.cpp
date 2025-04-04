@@ -152,6 +152,8 @@ MainWindow::~MainWindow()
     cIniFile::settings.sync();
     timerUpdate->stop();
 
+    saveRemovedSectionsList();
+
     delete progressBarProcess;
     delete labelExecStatus;
     delete labelFileName;
@@ -312,6 +314,87 @@ void MainWindow::showCurrentIndexPicture()
 
 //=============================================================================
 
+//
+// Запись QStringList в файл
+//
+bool MainWindow::saveStringListToFile(const QString& fileName, const QStringList& list)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out.setCodec("UTF-8"); // Установка кодировки
+
+    for (const QString& str : list) {
+        out << str << "\n";
+    }
+
+    file.close();
+    return true;
+}
+
+
+//=============================================================================
+
+QStringList MainWindow::loadStringListFromFile(const QString& fileName)
+{
+    QStringList list;
+    QFile file(fileName);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        in.setCodec("UTF-8");
+
+        while (!in.atEnd()) {
+            list << in.readLine();
+        }
+
+        file.close();
+    }
+    return list;
+}
+
+//=============================================================================
+
+void MainWindow::loadRemovedSectionsList()
+{
+    QString  filePathRemovedSectionList;
+    #ifdef HOME_STORAGE
+        filePathRemovedSectionList = "/home/andy/MyQtProjects/PicturesControl0/programm/data/RemovedSectionListPhotos.txt";// Прямой путь к файлу
+        qDebug() << "loadRemovedSectionsList():"  << "HOME_STORAGE";
+    #else
+        filePathRemovedSectionList = "C:/WORK/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
+        qDebug() << "loadRemovedSectionsList():" << "WORK_STORAGE";
+    #endif
+
+    qslDeletedSections = loadStringListFromFile(filePathRemovedSectionList);
+
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(qslDeletedSections);
+
+}//End of void MainWindow::loadRemovedSectionsList()
+
+//=============================================================================
+
+void MainWindow::saveRemovedSectionsList()
+{
+    QString  filePathRemovedSectionList;
+    #ifdef HOME_STORAGE
+        filePathRemovedSectionList = "/home/andy/MyQtProjects/PicturesControl0/programm/data/RemovedSectionListPhotos.txt";// Прямой путь к файлу
+        qDebug() << "saveRemovedSectionsList():"  << "HOME_STORAGE";
+    #else
+        filePathRemovedSectionList = "C:/WORK/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
+        qDebug() << "saveRemovedSectionsList():"  << "WORK_STORAGE";
+    #endif
+
+    saveStringListToFile(filePathRemovedSectionList, qslDeletedSections);
+
+}//End of void MainWindow::saveRemovedSectionsList()
+
+//=============================================================================
+
 void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
@@ -419,6 +502,11 @@ void MainWindow::execActionImportInitial()
     cImportFiles::execImport(progressBarProcess);
 
     emit execShowExecStatus("File import complete!");
+
+    qslDeletedSections.clear();
+
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(qslDeletedSections);
 
     //execActionLoad();//Выполнить загрузку изображений
 
@@ -928,6 +1016,9 @@ void MainWindow::execActionRemoveText()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
+            qslDeletedSections.append(qsSection);
+            ui->listWidgetOther->clear();
+            ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
         }
 
@@ -1013,6 +1104,9 @@ void MainWindow::execActionRemoveTif()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
+            qslDeletedSections.append(qsSection);
+            ui->listWidgetOther->clear();
+            ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
         }
 
@@ -1098,6 +1192,9 @@ void MainWindow::execActionRemoveMovie()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
+            qslDeletedSections.append(qsSection);
+            ui->listWidgetOther->clear();
+            ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
         }
         //---
@@ -1232,6 +1329,8 @@ void MainWindow::execTimerUpdate()
 
         qDebug() << "CurrentIndex=" << iCurrentIndexGlobal.load(std::memory_order_relaxed);
         execActionLoad();
+
+        loadRemovedSectionsList();
 
     }
 

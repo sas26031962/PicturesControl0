@@ -73,6 +73,12 @@ private:
     void execRotate(int angle);
     bool deleteSection(QString s);
 
+    bool saveStringListToFile(const QString& fileName, const QStringList& list);
+    QStringList loadStringListFromFile(const QString& fileName);
+
+    void loadRemovedSectionsList();
+    void saveRemovedSectionsList();
+
 public:
     //Атрибуты
     QString filePathSubject;
