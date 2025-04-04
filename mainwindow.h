@@ -60,7 +60,7 @@ private:
 
     QStringList * qslHashTagList;
 
-    QStringList * qslDeletedSections;
+    QStringList qslDeletedSections;
 
     //QString rotatedImagePath = "./img/tmp/rotated_image.png";
 
@@ -71,7 +71,7 @@ private:
     bool loadHashTagListProperty();
     bool loadHashTagListTheame();
     void execRotate(int angle);
-    bool deleteSection(QSettings settings, QString s);
+    bool deleteSection(QString s);
 
 public:
     //Атрибуты
@@ -114,6 +114,7 @@ private slots:
     void execActionRemoveMovie();
     void execActionRemoveText();
     void execActionRemoveTif();
+    void execActionRemoveSection();
 
     void execActionGetGroupsList();
 

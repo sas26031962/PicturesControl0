@@ -351,6 +351,7 @@
     <addaction name="actionRemoveText"/>
     <addaction name="actionRemoveTif"/>
     <addaction name="actionGetGroupsList"/>
+    <addaction name="actionRemoveSection"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSelect_image">
@@ -502,6 +503,11 @@
   <action name="actionLoadHashTagListTheame">
    <property name="text">
     <string>Theame</string>
+   </property>
+  </action>
+  <action name="actionRemoveSection">
+   <property name="text">
+    <string>RemoveSection</string>
    </property>
   </action>
  </widget>

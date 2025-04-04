@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     cImportFiles::Groups = new QStringList();
-    qslDeletedSections = new QStringList();
+    qslDeletedSections.clear();
 
     ui->setupUi(this);
 
@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRemoveMovie, SIGNAL(triggered()), this, SLOT( execActionRemoveMovie()));
     connect(ui->actionRemoveText, SIGNAL(triggered()), this, SLOT( execActionRemoveText()));
     connect(ui->actionRemoveTif, SIGNAL(triggered()), this, SLOT( execActionRemoveTif()));
+    connect(ui->actionRemoveSection, SIGNAL(triggered()), this, SLOT( execActionRemoveSection()));
 
     connect(ui->actionRotateCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCW()));
     connect(ui->actionRotateCCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCCW()));
@@ -159,7 +160,6 @@ MainWindow::~MainWindow()
     delete fmViewPicture;
 
     delete qslHashTagList;
-    delete qslDeletedSections;
 
     if(cImportFiles::Groups != nullptr) delete cImportFiles::Groups;
 
@@ -223,6 +223,18 @@ void MainWindow::keyPressEvent(QKeyEvent * e)
             }
         break;
 
+       //Key_D
+       case 1042:
+       case 68:
+            qDebug() << "D pressed";
+            KeyPressed.push(e->key());
+            if(KeyPressed.Previous == 16777249)
+            {
+                qDebug() << "CTRL+D pressed";
+                emit ui->actionRemoveSection->triggered();// pushButtonEnd->pressed();
+            }
+            break;
+
         default:
             qDebug() << "Key press:" << e->key();
         break;
@@ -236,7 +248,15 @@ void MainWindow::showCurrentIndexPicture()
 {
 
     // Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+    if(index > (Groups.count() - 1))
+    {
+        qDebug() << "Loaded index out of range:" << index << " goto head of list";
+
+        index = 0;
+        iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
+    }
+    QString qsGroupName = Groups.at(index);
     cIniFile::settings.beginGroup(qsGroupName);
 
     QString qsPath, qsName, qsError;
@@ -524,8 +544,6 @@ void MainWindow::execActionFormViewPicture()
 
 //=============================================================================
 
-//=============================================================================
-
 bool MainWindow::loadHashTagListSubject()
 {
 
@@ -783,12 +801,12 @@ void MainWindow::execActionLoadHashTagListTheame()
 //
 // Удалить секцию из ini файла
 //
-bool MainWindow::deleteSection(QSettings settings, QString s)
+bool MainWindow::deleteSection(QString s)
 {
     bool Error = false;
 
-    settings.beginGroup(s);
-    QList<QString> keys = settings.childKeys();
+    cIniFile::settings.beginGroup(s);
+    QList<QString> keys = cIniFile::settings.childKeys();
     int iKeysCount = keys.count();
 
     if(iKeysCount > 0)
@@ -799,7 +817,7 @@ bool MainWindow::deleteSection(QSettings settings, QString s)
         {
             QString qsKey = readKeyIt.next();
             qDebug() << qsKey;
-            settings.remove(qsKey);
+            cIniFile::settings.remove(qsKey);
         }
         qDebug() << "All keys in section " << s << " removed!";
 
@@ -808,14 +826,37 @@ bool MainWindow::deleteSection(QSettings settings, QString s)
     {
         qDebug() << "No keys in section " << s << " found!";
     }
-    settings.endGroup();
+    cIniFile::settings.endGroup();
 
-    settings.remove(s);
+    cIniFile::settings.remove(s);
     qDebug() << "Section " << s << " removed!";
 
-    qslDeletedSections->append(s);//Добавление секции в список - результат
+    qslDeletedSections.append(s);//Добавление секции в список - результат
 
     return Error;
+}
+
+//=============================================================================
+
+void MainWindow::execActionRemoveSection()
+{
+    QString s = "ActionRemoveSection()";
+
+    // Читаем имя текущей секции
+    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+
+    bool x = deleteSection(qsGroupName);
+    // Выводим значения удалённых секций
+    if(!x)
+    {
+        ui->listWidgetOther->clear();
+        ui->listWidgetOther->addItems(qslDeletedSections);
+    }
+
+    //===
+    emit execShowExecStatus(s);
+   //===
+
 }
 
 //=============================================================================

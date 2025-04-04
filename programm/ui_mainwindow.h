@@ -56,6 +56,7 @@ public:
     QAction *actionRemoveTif;
     QAction *actionGetGroupsList;
     QAction *actionLoadHashTagListTheame;
+    QAction *actionRemoveSection;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -141,6 +142,8 @@ public:
         actionGetGroupsList->setObjectName(QStringLiteral("actionGetGroupsList"));
         actionLoadHashTagListTheame = new QAction(MainWindow);
         actionLoadHashTagListTheame->setObjectName(QStringLiteral("actionLoadHashTagListTheame"));
+        actionRemoveSection = new QAction(MainWindow);
+        actionRemoveSection->setObjectName(QStringLiteral("actionRemoveSection"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -257,6 +260,7 @@ public:
         menuFile->addAction(actionRemoveText);
         menuFile->addAction(actionRemoveTif);
         menuFile->addAction(actionGetGroupsList);
+        menuFile->addAction(actionRemoveSection);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
         menuSelect_image->addAction(actionSelectImageNext);
@@ -303,6 +307,7 @@ public:
         actionRemoveTif->setText(QApplication::translate("MainWindow", "RemoveTif", 0));
         actionGetGroupsList->setText(QApplication::translate("MainWindow", "GetGroupsList", 0));
         actionLoadHashTagListTheame->setText(QApplication::translate("MainWindow", "Theame", 0));
+        actionRemoveSection->setText(QApplication::translate("MainWindow", "RemoveSection", 0));
         groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
 #ifndef QT_NO_TOOLTIP
         pushButtonBegin->setToolTip(QString());
