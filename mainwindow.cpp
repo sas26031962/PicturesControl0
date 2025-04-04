@@ -315,7 +315,7 @@ void MainWindow::showCurrentIndexPicture()
 void MainWindow::execActionSelectImageBegin()
 {
     // Модификация индекса
-    iCurrentIndexGlobal.store(0);
+    iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -849,6 +849,8 @@ void MainWindow::execActionRemoveSection()
     // Выводим значения удалённых секций
     if(!x)
     {
+        Groups.removeAt(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+
         ui->listWidgetOther->clear();
         ui->listWidgetOther->addItems(qslDeletedSections);
     }
@@ -925,6 +927,7 @@ void MainWindow::execActionRemoveText()
         if(IsSign)
         {
             settings.remove(qsSection);
+            Groups.removeOne(qsSection);
             qDebug() << "Section " << qsSection << " removed!";
         }
 
@@ -1009,6 +1012,7 @@ void MainWindow::execActionRemoveTif()
         if(IsSign)
         {
             settings.remove(qsSection);
+            Groups.removeOne(qsSection);
             qDebug() << "Section " << qsSection << " removed!";
         }
 
@@ -1093,6 +1097,7 @@ void MainWindow::execActionRemoveMovie()
         if(IsSign)
         {
             settings.remove(qsSection);
+            Groups.removeOne(qsSection);
             qDebug() << "Section " << qsSection << " removed!";
         }
         //---
