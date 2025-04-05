@@ -10,6 +10,9 @@ My_Avito
 My_bicycle
 My_teeth
 My_garage_making
+Nature_forest_fungi
+Nature
+Лес_грибы
 
 
 
