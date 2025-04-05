@@ -897,6 +897,10 @@ bool MainWindow::deleteSection(QString s)
     QList<QString> keys = cIniFile::settings.childKeys();
     int iKeysCount = keys.count();
 
+    QString qsName = cIniFile::settings.value("name", "noName").toString();
+    QString qsPath = cIniFile::settings.value("path", "noPath").toString();
+    QString qsWay = qsPath + "/" + qsName;
+
     if(iKeysCount > 0)
     {
         // Перебор всей ключей в секции
@@ -919,7 +923,9 @@ bool MainWindow::deleteSection(QString s)
     cIniFile::settings.remove(s);
     qDebug() << "Section " << s << " removed!";
 
-    qslDeletedSections.append(s);//Добавление секции в список - результат
+    //Добавление секции в список - результат
+    //qslDeletedSections.append(s);
+    qslDeletedSections.append(qsWay);//#@
 
     return Error;
 }
@@ -985,6 +991,8 @@ void MainWindow::execActionRemoveText()
         int iKeysCount = keys.count();
 
         QString qsName = settings.value("name", "noName").toString();
+        QString qsPath = settings.value("path", "noPath").toString();
+        QString qsWay = qsPath + "/" + qsName;
 
         if(qsName.toLower().indexOf(".txt") >= 0)
         {
@@ -1016,7 +1024,8 @@ void MainWindow::execActionRemoveText()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
-            qslDeletedSections.append(qsSection);
+            //qslDeletedSections.append(qsSection);
+            qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
             ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
@@ -1076,6 +1085,8 @@ void MainWindow::execActionRemoveTif()
         int iKeysCount = keys.count();
 
         QString qsName = settings.value("name", "noName").toString();
+        QString qsPath = settings.value("path", "noPath").toString();
+        QString qsWay = qsPath + "/" + qsName;
 
         if(qsName.toLower().indexOf(".tif") >= 0)
         {
@@ -1104,7 +1115,8 @@ void MainWindow::execActionRemoveTif()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
-            qslDeletedSections.append(qsSection);
+            //qslDeletedSections.append(qsSection);
+            qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
             ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
@@ -1164,6 +1176,8 @@ void MainWindow::execActionRemoveMovie()
         int iKeysCount = keys.count();
 
         QString qsName = settings.value("name", "noName").toString();
+        QString qsPath = settings.value("path", "noPath").toString();
+        QString qsWay = qsPath + "/" + qsName;
 
         if(qsName.toLower().indexOf(".mp4") >= 0)
         {
@@ -1180,6 +1194,7 @@ void MainWindow::execActionRemoveMovie()
             {
                 QString qsKey = readKeyIt.next();
                 qDebug() << qsKey;
+
                 settings.remove(qsKey);
             }
             qDebug() << "All keys in section " << qsSection << " removed!";
@@ -1192,7 +1207,8 @@ void MainWindow::execActionRemoveMovie()
         {
             settings.remove(qsSection);
             Groups.removeOne(qsSection);
-            qslDeletedSections.append(qsSection);
+            //qslDeletedSections.append(qsSection);
+            qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
             ui->listWidgetOther->addItems(qslDeletedSections);
             qDebug() << "Section " << qsSection << " removed!";
