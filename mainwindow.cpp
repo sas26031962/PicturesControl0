@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     progressBarNavigation = ui->progressBarNavigation;
+    SpinBoxIndex = ui->spinBoxIndex;
 
     connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
@@ -403,7 +404,9 @@ void MainWindow::execActionSelectImageBegin()
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+    progressBarNavigation->setValue(index);
+    SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -423,8 +426,9 @@ void MainWindow::execActionSelectImageNext()
 
     // Отобразить картинку
     showCurrentIndexPicture();
-
-    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+    progressBarNavigation->setValue(index);
+    SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageNext(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -445,7 +449,9 @@ void MainWindow::execActionSelectImagePrevious()
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+    progressBarNavigation->setValue(index);
+    SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -463,7 +469,9 @@ void MainWindow::execActionSelectImageEnd()
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    progressBarNavigation->setValue(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+    progressBarNavigation->setValue(index);
+    SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageEnd(), goto index";
     s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
@@ -601,6 +609,9 @@ void MainWindow::execActionLoad()
     //Установка навигации
     progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);
     progressBarNavigation->setValue(LoadedCurrentIndex);
+
+    SpinBoxIndex->setRange(0, cImportFiles::MaxIndexValue);
+    SpinBoxIndex->setValue(LoadedCurrentIndex);
 
     execActionSelectImageNext();
 

@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QImage>
 #include <QProgressBar>
+#include <QSpinBox>
 #include <QLabel>
 #include <memory>
 #include <QStringList>
@@ -47,6 +48,8 @@ private:
     QLabel * labelFileName;
     QProgressBar * progressBarProcess;
     QProgressBar * progressBarNavigation;
+    QSpinBox * SpinBoxIndex;
+
     QLabel * labelRotator;
 
     QTimer * timerUpdate;

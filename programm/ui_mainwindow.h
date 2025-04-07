@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.0
+** Created by: Qt User Interface Compiler version 5.15.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -64,6 +63,7 @@ public:
     QPushButton *pushButtonPrevious;
     QPushButton *pushButtonEnd;
     QProgressBar *progressBarNavigation;
+    QSpinBox *spinBoxIndex;
     QLabel *labelIncomingListCaption;
     QTableView *tableViewCurrent;
     QGroupBox *groupBoxEdit;
@@ -96,158 +96,161 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
+            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(601, 583);
         actionExit = new QAction(MainWindow);
-        actionExit->setObjectName(QStringLiteral("actionExit"));
+        actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionSelectImageBegin = new QAction(MainWindow);
-        actionSelectImageBegin->setObjectName(QStringLiteral("actionSelectImageBegin"));
+        actionSelectImageBegin->setObjectName(QString::fromUtf8("actionSelectImageBegin"));
         actionSelectImageNext = new QAction(MainWindow);
-        actionSelectImageNext->setObjectName(QStringLiteral("actionSelectImageNext"));
+        actionSelectImageNext->setObjectName(QString::fromUtf8("actionSelectImageNext"));
         actionSelectImagePrevious = new QAction(MainWindow);
-        actionSelectImagePrevious->setObjectName(QStringLiteral("actionSelectImagePrevious"));
+        actionSelectImagePrevious->setObjectName(QString::fromUtf8("actionSelectImagePrevious"));
         actionSelectImageEnd = new QAction(MainWindow);
-        actionSelectImageEnd->setObjectName(QStringLiteral("actionSelectImageEnd"));
+        actionSelectImageEnd->setObjectName(QString::fromUtf8("actionSelectImageEnd"));
         actionImport = new QAction(MainWindow);
-        actionImport->setObjectName(QStringLiteral("actionImport"));
+        actionImport->setObjectName(QString::fromUtf8("actionImport"));
         actionLoad = new QAction(MainWindow);
-        actionLoad->setObjectName(QStringLiteral("actionLoad"));
+        actionLoad->setObjectName(QString::fromUtf8("actionLoad"));
         actionViewPicture = new QAction(MainWindow);
-        actionViewPicture->setObjectName(QStringLiteral("actionViewPicture"));
+        actionViewPicture->setObjectName(QString::fromUtf8("actionViewPicture"));
         actionViewPicture->setCheckable(true);
         actionViewPicture->setChecked(true);
         actionLoaadHashTagListSubject = new QAction(MainWindow);
-        actionLoaadHashTagListSubject->setObjectName(QStringLiteral("actionLoaadHashTagListSubject"));
+        actionLoaadHashTagListSubject->setObjectName(QString::fromUtf8("actionLoaadHashTagListSubject"));
         actionLoadHashTagListPlace = new QAction(MainWindow);
-        actionLoadHashTagListPlace->setObjectName(QStringLiteral("actionLoadHashTagListPlace"));
+        actionLoadHashTagListPlace->setObjectName(QString::fromUtf8("actionLoadHashTagListPlace"));
         actionRemoveMovie = new QAction(MainWindow);
-        actionRemoveMovie->setObjectName(QStringLiteral("actionRemoveMovie"));
+        actionRemoveMovie->setObjectName(QString::fromUtf8("actionRemoveMovie"));
         actionRotateCW = new QAction(MainWindow);
-        actionRotateCW->setObjectName(QStringLiteral("actionRotateCW"));
+        actionRotateCW->setObjectName(QString::fromUtf8("actionRotateCW"));
         actionRotateCCW = new QAction(MainWindow);
-        actionRotateCCW->setObjectName(QStringLiteral("actionRotateCCW"));
+        actionRotateCCW->setObjectName(QString::fromUtf8("actionRotateCCW"));
         actionLoadHashTagListProperty = new QAction(MainWindow);
-        actionLoadHashTagListProperty->setObjectName(QStringLiteral("actionLoadHashTagListProperty"));
+        actionLoadHashTagListProperty->setObjectName(QString::fromUtf8("actionLoadHashTagListProperty"));
         actionImportFiles = new QAction(MainWindow);
-        actionImportFiles->setObjectName(QStringLiteral("actionImportFiles"));
+        actionImportFiles->setObjectName(QString::fromUtf8("actionImportFiles"));
         actionRotateCW_2 = new QAction(MainWindow);
-        actionRotateCW_2->setObjectName(QStringLiteral("actionRotateCW_2"));
+        actionRotateCW_2->setObjectName(QString::fromUtf8("actionRotateCW_2"));
         actionRotateCCW_2 = new QAction(MainWindow);
-        actionRotateCCW_2->setObjectName(QStringLiteral("actionRotateCCW_2"));
+        actionRotateCCW_2->setObjectName(QString::fromUtf8("actionRotateCCW_2"));
         actionRemoveText = new QAction(MainWindow);
-        actionRemoveText->setObjectName(QStringLiteral("actionRemoveText"));
+        actionRemoveText->setObjectName(QString::fromUtf8("actionRemoveText"));
         actionRemoveTif = new QAction(MainWindow);
-        actionRemoveTif->setObjectName(QStringLiteral("actionRemoveTif"));
+        actionRemoveTif->setObjectName(QString::fromUtf8("actionRemoveTif"));
         actionGetGroupsList = new QAction(MainWindow);
-        actionGetGroupsList->setObjectName(QStringLiteral("actionGetGroupsList"));
+        actionGetGroupsList->setObjectName(QString::fromUtf8("actionGetGroupsList"));
         actionLoadHashTagListTheame = new QAction(MainWindow);
-        actionLoadHashTagListTheame->setObjectName(QStringLiteral("actionLoadHashTagListTheame"));
+        actionLoadHashTagListTheame->setObjectName(QString::fromUtf8("actionLoadHashTagListTheame"));
         actionRemoveSection = new QAction(MainWindow);
-        actionRemoveSection->setObjectName(QStringLiteral("actionRemoveSection"));
+        actionRemoveSection->setObjectName(QString::fromUtf8("actionRemoveSection"));
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
-        groupBoxControl->setObjectName(QStringLiteral("groupBoxControl"));
-        groupBoxControl->setGeometry(QRect(10, 380, 271, 51));
+        groupBoxControl->setObjectName(QString::fromUtf8("groupBoxControl"));
+        groupBoxControl->setGeometry(QRect(10, 380, 271, 81));
         pushButtonBegin = new QPushButton(groupBoxControl);
-        pushButtonBegin->setObjectName(QStringLiteral("pushButtonBegin"));
+        pushButtonBegin->setObjectName(QString::fromUtf8("pushButtonBegin"));
         pushButtonBegin->setGeometry(QRect(20, 20, 23, 23));
         pushButtonNext = new QPushButton(groupBoxControl);
-        pushButtonNext->setObjectName(QStringLiteral("pushButtonNext"));
+        pushButtonNext->setObjectName(QString::fromUtf8("pushButtonNext"));
         pushButtonNext->setGeometry(QRect(80, 20, 23, 23));
         pushButtonPrevious = new QPushButton(groupBoxControl);
-        pushButtonPrevious->setObjectName(QStringLiteral("pushButtonPrevious"));
+        pushButtonPrevious->setObjectName(QString::fromUtf8("pushButtonPrevious"));
         pushButtonPrevious->setGeometry(QRect(50, 20, 23, 23));
         pushButtonEnd = new QPushButton(groupBoxControl);
-        pushButtonEnd->setObjectName(QStringLiteral("pushButtonEnd"));
+        pushButtonEnd->setObjectName(QString::fromUtf8("pushButtonEnd"));
         pushButtonEnd->setGeometry(QRect(110, 20, 23, 23));
         progressBarNavigation = new QProgressBar(groupBoxControl);
-        progressBarNavigation->setObjectName(QStringLiteral("progressBarNavigation"));
+        progressBarNavigation->setObjectName(QString::fromUtf8("progressBarNavigation"));
         progressBarNavigation->setGeometry(QRect(140, 20, 118, 23));
         progressBarNavigation->setValue(24);
+        spinBoxIndex = new QSpinBox(groupBoxControl);
+        spinBoxIndex->setObjectName(QString::fromUtf8("spinBoxIndex"));
+        spinBoxIndex->setGeometry(QRect(21, 50, 111, 26));
         labelIncomingListCaption = new QLabel(centralWidget);
-        labelIncomingListCaption->setObjectName(QStringLiteral("labelIncomingListCaption"));
+        labelIncomingListCaption->setObjectName(QString::fromUtf8("labelIncomingListCaption"));
         labelIncomingListCaption->setGeometry(QRect(10, 10, 221, 20));
         tableViewCurrent = new QTableView(centralWidget);
-        tableViewCurrent->setObjectName(QStringLiteral("tableViewCurrent"));
+        tableViewCurrent->setObjectName(QString::fromUtf8("tableViewCurrent"));
         tableViewCurrent->setGeometry(QRect(10, 30, 231, 341));
         groupBoxEdit = new QGroupBox(centralWidget);
-        groupBoxEdit->setObjectName(QStringLiteral("groupBoxEdit"));
-        groupBoxEdit->setGeometry(QRect(20, 430, 451, 51));
+        groupBoxEdit->setObjectName(QString::fromUtf8("groupBoxEdit"));
+        groupBoxEdit->setGeometry(QRect(20, 470, 451, 51));
         pushButtonLoad = new QPushButton(groupBoxEdit);
-        pushButtonLoad->setObjectName(QStringLiteral("pushButtonLoad"));
+        pushButtonLoad->setObjectName(QString::fromUtf8("pushButtonLoad"));
         pushButtonLoad->setGeometry(QRect(10, 20, 75, 23));
         lineEditMemo = new QLineEdit(groupBoxEdit);
-        lineEditMemo->setObjectName(QStringLiteral("lineEditMemo"));
+        lineEditMemo->setObjectName(QString::fromUtf8("lineEditMemo"));
         lineEditMemo->setGeometry(QRect(90, 20, 301, 23));
         pushButtonMemo = new QPushButton(groupBoxEdit);
-        pushButtonMemo->setObjectName(QStringLiteral("pushButtonMemo"));
+        pushButtonMemo->setObjectName(QString::fromUtf8("pushButtonMemo"));
         pushButtonMemo->setGeometry(QRect(400, 20, 31, 23));
         groupBoxRotate = new QGroupBox(centralWidget);
-        groupBoxRotate->setObjectName(QStringLiteral("groupBoxRotate"));
+        groupBoxRotate->setObjectName(QString::fromUtf8("groupBoxRotate"));
         groupBoxRotate->setGeometry(QRect(330, 380, 261, 51));
         pushButtonRotateCCW = new QPushButton(groupBoxRotate);
-        pushButtonRotateCCW->setObjectName(QStringLiteral("pushButtonRotateCCW"));
+        pushButtonRotateCCW->setObjectName(QString::fromUtf8("pushButtonRotateCCW"));
         pushButtonRotateCCW->setGeometry(QRect(93, 20, 75, 23));
         spinBoxAngle = new QSpinBox(groupBoxRotate);
-        spinBoxAngle->setObjectName(QStringLiteral("spinBoxAngle"));
+        spinBoxAngle->setObjectName(QString::fromUtf8("spinBoxAngle"));
         spinBoxAngle->setGeometry(QRect(183, 20, 51, 22));
         spinBoxAngle->setMinimum(-90);
         spinBoxAngle->setMaximum(90);
         pushButtonRotateCW = new QPushButton(groupBoxRotate);
-        pushButtonRotateCW->setObjectName(QStringLiteral("pushButtonRotateCW"));
+        pushButtonRotateCW->setObjectName(QString::fromUtf8("pushButtonRotateCW"));
         pushButtonRotateCW->setGeometry(QRect(10, 20, 75, 23));
         tabWidget = new QTabWidget(centralWidget);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(250, 30, 341, 341));
         tab_4 = new QWidget();
-        tab_4->setObjectName(QStringLiteral("tab_4"));
+        tab_4->setObjectName(QString::fromUtf8("tab_4"));
         listWidgetSubject = new QListWidget(tab_4);
-        listWidgetSubject->setObjectName(QStringLiteral("listWidgetSubject"));
+        listWidgetSubject->setObjectName(QString::fromUtf8("listWidgetSubject"));
         listWidgetSubject->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab_4, QString());
         tab = new QWidget();
-        tab->setObjectName(QStringLiteral("tab"));
+        tab->setObjectName(QString::fromUtf8("tab"));
         listWidgetPlaces = new QListWidget(tab);
-        listWidgetPlaces->setObjectName(QStringLiteral("listWidgetPlaces"));
+        listWidgetPlaces->setObjectName(QString::fromUtf8("listWidgetPlaces"));
         listWidgetPlaces->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
-        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
         listWidgetPropertyes = new QListWidget(tab_2);
-        listWidgetPropertyes->setObjectName(QStringLiteral("listWidgetPropertyes"));
+        listWidgetPropertyes->setObjectName(QString::fromUtf8("listWidgetPropertyes"));
         listWidgetPropertyes->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
-        tab_3->setObjectName(QStringLiteral("tab_3"));
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
         listWidgetTheams = new QListWidget(tab_3);
-        listWidgetTheams->setObjectName(QStringLiteral("listWidgetTheams"));
+        listWidgetTheams->setObjectName(QString::fromUtf8("listWidgetTheams"));
         listWidgetTheams->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab_3, QString());
         tab_5 = new QWidget();
-        tab_5->setObjectName(QStringLiteral("tab_5"));
+        tab_5->setObjectName(QString::fromUtf8("tab_5"));
         listWidgetOther = new QListWidget(tab_5);
-        listWidgetOther->setObjectName(QStringLiteral("listWidgetOther"));
+        listWidgetOther->setObjectName(QString::fromUtf8("listWidgetOther"));
         listWidgetOther->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab_5, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 601, 21));
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 601, 22));
         menuFile = new QMenu(menuBar);
-        menuFile->setObjectName(QStringLiteral("menuFile"));
+        menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuSelect_image = new QMenu(menuBar);
-        menuSelect_image->setObjectName(QStringLiteral("menuSelect_image"));
+        menuSelect_image->setObjectName(QString::fromUtf8("menuSelect_image"));
         menuForms = new QMenu(menuBar);
-        menuForms->setObjectName(QStringLiteral("menuForms"));
+        menuForms->setObjectName(QString::fromUtf8("menuForms"));
         menuTags = new QMenu(menuBar);
-        menuTags->setObjectName(QStringLiteral("menuTags"));
+        menuTags->setObjectName(QString::fromUtf8("menuTags"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
@@ -285,74 +288,74 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "PicturesControl0 ", 0));
-        actionExit->setText(QApplication::translate("MainWindow", "Exit", 0));
-        actionSelectImageBegin->setText(QApplication::translate("MainWindow", "Begin", 0));
-        actionSelectImageNext->setText(QApplication::translate("MainWindow", "Next", 0));
-        actionSelectImagePrevious->setText(QApplication::translate("MainWindow", "Previous", 0));
-        actionSelectImageEnd->setText(QApplication::translate("MainWindow", "End", 0));
-        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
-        actionLoad->setText(QApplication::translate("MainWindow", "Load", 0));
-        actionViewPicture->setText(QApplication::translate("MainWindow", "ViewPicture", 0));
-        actionLoaadHashTagListSubject->setText(QApplication::translate("MainWindow", "Subject", 0));
-        actionLoadHashTagListPlace->setText(QApplication::translate("MainWindow", "Place", 0));
-        actionRemoveMovie->setText(QApplication::translate("MainWindow", "RemoveMovie", 0));
-        actionRotateCW->setText(QApplication::translate("MainWindow", "RotateCW", 0));
-        actionRotateCCW->setText(QApplication::translate("MainWindow", "RotateCCW", 0));
-        actionLoadHashTagListProperty->setText(QApplication::translate("MainWindow", "Property", 0));
-        actionImportFiles->setText(QApplication::translate("MainWindow", "ImportFiles", 0));
-        actionRotateCW_2->setText(QApplication::translate("MainWindow", "RotateCW", 0));
-        actionRotateCCW_2->setText(QApplication::translate("MainWindow", "RotateCCW", 0));
-        actionRemoveText->setText(QApplication::translate("MainWindow", "RemoveText", 0));
-        actionRemoveTif->setText(QApplication::translate("MainWindow", "RemoveTif", 0));
-        actionGetGroupsList->setText(QApplication::translate("MainWindow", "GetGroupsList", 0));
-        actionLoadHashTagListTheame->setText(QApplication::translate("MainWindow", "Theame", 0));
-        actionRemoveSection->setText(QApplication::translate("MainWindow", "RemoveSection", 0));
-        groupBoxControl->setTitle(QApplication::translate("MainWindow", "Navigation", 0));
-#ifndef QT_NO_TOOLTIP
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "PicturesControl0 ", nullptr));
+        actionExit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
+        actionSelectImageBegin->setText(QCoreApplication::translate("MainWindow", "Begin", nullptr));
+        actionSelectImageNext->setText(QCoreApplication::translate("MainWindow", "Next", nullptr));
+        actionSelectImagePrevious->setText(QCoreApplication::translate("MainWindow", "Previous", nullptr));
+        actionSelectImageEnd->setText(QCoreApplication::translate("MainWindow", "End", nullptr));
+        actionImport->setText(QCoreApplication::translate("MainWindow", "Import", nullptr));
+        actionLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
+        actionViewPicture->setText(QCoreApplication::translate("MainWindow", "ViewPicture", nullptr));
+        actionLoaadHashTagListSubject->setText(QCoreApplication::translate("MainWindow", "Subject", nullptr));
+        actionLoadHashTagListPlace->setText(QCoreApplication::translate("MainWindow", "Place", nullptr));
+        actionRemoveMovie->setText(QCoreApplication::translate("MainWindow", "RemoveMovie", nullptr));
+        actionRotateCW->setText(QCoreApplication::translate("MainWindow", "RotateCW", nullptr));
+        actionRotateCCW->setText(QCoreApplication::translate("MainWindow", "RotateCCW", nullptr));
+        actionLoadHashTagListProperty->setText(QCoreApplication::translate("MainWindow", "Property", nullptr));
+        actionImportFiles->setText(QCoreApplication::translate("MainWindow", "ImportFiles", nullptr));
+        actionRotateCW_2->setText(QCoreApplication::translate("MainWindow", "RotateCW", nullptr));
+        actionRotateCCW_2->setText(QCoreApplication::translate("MainWindow", "RotateCCW", nullptr));
+        actionRemoveText->setText(QCoreApplication::translate("MainWindow", "RemoveText", nullptr));
+        actionRemoveTif->setText(QCoreApplication::translate("MainWindow", "RemoveTif", nullptr));
+        actionGetGroupsList->setText(QCoreApplication::translate("MainWindow", "GetGroupsList", nullptr));
+        actionLoadHashTagListTheame->setText(QCoreApplication::translate("MainWindow", "Theame", nullptr));
+        actionRemoveSection->setText(QCoreApplication::translate("MainWindow", "RemoveSection", nullptr));
+        groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonBegin->setText(QApplication::translate("MainWindow", "|<", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonBegin->setText(QCoreApplication::translate("MainWindow", "|<", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonNext->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonNext->setText(QApplication::translate("MainWindow", ">", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonNext->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonPrevious->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonPrevious->setText(QApplication::translate("MainWindow", "<", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonPrevious->setText(QCoreApplication::translate("MainWindow", "<", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonEnd->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonEnd->setText(QApplication::translate("MainWindow", ">|", 0));
-        labelIncomingListCaption->setText(QApplication::translate("MainWindow", "Incoming tag", 0));
-        groupBoxEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
-        pushButtonLoad->setText(QApplication::translate("MainWindow", "Load", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonEnd->setText(QCoreApplication::translate("MainWindow", ">|", nullptr));
+        labelIncomingListCaption->setText(QCoreApplication::translate("MainWindow", "Incoming tag", nullptr));
+        groupBoxEdit->setTitle(QCoreApplication::translate("MainWindow", "Edit", nullptr));
+        pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonMemo->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonMemo->setText(QApplication::translate("MainWindow", "M", 0));
-        groupBoxRotate->setTitle(QApplication::translate("MainWindow", "Rotate", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonMemo->setText(QCoreApplication::translate("MainWindow", "M", nullptr));
+        groupBoxRotate->setTitle(QCoreApplication::translate("MainWindow", "Rotate", nullptr));
+#if QT_CONFIG(tooltip)
         pushButtonRotateCCW->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonRotateCCW->setText(QApplication::translate("MainWindow", "Rotate CCW", 0));
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+        pushButtonRotateCCW->setText(QCoreApplication::translate("MainWindow", "Rotate CCW", nullptr));
+#if QT_CONFIG(tooltip)
         spinBoxAngle->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_TOOLTIP
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
         pushButtonRotateCW->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButtonRotateCW->setText(QApplication::translate("MainWindow", "Rotate CW", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Subject", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Places", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Propertyes", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Theams", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "Other", 0));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuSelect_image->setTitle(QApplication::translate("MainWindow", "Select image", 0));
-        menuForms->setTitle(QApplication::translate("MainWindow", "Forms", 0));
-        menuTags->setTitle(QApplication::translate("MainWindow", "Tags", 0));
+#endif // QT_CONFIG(tooltip)
+        pushButtonRotateCW->setText(QCoreApplication::translate("MainWindow", "Rotate CW", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("MainWindow", "Subject", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Places", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Propertyes", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Theams", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Other", nullptr));
+        menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
+        menuSelect_image->setTitle(QCoreApplication::translate("MainWindow", "Select image", nullptr));
+        menuForms->setTitle(QCoreApplication::translate("MainWindow", "Forms", nullptr));
+        menuTags->setTitle(QCoreApplication::translate("MainWindow", "Tags", nullptr));
     } // retranslateUi
 
 };
