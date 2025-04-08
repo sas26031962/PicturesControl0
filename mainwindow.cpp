@@ -1298,7 +1298,26 @@ void MainWindow::execRotate(int angle)
     cIniFile::settings.endGroup();
 
     QString imagePath = qsPath + '/' + qsName;
-    qDebug() << "Path:" << imagePath;
+    qDebug() << "OriginalPath:" << imagePath;
+
+    int x = imagePath.indexOf('.');
+    QString qsRootOfName, qsExtOfName;
+    if(x > 0)
+    {
+        qsRootOfName = imagePath.mid(0,x);
+        qsExtOfName = imagePath.mid(x + 1);
+    }
+    else
+    {
+        QString s = "Wrong image file name format";
+        //---
+        emit execShowExecStatus(s);
+        //---
+        return;
+    }
+    qDebug() << "RootOfName=" << qsRootOfName << " ExtOfName=" << qsExtOfName;
+
+    cIniFile::rotatedImagePath = qsRootOfName + "_1" + "." + qsExtOfName;
     //---
 
     QImage originalImage(imagePath);
