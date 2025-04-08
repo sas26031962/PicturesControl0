@@ -960,6 +960,8 @@ void MainWindow::execActionRemoveSection()
         ui->listWidgetOther->addItems(qslDeletedSections);
     }
 
+    execActionSelectImagePrevious();//Перерисовка изображения
+
     //===
     emit execShowExecStatus(s);
    //===
