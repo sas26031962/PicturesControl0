@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     SpinBoxIndex = ui->spinBoxIndex;
 
     connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
+    connect(ui->actionGotoIndex, SIGNAL(pressed()), this, SLOT( execActionGotoIndex()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
@@ -39,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRotateCCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCCW()));
     connect(ui->actionRotateCW, SIGNAL(triggered()), this, SLOT( execActionRotateCW()));
     connect(ui->actionRotateCCW, SIGNAL(triggered()), this, SLOT( execActionRotateCCW()));
+
+    connect(ui->pushButtonGotoIndex, SIGNAL(pressed()), this, SLOT( execActionGotoIndex()));
 
     connect(ui->pushButtonBegin, SIGNAL(pressed()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->pushButtonNext, SIGNAL(pressed()), this, SLOT( execActionSelectImageNext()));
@@ -252,64 +255,75 @@ void MainWindow::showCurrentIndexPicture()
 
     // Читаем значения из INI-файла
     int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-    if(index > (Groups.count() - 1))
+    if(index > (qslGroupsLocal.count() - 1))
     {
         qDebug() << "Loaded index out of range:" << index << " goto head of list";
 
         index = 0;
         iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
     }
-    QString qsGroupName = Groups.at(index);
-    cIniFile::settings.beginGroup(qsGroupName);
-
-    QString qsPath, qsName, qsError;
-
-    QStringList keys = cIniFile::settings.childKeys();
-    int iStrings = keys.count();
-
-    QStandardItemModel * model= new QStandardItemModel(iStrings, 2);
-    QListIterator<QString> readIt(keys);
-    int iIndex = 0;
-    while(readIt.hasNext())
+    int iGroupsCount = qslGroupsLocal.count();
+    if(iGroupsCount > 0)
     {
-        QString key = readIt.next();
-        QString value = cIniFile::settings.value(key,"0").toString();
+        QString qsGroupName = qslGroupsLocal.at(index);
+        cIniFile::settings.beginGroup(qsGroupName);
 
-        if(key == "path") qsPath = value;
-        if(key == "name") qsName = value;
-        if(key == "Eror") qsError = value;
+        QString qsPath, qsName, qsError;
 
-        model->setItem(iIndex, 0, new QStandardItem(key));
-        model->setItem(iIndex, 1, new QStandardItem(value));
-        iIndex++;
-        //qDebug() << "iterator:" << key << " index:" << iIndex;
-    }
-    model->setHeaderData(0, Qt::Horizontal, "Key");
-    model->setHeaderData(1,Qt::Horizontal,"Value");
-    ui->tableViewCurrent->setModel(model);
+        QStringList keys = cIniFile::settings.childKeys();
+        int iStrings = keys.count();
 
-    cIniFile::settings.endGroup();
+        QStandardItemModel * model= new QStandardItemModel(iStrings, 2);
+        QListIterator<QString> readIt(keys);
+        int iIndex = 0;
+        while(readIt.hasNext())
+        {
+            QString key = readIt.next();
+            QString value = cIniFile::settings.value(key,"0").toString();
 
-    QString imagePath = qsPath + '/' + qsName;
+            if(key == "path") qsPath = value;
+            if(key == "name") qsName = value;
+            if(key == "Eror") qsError = value;
 
-    if(qsError == "true")
-    {
-        qDebug() << "FullPath: " << imagePath << " Error:" << qsError;
-        //ui->labelMain->setText(imagePath);
-        return;
+            model->setItem(iIndex, 0, new QStandardItem(key));
+            model->setItem(iIndex, 1, new QStandardItem(value));
+            iIndex++;
+            //qDebug() << "iterator:" << key << " index:" << iIndex;
+        }
+        model->setHeaderData(0, Qt::Horizontal, "Key");
+        model->setHeaderData(1,Qt::Horizontal,"Value");
+        ui->tableViewCurrent->setModel(model);
+
+        cIniFile::settings.endGroup();
+
+        QString imagePath = qsPath + '/' + qsName;
+
+        if(qsError == "true")
+        {
+            qDebug() << "FullPath: " << imagePath << " Error:" << qsError;
+            //ui->labelMain->setText(imagePath);
+            return;
+        }
+        else
+        {
+            emit draw(imagePath);
+        }
+        cImportFiles::labelFileNameText = qsName;
+        cImportFiles::IslabelFileNameTextChanged = true;
+
+        //Сохранение текущего индекса
+        int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+        cIniFile::settings.beginGroup("RecordList");
+        cIniFile::settings.setValue("index", x);
+        cIniFile::settings.endGroup();
     }
     else
     {
-        emit draw(imagePath);
-    }
-      cImportFiles::labelFileNameText = qsName;
-      cImportFiles::IslabelFileNameTextChanged = true;
+        QString s = "Groups is empty!";
+        emit showExecStatus(s);
 
-      //Сохранение текущего индекса
-      int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-      cIniFile::settings.beginGroup("RecordList");
-      cIniFile::settings.setValue("index", x);
-      cIniFile::settings.endGroup();
+        //execActionImportInitial();//!!!
+    }
 
 }
 
@@ -395,6 +409,28 @@ void MainWindow::saveRemovedSectionsList()
 }//End of void MainWindow::saveRemovedSectionsList()
 
 //=============================================================================
+void MainWindow::execActionGotoIndex()
+{
+
+    int index = SpinBoxIndex->value();
+
+    // Модификация индекса
+    iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
+
+    // Отобразить картинку
+    showCurrentIndexPicture();
+
+    progressBarNavigation->setValue(index);
+
+    //---
+    QString s = "execActionGotoIndex(), goto index:";
+    s += QString::number(index);
+    emit execShowExecStatus(s);
+    //---
+
+}
+
+//=============================================================================
 
 void MainWindow::execActionSelectImageBegin()
 {
@@ -419,7 +455,7 @@ void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
-    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < Groups.count() - 1)
+    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < qslGroupsLocal.count() - 1)
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
     }
@@ -464,7 +500,7 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    iCurrentIndexGlobal.store(Groups.count() - 1);
+    iCurrentIndexGlobal.store(qslGroupsLocal.count() - 1);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -544,17 +580,17 @@ void MainWindow::execActionLoad()
     if(!*Ok)iLength = 0;
     settings.endGroup();
 
-    Groups = settings.childGroups();
+    qslGroupsLocal = settings.childGroups();
 
     // Выводим значения
     qDebug() << "length: " << iLength;
-    qDebug() << "childGroupsList length: " << Groups.count();
+    qDebug() << "childGroupsList length: " << qslGroupsLocal.count();
     qDebug() << "----------------------------";
-    cImportFiles::MaxIndexValue = Groups.count();
-    progressBarProcess->setRange(0, Groups.count());
+    cImportFiles::MaxIndexValue = qslGroupsLocal.count();
+    progressBarProcess->setRange(0, qslGroupsLocal.count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
-    QListIterator<QString> readIt(Groups);
+    QListIterator<QString> readIt(qslGroupsLocal);
     while (readIt.hasNext())
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
@@ -948,13 +984,13 @@ void MainWindow::execActionRemoveSection()
     QString s = "ActionRemoveSection()";
 
     // Читаем имя текущей секции
-    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
     bool x = deleteSection(qsGroupName);
     // Выводим значения удалённых секций
     if(!x)
     {
-        Groups.removeAt(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        qslGroupsLocal.removeAt(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
         ui->listWidgetOther->clear();
         ui->listWidgetOther->addItems(qslDeletedSections);
@@ -1036,7 +1072,7 @@ void MainWindow::execActionRemoveText()
         if(IsSign)
         {
             settings.remove(qsSection);
-            Groups.removeOne(qsSection);
+            qslGroupsLocal.removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1127,7 +1163,7 @@ void MainWindow::execActionRemoveTif()
         if(IsSign)
         {
             settings.remove(qsSection);
-            Groups.removeOne(qsSection);
+            qslGroupsLocal.removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1219,7 +1255,7 @@ void MainWindow::execActionRemoveMovie()
         if(IsSign)
         {
             settings.remove(qsSection);
-            Groups.removeOne(qsSection);
+            qslGroupsLocal.removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1288,7 +1324,7 @@ void MainWindow::execSpinBoxAngle(int angle)
 void MainWindow::execRotate(int angle)
 {
     //--- Читаем значения из INI-файла
-    QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
     cIniFile::settings.beginGroup(qsGroupName);
 
@@ -1323,7 +1359,16 @@ void MainWindow::execRotate(int angle)
     QImage originalImage(imagePath);
 
     // Создаем новое изображение для хранения повернутого изображения
-    QImage rotatedImage(originalImage.size(), originalImage.format());
+    QImage::Format format = originalImage.format();
+    QSize size = originalImage.size();
+    int iW = size.width();
+    int iH = size.height();
+    QSize newSize = QSize(iH, iW);
+
+    //QImage rotatedImage(originalImage.size(), originalImage.format());
+    QImage rotatedImage(newSize, format);
+    //QImage rotatedImage(size, format);
+
     rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
 
     QPainter painter(&rotatedImage);
@@ -1357,6 +1402,7 @@ void MainWindow::execTimerUpdate()
 {
     //qDebug() << "CurrentIndex=" << CurrentIndex;
     iTimerUpdateCounter++;
+
     if(iTimerUpdateCounter == 1)
     {
         qDebug() << "CurrentIndex=" << iCurrentIndexGlobal.load(std::memory_order_relaxed) << " Action: open ViewPictureForm";
@@ -1380,7 +1426,7 @@ void MainWindow::execTimerUpdate()
 
         loadRemovedSectionsList();
 
-    }
+    }//End of if(iTimerUpdateCounter == 1)
 
 //    progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
 //    int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
@@ -1445,9 +1491,9 @@ void MainWindow::execActionMemo()
         s = "execInsertMemoKeyValue()";
 
         // Сохранение параметра в INI-файле
-        if(Groups.count() > 0)
+        if(qslGroupsLocal.count() > 0)
         {
-            QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+            QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
             //cIniFile::settings.beginGroup(qsGroupName);
             //cIniFile::settings.setValue("memo", item);
             cIniFile::settings.beginGroup(qsGroupName);
@@ -1493,9 +1539,9 @@ void MainWindow::execListWidgetSubjectItemClicked()
     qDebug() << "listWidgetSubject: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(Groups.count() > 0)
+    if(qslGroupsLocal.count() > 0)
     {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1533,9 +1579,9 @@ void MainWindow::execListWidgetPropertyItemClicked()
     qDebug() << "listWidgetProperty: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(Groups.count() > 0)
+    if(qslGroupsLocal.count() > 0)
     {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1573,9 +1619,9 @@ void MainWindow::execListWidgetTheameItemClicked()
     qDebug() << "listWidgetTheame: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(Groups.count() > 0)
+    if(qslGroupsLocal.count() > 0)
     {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1613,9 +1659,9 @@ void MainWindow::execListWidgetPlaceItemClicked()
     qDebug() << "listWidgetPlace: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(Groups.count() > 0)
+    if(qslGroupsLocal.count() > 0)
     {
-        QString qsGroupName = Groups.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         cIniFile::settings.beginGroup(qsGroupName);
         QStringList list = cIniFile::settings.childKeys();
         if(list.contains(item))

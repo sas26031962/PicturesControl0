@@ -113,6 +113,19 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButtonGotoIndex">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>50</y>
+       <width>81</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Goto index</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="labelIncomingListCaption">
     <property name="geometry">
@@ -348,7 +361,7 @@
      <x>0</x>
      <y>0</y>
      <width>601</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -374,6 +387,7 @@
     <addaction name="actionSelectImageEnd"/>
     <addaction name="actionRotateCW_2"/>
     <addaction name="actionRotateCCW_2"/>
+    <addaction name="actionGotoIndex"/>
    </widget>
    <widget class="QMenu" name="menuForms">
     <property name="title">
@@ -518,6 +532,11 @@
   <action name="actionRemoveSection">
    <property name="text">
     <string>RemoveSection</string>
+   </property>
+  </action>
+  <action name="actionGotoIndex">
+   <property name="text">
+    <string>Goto index</string>
    </property>
   </action>
  </widget>

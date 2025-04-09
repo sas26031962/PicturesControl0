@@ -55,7 +55,7 @@ private:
     QTimer * timerUpdate;
     int iTimerUpdateCounter = 0;
 
-    QStringList Groups;
+    QStringList qslGroupsLocal;
 
     fmView * fmViewPicture;
 
@@ -126,6 +126,8 @@ private slots:
     void execActionRemoveSection();
 
     void execActionGetGroupsList();
+
+    void execActionGotoIndex();
 
     void execActionRotateCW();
     void execActionRotateCCW();
