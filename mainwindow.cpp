@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
     progressBarNavigation = ui->progressBarNavigation;
     SpinBoxIndex = ui->spinBoxIndex;
 
+    ui->pushButtonGotoIndex->setVisible(false);//РЕЖИМ АДМИНИСТРАТОРА
+    ui->pushButtonLoad->setVisible(false);//РЕЖИМ АДМИНИСТРАТОРА
+
     connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
     connect(ui->actionGotoIndex, SIGNAL(pressed()), this, SLOT( execActionGotoIndex()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
@@ -1363,7 +1366,10 @@ void MainWindow::execRotate(int angle)
     QSize size = originalImage.size();
     int iW = size.width();
     int iH = size.height();
-    QSize newSize = QSize(iH, iW);
+    int iSize;
+    if(iW > iH)iSize = iW; else iSize = iH;
+    //QSize newSize = QSize(iH, iW);
+    QSize newSize = QSize(iSize, iSize);
 
     //QImage rotatedImage(originalImage.size(), originalImage.format());
     QImage rotatedImage(newSize, format);
@@ -1385,6 +1391,7 @@ void MainWindow::execRotate(int angle)
 
     painter.setTransform(transform);
     painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
+    //painter.drawImage(0, 437, originalImage); // Рисуем исходное изображение на повернутом
 
     painter.end();
 

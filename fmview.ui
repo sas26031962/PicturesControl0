@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>575</height>
+    <height>850</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,11 @@
      <x>5</x>
      <y>5</y>
      <width>821</width>
-     <height>531</height>
+     <height>821</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(239, 246, 255);</string>
    </property>
    <property name="text">
     <string/>
@@ -30,10 +33,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>550</y>
+     <y>830</y>
      <width>811</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(248, 255, 250);</string>
    </property>
    <property name="text">
     <string>TextLabel</string>
