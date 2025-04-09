@@ -56,6 +56,7 @@ public:
     QAction *actionGetGroupsList;
     QAction *actionLoadHashTagListTheame;
     QAction *actionRemoveSection;
+    QAction *actionGotoIndex;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -64,6 +65,7 @@ public:
     QPushButton *pushButtonEnd;
     QProgressBar *progressBarNavigation;
     QSpinBox *spinBoxIndex;
+    QPushButton *pushButtonGotoIndex;
     QLabel *labelIncomingListCaption;
     QTableView *tableViewCurrent;
     QGroupBox *groupBoxEdit;
@@ -144,6 +146,8 @@ public:
         actionLoadHashTagListTheame->setObjectName(QString::fromUtf8("actionLoadHashTagListTheame"));
         actionRemoveSection = new QAction(MainWindow);
         actionRemoveSection->setObjectName(QString::fromUtf8("actionRemoveSection"));
+        actionGotoIndex = new QAction(MainWindow);
+        actionGotoIndex->setObjectName(QString::fromUtf8("actionGotoIndex"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -168,6 +172,9 @@ public:
         spinBoxIndex = new QSpinBox(groupBoxControl);
         spinBoxIndex->setObjectName(QString::fromUtf8("spinBoxIndex"));
         spinBoxIndex->setGeometry(QRect(21, 50, 111, 26));
+        pushButtonGotoIndex = new QPushButton(groupBoxControl);
+        pushButtonGotoIndex->setObjectName(QString::fromUtf8("pushButtonGotoIndex"));
+        pushButtonGotoIndex->setGeometry(QRect(140, 50, 81, 25));
         labelIncomingListCaption = new QLabel(centralWidget);
         labelIncomingListCaption->setObjectName(QString::fromUtf8("labelIncomingListCaption"));
         labelIncomingListCaption->setGeometry(QRect(10, 10, 221, 20));
@@ -236,7 +243,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 601, 22));
+        menuBar->setGeometry(QRect(0, 0, 601, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuSelect_image = new QMenu(menuBar);
@@ -271,6 +278,7 @@ public:
         menuSelect_image->addAction(actionSelectImageEnd);
         menuSelect_image->addAction(actionRotateCW_2);
         menuSelect_image->addAction(actionRotateCCW_2);
+        menuSelect_image->addAction(actionGotoIndex);
         menuForms->addAction(actionViewPicture);
         menuTags->addAction(actionLoaadHashTagListSubject);
         menuTags->addAction(actionLoadHashTagListPlace);
@@ -311,6 +319,7 @@ public:
         actionGetGroupsList->setText(QCoreApplication::translate("MainWindow", "GetGroupsList", nullptr));
         actionLoadHashTagListTheame->setText(QCoreApplication::translate("MainWindow", "Theame", nullptr));
         actionRemoveSection->setText(QCoreApplication::translate("MainWindow", "RemoveSection", nullptr));
+        actionGotoIndex->setText(QCoreApplication::translate("MainWindow", "Goto index", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());
@@ -328,6 +337,7 @@ public:
         pushButtonEnd->setToolTip(QString());
 #endif // QT_CONFIG(tooltip)
         pushButtonEnd->setText(QCoreApplication::translate("MainWindow", ">|", nullptr));
+        pushButtonGotoIndex->setText(QCoreApplication::translate("MainWindow", "Goto index", nullptr));
         labelIncomingListCaption->setText(QCoreApplication::translate("MainWindow", "Incoming tag", nullptr));
         groupBoxEdit->setTitle(QCoreApplication::translate("MainWindow", "Edit", nullptr));
         pushButtonLoad->setText(QCoreApplication::translate("MainWindow", "Load", nullptr));

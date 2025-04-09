@@ -57,7 +57,8 @@ SOURCES       = ../main.cpp \
 		../cinifile.cpp \
 		../crecord.cpp \
 		../fmview.cpp \
-		../cimportfiles.cpp qrc_resourcedata.cpp \
+		../cimportfiles.cpp \
+		../cdrawfiles.cpp qrc_resourcedata.cpp \
 		moc_mainwindow.cpp \
 		moc_fmview.cpp
 OBJECTS       = main.o \
@@ -66,6 +67,7 @@ OBJECTS       = main.o \
 		crecord.o \
 		fmview.o \
 		cimportfiles.o \
+		cdrawfiles.o \
 		qrc_resourcedata.o \
 		moc_mainwindow.o \
 		moc_fmview.o
@@ -151,12 +153,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../cinifile.h \
 		../crecord.h \
 		../fmview.h \
-		../cimportfiles.h ../main.cpp \
+		../cimportfiles.h \
+		../cdrawfiles.h ../main.cpp \
 		../mainwindow.cpp \
 		../cinifile.cpp \
 		../crecord.cpp \
 		../fmview.cpp \
-		../cimportfiles.cpp
+		../cimportfiles.cpp \
+		../cdrawfiles.cpp
 QMAKE_TARGET  = PicturesControl0
 DESTDIR       = 
 TARGET        = PicturesControl0
@@ -345,8 +349,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../resourcedata.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../cinifile.h ../crecord.h ../fmview.h ../cimportfiles.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../cinifile.cpp ../crecord.cpp ../fmview.cpp ../cimportfiles.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../cinifile.h ../crecord.h ../fmview.h ../cimportfiles.h ../cdrawfiles.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../cinifile.cpp ../crecord.cpp ../fmview.cpp ../cimportfiles.cpp ../cdrawfiles.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui ../fmview.ui $(DISTDIR)/
 
 
@@ -464,6 +468,9 @@ cimportfiles.o: ../cimportfiles.cpp ../cimportfiles.h \
 		../crecord.h \
 		../cinifile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cimportfiles.o ../cimportfiles.cpp
+
+cdrawfiles.o: ../cdrawfiles.cpp ../cdrawfiles.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cdrawfiles.o ../cdrawfiles.cpp
 
 qrc_resourcedata.o: qrc_resourcedata.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resourcedata.o qrc_resourcedata.cpp
