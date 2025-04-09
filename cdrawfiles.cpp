@@ -7,43 +7,9 @@ cDrawFiles::cDrawFiles()
 
 QString cDrawFiles::execRotate(QString image_path, int angle)
 {
-/*
-    //--- Читаем значения из INI-файла
-    QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-
-    cIniFile::settings.beginGroup(qsGroupName);
-
-    QString qsPath = cIniFile::settings.value("path","").toString();
-    QString qsName = cIniFile::settings.value("name","").toString();
-
-    cIniFile::settings.endGroup();
-
-    QString imagePath = qsPath + '/' + qsName;
-    qDebug() << "OriginalPath:" << imagePath;
-
-    int x = imagePath.indexOf('.');
-    QString qsRootOfName, qsExtOfName;
-    if(x > 0)
-    {
-        qsRootOfName = imagePath.mid(0,x);
-        qsExtOfName = imagePath.mid(x + 1);
-    }
-    else
-    {
-        QString s = "Wrong image file name format";
-        //---
-        emit execShowExecStatus(s);
-        //---
-        return;
-    }
-    qDebug() << "RootOfName=" << qsRootOfName << " ExtOfName=" << qsExtOfName;
-
-    cIniFile::rotatedImagePath = qsRootOfName + "_1" + "." + qsExtOfName;
-    //---
-*/
     QString rotatedImagePath  = "";
 
-    int x = image_path.indexOf('.');
+    int x = image_path.lastIndexOf('.');
     QString qsRootOfName, qsExtOfName;
     if(x > 0)
     {
