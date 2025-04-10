@@ -74,6 +74,7 @@ private:
     bool loadHashTagListProperty();
     bool loadHashTagListTheame();
     void execRotate(int angle);
+    QString getCurrentImagePath();
     bool deleteSection(QString s);
 
     bool saveStringListToFile(const QString& fileName, const QStringList& list);

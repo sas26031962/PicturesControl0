@@ -116,3 +116,23 @@ void cIniFile::addRecordListData()
     qDebug() << "==================Task is done!!!=========================";
 }
 
+QString cIniFile::getCurrentImagePath(QString group_name)
+{
+    QString imagePath = "";
+
+    //--- Читаем значения из INI-файла
+    cIniFile::settings.beginGroup(group_name);
+
+    QString qsPath = cIniFile::settings.value("path","").toString();
+    QString qsName = cIniFile::settings.value("name","").toString();
+
+    cIniFile::settings.endGroup();
+
+    imagePath = qsPath + '/' + qsName;
+    qDebug() << "OriginalPath:" << imagePath;
+
+    return imagePath;
+
+}//End of QString cIniFile::getCurrentImagePath()
+
+

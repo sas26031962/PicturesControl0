@@ -18,7 +18,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 //-----------------------------------------------------------------------------
 //Глобальные переменные
@@ -48,6 +48,9 @@ public:
 
     void addInitalSection(int n);
     void addRecordListData();
+
+    static QString getCurrentImagePath(QString group_name);
+
 };
 
 #endif // CINIFILE_H

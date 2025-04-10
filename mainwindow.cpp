@@ -1324,8 +1324,10 @@ void MainWindow::execSpinBoxAngle(int angle)
     execRotate(iAngle);
 }
 
-void MainWindow::execRotate(int angle)
+QString MainWindow::getCurrentImagePath()
 {
+    QString imagePath = "";
+
     //--- Читаем значения из INI-файла
     QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
@@ -1336,8 +1338,18 @@ void MainWindow::execRotate(int angle)
 
     cIniFile::settings.endGroup();
 
-    QString imagePath = qsPath + '/' + qsName;
+    imagePath = qsPath + '/' + qsName;
     qDebug() << "OriginalPath:" << imagePath;
+
+    return imagePath;
+
+}//End of QString MainWindow::getCurrentImagePath()
+
+
+void MainWindow::execRotate(int angle)
+{
+    //--- Читаем значения из INI-файла
+    QString imagePath = cIniFile::getCurrentImagePath(qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed)));
 
     int x = imagePath.indexOf('.');
     QString qsRootOfName, qsExtOfName;
