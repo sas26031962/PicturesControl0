@@ -30,7 +30,7 @@ public:
     static int MaxIndexValue;
     static QString labelExecStatusText;
     static bool IslabelExecStatusTextChacnged;
-    static QStringList * Groups;
+//    static QStringList * Groups;
 
 
     static QString labelFileNameText;

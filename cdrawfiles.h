@@ -6,11 +6,13 @@
 #include <QImage>
 #include <QPainter>
 
+#include "cinifile.h"
+
 class cDrawFiles
 {
 public:
 
-    static QString execRotate(QString image_path, int angle);
+    static QString execRotate(int angle);
 
     cDrawFiles();
 };

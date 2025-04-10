@@ -19,8 +19,8 @@ fmView::~fmView()
 void fmView::execDraw(QString s)
 {
     scaleImage(s);
-    //QPixmap pmMain(cIniFile::scaledImagePath);//
-    QPixmap pmMain(s);//
+    QPixmap pmMain(cIniFile::scaledImagePath);//
+    //QPixmap pmMain(s);//
     ui->labelMain->setPixmap(pmMain);
 }
 

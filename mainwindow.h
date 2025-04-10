@@ -25,6 +25,7 @@
 #include "fmview.h"
 #include "cimportfiles.h"
 #include "stvarmem.h"
+#include "cdrawfiles.h"
 
 #define STATUS_BAR_DELAY 500
 #define WINDOW_LEFT_MARGING 40
@@ -55,8 +56,6 @@ private:
     QTimer * timerUpdate;
     int iTimerUpdateCounter = 0;
 
-    QStringList qslGroupsLocal;
-
     fmView * fmViewPicture;
 
     int iAngle = 90;
@@ -65,16 +64,12 @@ private:
 
     QStringList qslDeletedSections;
 
-    //QString rotatedImagePath = "./img/tmp/rotated_image.png";
-
     //Методы
     void showCurrentIndexPicture();
     bool loadHashTagListSubject();
     bool loadHashTagListPlace();
     bool loadHashTagListProperty();
     bool loadHashTagListTheame();
-    void execRotate(int angle);
-    QString getCurrentImagePath();
     bool deleteSection(QString s);
 
     bool saveStringListToFile(const QString& fileName, const QStringList& list);

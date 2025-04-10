@@ -15,9 +15,13 @@
     QString cIniFile::scaledImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/scaled_image.png";
 #endif
 
-QList<cRecord> * cRecord::RecordList;
+    QString cIniFile::currentImagePath = "";
+    QString cIniFile::currentRotatedImagePath = "";
+    QStringList * cIniFile::Groups;
 
-QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    QList<cRecord> * cRecord::RecordList;
+
+    QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
 // Путь к каталогу, который нужно прочитать.
 #ifdef HOME_STORAGE
@@ -116,12 +120,14 @@ void cIniFile::addRecordListData()
     qDebug() << "==================Task is done!!!=========================";
 }
 
-QString cIniFile::getCurrentImagePath(QString group_name)
+void cIniFile::getCurrentImagePath()
 {
     QString imagePath = "";
 
     //--- Читаем значения из INI-файла
-    cIniFile::settings.beginGroup(group_name);
+    QString GroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+
+    cIniFile::settings.beginGroup(GroupName);
 
     QString qsPath = cIniFile::settings.value("path","").toString();
     QString qsName = cIniFile::settings.value("name","").toString();
@@ -131,8 +137,8 @@ QString cIniFile::getCurrentImagePath(QString group_name)
     imagePath = qsPath + '/' + qsName;
     qDebug() << "OriginalPath:" << imagePath;
 
-    return imagePath;
+    cIniFile::currentImagePath = imagePath;
 
-}//End of QString cIniFile::getCurrentImagePath()
+}
 
 

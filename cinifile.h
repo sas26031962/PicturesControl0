@@ -32,9 +32,13 @@ private:
     QString directoryPath;
 public:
     //Атрибуты
+    static QStringList * Groups;
+
     static QString iniFilePath;
     static QString rotatedImagePath;
     static QString scaledImagePath;
+    static QString currentImagePath;
+    static QString currentRotatedImagePath;
     static QSettings settings;
     static cIniFile IniFile;
 
@@ -49,7 +53,7 @@ public:
     void addInitalSection(int n);
     void addRecordListData();
 
-    static QString getCurrentImagePath(QString group_name);
+    static void getCurrentImagePath();
 
 };
 

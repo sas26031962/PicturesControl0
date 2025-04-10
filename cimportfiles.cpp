@@ -3,7 +3,6 @@
 //int cImportFiles::CurrentIndex = 0;
 
 int cImportFiles::MaxIndexValue = MAX_INDEX_DEFAULT_VALUE;
-QStringList * cImportFiles::Groups = nullptr;
 
 QString cImportFiles::labelExecStatusText = "";
 bool cImportFiles::IslabelExecStatusTextChacnged = false;
@@ -124,7 +123,7 @@ void cImportFiles::execImport(QProgressBar * bar)
 bool cImportFiles::getGroupsList()
 {
     bool IsError = false;
-    cImportFiles::Groups->clear();
+    cIniFile::Groups->clear();
     QFile file(cIniFile::iniFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -140,7 +139,7 @@ bool cImportFiles::getGroupsList()
         if (line.startsWith("[") && line.endsWith("]"))
         {
             QString groupName = line.mid(1, line.length() - 2); // Извлекаем имя секции
-            if (!cImportFiles::Groups->contains(groupName))
+            if (!cIniFile::Groups->contains(groupName))
             {
                 //Чтение списка ключей
                 cIniFile::settings.beginGroup(groupName);
@@ -152,7 +151,7 @@ bool cImportFiles::getGroupsList()
                 s += ": ";
                 s += QString::number(iKeysCount);
                 //Вывод сообщения в список
-                cImportFiles::Groups->append(s); // Добавляем в список, если еще не существует
+                cIniFile::Groups->append(s); // Добавляем в список, если еще не существует
             }
             else
             {

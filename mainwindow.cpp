@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    cImportFiles::Groups = new QStringList();
+    cIniFile::Groups = new QStringList();
+
     qslDeletedSections.clear();
 
     ui->setupUi(this);
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButtonLoad->setVisible(false);//РЕЖИМ АДМИНИСТРАТОРА
 
     connect(ui->actionViewPicture, SIGNAL(triggered()), this, SLOT( execActionFormViewPicture()));
-    connect(ui->actionGotoIndex, SIGNAL(pressed()), this, SLOT( execActionGotoIndex()));
+    connect(ui->actionGotoIndex, SIGNAL(triggered()), this, SLOT( execActionGotoIndex()));
     connect(ui->actionSelectImageBegin, SIGNAL(triggered()), this, SLOT( execActionSelectImageBegin()));
     connect(ui->actionSelectImageNext, SIGNAL(triggered()), this, SLOT( execActionSelectImageNext()));
     connect(ui->actionSelectImagePrevious, SIGNAL(triggered()), this, SLOT( execActionSelectImagePrevious()));
@@ -170,7 +171,7 @@ MainWindow::~MainWindow()
 
     delete qslHashTagList;
 
-    if(cImportFiles::Groups != nullptr) delete cImportFiles::Groups;
+    if(cIniFile::Groups != nullptr) delete cIniFile::Groups;
 
     delete ui;
 }
@@ -258,17 +259,17 @@ void MainWindow::showCurrentIndexPicture()
 
     // Читаем значения из INI-файла
     int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-    if(index > (qslGroupsLocal.count() - 1))
+    if(index > (cIniFile::Groups->count() - 1))
     {
         qDebug() << "Loaded index out of range:" << index << " goto head of list";
 
         index = 0;
         iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
     }
-    int iGroupsCount = qslGroupsLocal.count();
+    int iGroupsCount = cIniFile::Groups->count();
     if(iGroupsCount > 0)
     {
-        QString qsGroupName = qslGroupsLocal.at(index);
+        QString qsGroupName = cIniFile::Groups->at(index);
         cIniFile::settings.beginGroup(qsGroupName);
 
         QString qsPath, qsName, qsError;
@@ -458,7 +459,7 @@ void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
-    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < qslGroupsLocal.count() - 1)
+    if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < cIniFile::Groups->count() - 1)
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
     }
@@ -503,7 +504,7 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    iCurrentIndexGlobal.store(qslGroupsLocal.count() - 1);
+    iCurrentIndexGlobal.store(cIniFile::Groups->count() - 1);
 
     // Отобразить картинку
     showCurrentIndexPicture();
@@ -583,17 +584,17 @@ void MainWindow::execActionLoad()
     if(!*Ok)iLength = 0;
     settings.endGroup();
 
-    qslGroupsLocal = settings.childGroups();
+    *cIniFile::Groups = settings.childGroups();
 
     // Выводим значения
     qDebug() << "length: " << iLength;
-    qDebug() << "childGroupsList length: " << qslGroupsLocal.count();
+    qDebug() << "childGroupsList length: " << cIniFile::Groups->count();
     qDebug() << "----------------------------";
-    cImportFiles::MaxIndexValue = qslGroupsLocal.count();
-    progressBarProcess->setRange(0, qslGroupsLocal.count());
+    cImportFiles::MaxIndexValue = cIniFile::Groups->count();
+    progressBarProcess->setRange(0, cIniFile::Groups->count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
-    QListIterator<QString> readIt(qslGroupsLocal);
+    QListIterator<QString> readIt(*cIniFile::Groups);
     while (readIt.hasNext())
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
@@ -987,13 +988,13 @@ void MainWindow::execActionRemoveSection()
     QString s = "ActionRemoveSection()";
 
     // Читаем имя текущей секции
-    QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
     bool x = deleteSection(qsGroupName);
     // Выводим значения удалённых секций
     if(!x)
     {
-        qslGroupsLocal.removeAt(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        cIniFile::Groups->removeAt(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
         ui->listWidgetOther->clear();
         ui->listWidgetOther->addItems(qslDeletedSections);
@@ -1075,7 +1076,7 @@ void MainWindow::execActionRemoveText()
         if(IsSign)
         {
             settings.remove(qsSection);
-            qslGroupsLocal.removeOne(qsSection);
+            cIniFile::Groups->removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1166,7 +1167,7 @@ void MainWindow::execActionRemoveTif()
         if(IsSign)
         {
             settings.remove(qsSection);
-            qslGroupsLocal.removeOne(qsSection);
+            cIniFile::Groups->removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1258,7 +1259,7 @@ void MainWindow::execActionRemoveMovie()
         if(IsSign)
         {
             settings.remove(qsSection);
-            qslGroupsLocal.removeOne(qsSection);
+            cIniFile::Groups->removeOne(qsSection);
             //qslDeletedSections.append(qsSection);
             qslDeletedSections.append(qsWay);//#@
             ui->listWidgetOther->clear();
@@ -1291,7 +1292,9 @@ void MainWindow::execActionRotateCW()
 
     iAngle = 90;
 
-    execRotate(iAngle);
+    cDrawFiles::execRotate(iAngle);
+
+    emit draw(cIniFile::currentRotatedImagePath);
 
     //===
     emit execShowExecStatus(s);
@@ -1307,7 +1310,9 @@ void MainWindow::execActionRotateCCW()
 
     iAngle = 270;
 
-    execRotate(iAngle);
+    cDrawFiles::execRotate(iAngle);
+
+    emit draw(cIniFile::currentRotatedImagePath);
 
     //===
     emit execShowExecStatus(s);
@@ -1321,97 +1326,9 @@ void MainWindow::execSpinBoxAngle(int angle)
 {
     qDebug() << "Angle:" << angle;
     iAngle = angle;
-    execRotate(iAngle);
-}
+    cDrawFiles::execRotate(iAngle);
 
-QString MainWindow::getCurrentImagePath()
-{
-    QString imagePath = "";
-
-    //--- Читаем значения из INI-файла
-    QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-
-    cIniFile::settings.beginGroup(qsGroupName);
-
-    QString qsPath = cIniFile::settings.value("path","").toString();
-    QString qsName = cIniFile::settings.value("name","").toString();
-
-    cIniFile::settings.endGroup();
-
-    imagePath = qsPath + '/' + qsName;
-    qDebug() << "OriginalPath:" << imagePath;
-
-    return imagePath;
-
-}//End of QString MainWindow::getCurrentImagePath()
-
-
-void MainWindow::execRotate(int angle)
-{
-    //--- Читаем значения из INI-файла
-    QString imagePath = cIniFile::getCurrentImagePath(qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed)));
-
-    int x = imagePath.indexOf('.');
-    QString qsRootOfName, qsExtOfName;
-    if(x > 0)
-    {
-        qsRootOfName = imagePath.mid(0,x);
-        qsExtOfName = imagePath.mid(x + 1);
-    }
-    else
-    {
-        QString s = "Wrong image file name format";
-        //---
-        emit execShowExecStatus(s);
-        //---
-        return;
-    }
-    qDebug() << "RootOfName=" << qsRootOfName << " ExtOfName=" << qsExtOfName;
-
-    cIniFile::rotatedImagePath = qsRootOfName + "_1" + "." + qsExtOfName;
-    //---
-
-    QImage originalImage(imagePath);
-
-    // Создаем новое изображение для хранения повернутого изображения
-    QImage::Format format = originalImage.format();
-    QSize size = originalImage.size();
-    int iW = size.width();
-    int iH = size.height();
-    int iSize;
-    if(iW > iH)iSize = iW; else iSize = iH;
-    //QSize newSize = QSize(iH, iW);
-    QSize newSize = QSize(iSize, iSize);
-
-    //QImage rotatedImage(originalImage.size(), originalImage.format());
-    QImage rotatedImage(newSize, format);
-    //QImage rotatedImage(size, format);
-
-    rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
-
-    QPainter painter(&rotatedImage);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание для более качественного поворота
-
-    // Центр поворота (по умолчанию центр изображения)
-    QPoint center = originalImage.rect().center();
-
-    // Создаем матрицу трансформации
-    QTransform transform;
-    transform.translate(center.x(), center.y());    // Перемещаем систему координат в центр изображения
-    transform.rotate(angle);                        // Выполняем поворот
-    transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
-
-    painter.setTransform(transform);
-    painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
-    //painter.drawImage(0, 437, originalImage); // Рисуем исходное изображение на повернутом
-
-    painter.end();
-
-    rotatedImage.save(cIniFile::rotatedImagePath); // Сохраняем повернутое изображение
-
-    emit draw(cIniFile::rotatedImagePath);//Отображаем повёрнутое изображение на форме
-
-    qDebug() << "Image rotated successfully";
+    emit draw(cIniFile::currentRotatedImagePath);
 
 }
 
@@ -1489,7 +1406,7 @@ void MainWindow::execActionGetGroupsList()
         s += ": sucsess!";
 
         ui->listWidgetOther->clear();
-        ui->listWidgetOther->addItems(*cImportFiles::Groups);
+        ui->listWidgetOther->addItems(*cIniFile::Groups);
     }
 
     //---
@@ -1510,9 +1427,9 @@ void MainWindow::execActionMemo()
         s = "execInsertMemoKeyValue()";
 
         // Сохранение параметра в INI-файле
-        if(qslGroupsLocal.count() > 0)
+        if(cIniFile::Groups->count() > 0)
         {
-            QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+            QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
             //cIniFile::settings.beginGroup(qsGroupName);
             //cIniFile::settings.setValue("memo", item);
             cIniFile::settings.beginGroup(qsGroupName);
@@ -1558,9 +1475,9 @@ void MainWindow::execListWidgetSubjectItemClicked()
     qDebug() << "listWidgetSubject: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(qslGroupsLocal.count() > 0)
+    if(cIniFile::Groups->count() > 0)
     {
-        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1598,9 +1515,9 @@ void MainWindow::execListWidgetPropertyItemClicked()
     qDebug() << "listWidgetProperty: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(qslGroupsLocal.count() > 0)
+    if(cIniFile::Groups->count() > 0)
     {
-        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1638,9 +1555,9 @@ void MainWindow::execListWidgetTheameItemClicked()
     qDebug() << "listWidgetTheame: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(qslGroupsLocal.count() > 0)
+    if(cIniFile::Groups->count() > 0)
     {
-        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         //cIniFile::settings.beginGroup(qsGroupName);
         //cIniFile::settings.setValue(item, "true");
         cIniFile::settings.beginGroup(qsGroupName);
@@ -1678,9 +1595,9 @@ void MainWindow::execListWidgetPlaceItemClicked()
     qDebug() << "listWidgetPlace: item=" << item;
 
     // Сохранение параметра в INI-файле
-    if(qslGroupsLocal.count() > 0)
+    if(cIniFile::Groups->count() > 0)
     {
-        QString qsGroupName = qslGroupsLocal.at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+        QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
         cIniFile::settings.beginGroup(qsGroupName);
         QStringList list = cIniFile::settings.childKeys();
         if(list.contains(item))

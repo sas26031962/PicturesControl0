@@ -5,29 +5,30 @@ cDrawFiles::cDrawFiles()
 
 }
 
-QString cDrawFiles::execRotate(QString image_path, int angle)
+QString cDrawFiles::execRotate(int angle)
 {
-    QString rotatedImagePath  = "";
+    //--- Читаем значения из INI-файла
+    cIniFile::getCurrentImagePath();
 
-    int x = image_path.lastIndexOf('.');
+    int x = cIniFile::currentImagePath.lastIndexOf('.');
     QString qsRootOfName, qsExtOfName;
     if(x > 0)
     {
-        qsRootOfName = image_path.mid(0,x);
-        qsExtOfName = image_path.mid(x + 1);
+        qsRootOfName = cIniFile::currentImagePath.mid(0,x);
+        qsExtOfName = cIniFile::currentImagePath.mid(x + 1);
     }
     else
     {
-        qDebug() << "Wrong file format:" << image_path;
+        qDebug() << "Wrong file format:" << cIniFile::currentImagePath;
 
-        return rotatedImagePath;
+        return cIniFile::currentRotatedImagePath;
     }
     qDebug() << "RootOfName=" << qsRootOfName << " ExtOfName=" << qsExtOfName;
 
-    rotatedImagePath = qsRootOfName + "_1" + "." + qsExtOfName;
+    cIniFile::currentRotatedImagePath = qsRootOfName + "_1" + "." + qsExtOfName;
 
 
-    QImage originalImage(image_path);
+    QImage originalImage(cIniFile::currentImagePath);
 
     // Создаем новое изображение для хранения повернутого изображения
     QImage::Format format = originalImage.format();
@@ -63,10 +64,10 @@ QString cDrawFiles::execRotate(QString image_path, int angle)
 
     painter.end();
 
-    rotatedImage.save(rotatedImagePath); // Сохраняем повернутое изображение
+    rotatedImage.save(cIniFile::currentRotatedImagePath); // Сохраняем повернутое изображение
 
     qDebug() << "Image rotated successfully";
 
-    return rotatedImagePath;
+    return cIniFile::currentRotatedImagePath;
 
 }//End of void cDrawFiles::execRotate(int Angle)
