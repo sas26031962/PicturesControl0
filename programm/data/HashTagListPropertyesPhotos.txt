@@ -1,6 +1,7 @@
 Maps
 IsRotated
 Document
+Archive
 ForDeleting
 Unknown
 
