@@ -10,7 +10,7 @@ QString cDrawFiles::execRotate(int angle)
     //--- Читаем значения из INI-файла
     cIniFile::getCurrentImagePath();
 
-    int x = cIniFile::currentImagePath.lastIndexOf('.');
+    int x = cIniFile::currentImagePath.indexOf('.');
     QString qsRootOfName, qsExtOfName;
     if(x > 0)
     {
@@ -71,3 +71,47 @@ QString cDrawFiles::execRotate(int angle)
     return cIniFile::currentRotatedImagePath;
 
 }//End of void cDrawFiles::execRotate(int Angle)
+
+//
+//
+//
+void cDrawFiles::scaleImage(QString path, int width, int height)
+{
+    int newWidth = width;//ui->labelMain->width();//960
+    int newHeight = height;//ui->labelMain->height();//540
+
+    QImage originalImage(path);
+
+    QString status;
+
+    if (originalImage.isNull())
+    {
+        qDebug() << "Error: Could not load image: " << path;
+        return;
+    }
+
+    // Масштабирование изображения
+    QImage scaledImage = originalImage.scaled(
+        newWidth,
+        newHeight,
+        Qt::KeepAspectRatio, // Сохранять пропорции
+        Qt::SmoothTransformation // Использовать сглаживание
+    );
+
+    // Сохранение масштабированного изображения
+
+    QString scaledImagePath = cIniFile::scaledImagePath;
+    status = "Image scaling to file";
+    status += scaledImagePath;
+    if(scaledImagePath.count() > 0)
+    {
+        scaledImage.save(scaledImagePath);
+        status += " sucsess!";
+    }
+    else
+    {
+        status += " fault";
+    }
+
+    qDebug() << status;
+}

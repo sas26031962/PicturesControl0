@@ -10,9 +10,9 @@
     QString cIniFile::rotatedImagePath = "/home/andy/MyQtProjects/PicturesControl0/programm/img/tmp/rotated_image.png";
     QString cIniFile::scaledImagePath = "/home/andy/MyQtProjects/PicturesControl0/programm/img/tmp/scaled_image.png";
 #else
-    QString cIniFile::iniFilePath = "C:/WORK/PicturesControl0/programm/data/FilesConfigShips.ini";
-    QString cIniFile::rotatedImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/rotated_image.png";
-    QString cIniFile::scaledImagePath = "C:/WORK/PicturesControl0/programm/img/tmp/scaled_image.png";
+    QString cIniFile::iniFilePath = "C:/WORK/PicturesControl/PicturesControl0/programm/data/FilesConfigShips.ini";
+    QString cIniFile::rotatedImagePath = "C:/WORK/PicturesControl/PicturesControl0/programm/img/tmp/rotated_image.png";
+    QString cIniFile::scaledImagePath = "C:/WORK/PicturesControl/PicturesControl0/programm/img/tmp/scaled_image.png";
 #endif
 
     QString cIniFile::currentImagePath = "";

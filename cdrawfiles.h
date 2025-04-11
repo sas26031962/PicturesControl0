@@ -13,6 +13,7 @@ class cDrawFiles
 public:
 
     static QString execRotate(int angle);
+    static void scaleImage(QString, int width, int height);
 
     cDrawFiles();
 };

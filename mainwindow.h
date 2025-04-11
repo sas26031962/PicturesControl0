@@ -86,7 +86,6 @@ public:
     ~MainWindow();
 
    //Методы
-   void scaleImage(QString);
 
 protected:
     void keyPressEvent(QKeyEvent * e) override;//keys

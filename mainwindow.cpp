@@ -300,6 +300,12 @@ void MainWindow::showCurrentIndexPicture()
 
         cIniFile::settings.endGroup();
 
+        if(!qsPath.count() || !qsName.count())
+        {
+            qDebug() << "FilePath=" << qsPath << " FileName=" << qsName << " file not exist!!!";
+            return;
+        }
+
         QString imagePath = qsPath + '/' + qsName;
 
         if(qsError == "true")

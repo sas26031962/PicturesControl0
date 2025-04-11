@@ -6,6 +6,7 @@
 #include <QStatusBar>
 
 #include "cinifile.h"
+#include "cdrawfiles.h"
 
 namespace Ui {
 class fmView;
@@ -24,7 +25,6 @@ private:
     Ui::fmView *ui;
 
     //Методы
-    void scaleImage(QString);
 
 private slots:
 
