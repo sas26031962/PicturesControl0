@@ -77,9 +77,9 @@ QString cDrawFiles::execRotate(int angle)
 //
 void cDrawFiles::scaleImage(QString path, int width, int height)
 {
-    int newSize = 582;
-    int newWidth = newSize;//width;
-    int newHeight = newSize;//height;
+    //int newSize = 582;
+    int newWidth = width;
+    int newHeight = height;
 
     QImage originalImage(path);
 

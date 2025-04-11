@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QDebug>
 #include <QStatusBar>
+#include <QString>
 
 #include "cinifile.h"
 #include "cdrawfiles.h"
@@ -17,6 +18,8 @@ class fmView : public QDialog
     Q_OBJECT
 
 public:
+    int iSize = 821;
+    QString currentImagePath;
 
     explicit fmView(QWidget *parent = 0);
     ~fmView();
@@ -30,6 +33,7 @@ private slots:
 
     void execDraw(QString s);
     void execShowExecStatus(QString s);
+    void execHorizontalSliderValueChanged(int x);
 
 signals:
     void showExecStatus(QString s);
