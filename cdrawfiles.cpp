@@ -77,8 +77,9 @@ QString cDrawFiles::execRotate(int angle)
 //
 void cDrawFiles::scaleImage(QString path, int width, int height)
 {
-    int newWidth = width;//ui->labelMain->width();//960
-    int newHeight = height;//ui->labelMain->height();//540
+    int newSize = 582;
+    int newWidth = newSize;//width;
+    int newHeight = newSize;//height;
 
     QImage originalImage(path);
 
@@ -90,6 +91,22 @@ void cDrawFiles::scaleImage(QString path, int width, int height)
         return;
     }
 
+    int oldWidth = originalImage.width();
+    int oldHeight = originalImage.height();
+
+    QString info = "Original:";
+    info += " width=";
+    info += QString::number(oldWidth);
+    info += " height=";
+    info += QString::number(oldHeight);
+    info += " Scaled:";
+    info += " width=";
+    info += QString::number(newWidth);
+    info += " height=";
+    info += QString::number(newHeight);
+
+    qDebug() << info;
+
     // Масштабирование изображения
     QImage scaledImage = originalImage.scaled(
         newWidth,
@@ -97,15 +114,34 @@ void cDrawFiles::scaleImage(QString path, int width, int height)
         Qt::KeepAspectRatio, // Сохранять пропорции
         Qt::SmoothTransformation // Использовать сглаживание
     );
+//--- Трансформирование изображения ---
+//    QImage::Format format = scaledImage.format();
+//    QSize transformSize = QSize(newWidth, newHeight);
+//    QImage transformedImage(transformSize, format);
 
-    // Сохранение масштабированного изображения
+//    transformedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
+
+//    QPainter painter(&transformedImage);
+//    painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание
+//    // Создаем матрицу трансформации
+//    qreal dx = 10;//(width - newSize)/2;
+//    qreal dy = 10;
+
+//    QTransform transform;
+//    transform.translate(dx, dy);
+//    painter.setTransform(transform);
+//    painter.drawImage(0, 0, scaledImage); // Рисуем масштабированное изображение на трансформированном
+//    painter.end();
+
+//---
 
     QString scaledImagePath = cIniFile::scaledImagePath;
     status = "Image scaling to file";
     status += scaledImagePath;
     if(scaledImagePath.count() > 0)
     {
-        scaledImage.save(scaledImagePath);
+        scaledImage.save(scaledImagePath);    // Сохраняем масштабированное изображение
+        //transformedImage.save(scaledImagePath); // Сохраняем трансформированное изображение
         status += " sucsess!";
     }
     else
