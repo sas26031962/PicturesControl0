@@ -60,7 +60,7 @@ QString cDrawFiles::execRotate(int angle)
     transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
 
     qreal dx = 0;
-    qreal dy = 880;//870
+    qreal dy = VERTICAL_SHIFT_AFTER_ROtATION;//880
 
     painter.setTransform(transform);
     painter.drawImage(dy, dx, originalImage); // Рисуем исходное изображение на повернутом

@@ -8,6 +8,8 @@
 
 #include "cinifile.h"
 
+#define VERTICAL_SHIFT_AFTER_ROtATION 880
+
 class cDrawFiles
 {
 public:
