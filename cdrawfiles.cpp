@@ -44,8 +44,9 @@ QString cDrawFiles::execRotate(int angle)
     QImage rotatedImage(newSize, format);
     //QImage rotatedImage(size, format);
 
-    rotatedImage.fill(Qt::transparent); // Заполняем прозрачным, если нужно
-
+    //rotatedImage.fill(Qt::transparent); // Заполняем прозрачным (фактически - чёрный)
+    rotatedImage.fill(Qt::blue); // Заполняем голубым
+    //---
     QPainter painter(&rotatedImage);
     painter.setRenderHint(QPainter::SmoothPixmapTransform); // Сглаживание для более качественного поворота
 
@@ -58,12 +59,14 @@ QString cDrawFiles::execRotate(int angle)
     transform.rotate(angle);                        // Выполняем поворот
     transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
 
+    qreal dx = 0;
+    qreal dy = 880;//870
+
     painter.setTransform(transform);
-    painter.drawImage(0, 0, originalImage); // Рисуем исходное изображение на повернутом
-    //painter.drawImage(0, 437, originalImage); // Рисуем исходное изображение на повернутом
+    painter.drawImage(dy, dx, originalImage); // Рисуем исходное изображение на повернутом
 
     painter.end();
-
+    //---
     rotatedImage.save(cIniFile::currentRotatedImagePath); // Сохраняем повернутое изображение
 
     qDebug() << "Image rotated successfully";
