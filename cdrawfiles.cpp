@@ -5,6 +5,9 @@ cDrawFiles::cDrawFiles()
 
 }
 
+//
+// Поворот изображения
+//
 QString cDrawFiles::execRotate(int angle)
 {
     //--- Читаем значения из INI-файла
@@ -76,7 +79,7 @@ QString cDrawFiles::execRotate(int angle)
 }//End of void cDrawFiles::execRotate(int Angle)
 
 //
-//
+// Масштабирование изображения
 //
 void cDrawFiles::scaleImage(QString path, int width, int height)
 {
