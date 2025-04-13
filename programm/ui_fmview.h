@@ -21,7 +21,7 @@ class Ui_fmView
 {
 public:
     QLabel *labelMain;
-    QLabel *label;
+    QLabel *labelInfo;
     QSlider *horizontalSliderScale;
 
     void setupUi(QDialog *fmView)
@@ -34,10 +34,10 @@ public:
         labelMain->setGeometry(QRect(5, 5, 821, 821));
         labelMain->setStyleSheet(QString::fromUtf8("background-color: rgb(239, 246, 255);"));
         labelMain->setAlignment(Qt::AlignCenter);
-        label = new QLabel(fmView);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 830, 621, 22));
-        label->setStyleSheet(QString::fromUtf8("background-color: rgb(248, 255, 250);"));
+        labelInfo = new QLabel(fmView);
+        labelInfo->setObjectName(QString::fromUtf8("labelInfo"));
+        labelInfo->setGeometry(QRect(10, 830, 621, 22));
+        labelInfo->setStyleSheet(QString::fromUtf8("background-color: rgb(248, 255, 250);"));
         horizontalSliderScale = new QSlider(fmView);
         horizontalSliderScale->setObjectName(QString::fromUtf8("horizontalSliderScale"));
         horizontalSliderScale->setGeometry(QRect(640, 830, 181, 22));
@@ -55,7 +55,7 @@ public:
     {
         fmView->setWindowTitle(QCoreApplication::translate("fmView", "ViewPicture", nullptr));
         labelMain->setText(QString());
-        label->setText(QCoreApplication::translate("fmView", "TextLabel", nullptr));
+        labelInfo->setText(QCoreApplication::translate("fmView", "TextLabel", nullptr));
     } // retranslateUi
 
 };

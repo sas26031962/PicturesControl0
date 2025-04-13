@@ -20,8 +20,7 @@ fmView::~fmView()
 void fmView::execDraw(QString s)
 {
     currentImagePath = s;
-    //iSize = ui->horizontalSliderScale->value();
-    //cDrawFiles::scaleImage(s, ui->labelMain->width(), ui->labelMain->height());
+    emit showExecStatus(s + " Size=" + QString::number(iSize));
     cDrawFiles::scaleImage(s, iSize, iSize);
     QPixmap pmMain(cIniFile::scaledImagePath);//
     //QPixmap pmMain(s);//
@@ -30,12 +29,12 @@ void fmView::execDraw(QString s)
 
 void fmView::execShowExecStatus(QString s)
 {
-    ui->label->setText(s);
+    ui->labelInfo->setText(s);
 }
 
 void fmView::execHorizontalSliderValueChanged(int x)
 {
-    ui->label->setText("Picture size:" + QString::number(x));
+    ui->labelInfo->setText("Picture size:" + QString::number(x));
     iSize = x;
     execDraw(currentImagePath);
 }
