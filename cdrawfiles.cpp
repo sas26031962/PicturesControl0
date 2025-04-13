@@ -1,5 +1,9 @@
 #include "cdrawfiles.h"
 
+
+qreal cDrawFiles::dx = 0;
+qreal cDrawFiles::dy = VERTICAL_SHIFT_AFTER_ROtATION;
+
 cDrawFiles::cDrawFiles()
 {
 
@@ -62,11 +66,11 @@ QString cDrawFiles::execRotate(int angle)
     transform.rotate(angle);                        // Выполняем поворот
     transform.translate(-center.x(), -center.y());  // Возвращаем систему координат
 
-    qreal dx = 0;
-    qreal dy = VERTICAL_SHIFT_AFTER_ROtATION;//880
+    //qreal dx = 0;
+    //qreal dy = VERTICAL_SHIFT_AFTER_ROtATION;//880
 
     painter.setTransform(transform);
-    painter.drawImage(dy, dx, originalImage); // Рисуем исходное изображение на повернутом
+    painter.drawImage(cDrawFiles::dy, cDrawFiles::dx, originalImage); // Рисуем исходное изображение на повернутом
 
     painter.end();
     //---

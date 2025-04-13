@@ -13,6 +13,8 @@
 class cDrawFiles
 {
 public:
+    static qreal dx;// = 0;
+    static qreal dy;// = VERTICAL_SHIFT_AFTER_ROtATION;//880
 
     static QString execRotate(int angle);
     static void scaleImage(QString, int width, int height);

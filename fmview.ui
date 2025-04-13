@@ -37,7 +37,7 @@
     <rect>
      <x>10</x>
      <y>830</y>
-     <width>621</width>
+     <width>631</width>
      <height>22</height>
     </rect>
    </property>
@@ -68,6 +68,58 @@
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditX">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>800</y>
+     <width>81</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditY">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>800</y>
+     <width>81</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>880</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelXCaption">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>800</y>
+     <width>21</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>X=</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelXCaption_2">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>800</y>
+     <width>21</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Y=</string>
    </property>
   </widget>
  </widget>

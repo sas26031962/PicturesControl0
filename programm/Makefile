@@ -396,6 +396,7 @@ moc_mainwindow.cpp: ../mainwindow.h \
 		../cinifile.h \
 		../crecord.h \
 		../fmview.h \
+		../cdrawfiles.h \
 		../cimportfiles.h \
 		../stvarmem.h \
 		moc_predefs.h \
@@ -405,6 +406,7 @@ moc_mainwindow.cpp: ../mainwindow.h \
 moc_fmview.cpp: ../fmview.h \
 		../cinifile.h \
 		../crecord.h \
+		../cdrawfiles.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/andy/MyQtProjects/PicturesControl0/programm/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/andy/MyQtProjects/PicturesControl0 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../fmview.h -o moc_fmview.cpp
@@ -438,6 +440,7 @@ main.o: ../main.cpp ../mainwindow.h \
 		../cinifile.h \
 		../crecord.h \
 		../fmview.h \
+		../cdrawfiles.h \
 		../cimportfiles.h \
 		../stvarmem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
@@ -446,6 +449,7 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../cinifile.h \
 		../crecord.h \
 		../fmview.h \
+		../cdrawfiles.h \
 		../cimportfiles.h \
 		../stvarmem.h \
 		ui_mainwindow.h
@@ -461,6 +465,7 @@ crecord.o: ../crecord.cpp ../crecord.h
 fmview.o: ../fmview.cpp ../fmview.h \
 		../cinifile.h \
 		../crecord.h \
+		../cdrawfiles.h \
 		ui_fmview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fmview.o ../fmview.cpp
 
@@ -469,7 +474,9 @@ cimportfiles.o: ../cimportfiles.cpp ../cimportfiles.h \
 		../cinifile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cimportfiles.o ../cimportfiles.cpp
 
-cdrawfiles.o: ../cdrawfiles.cpp ../cdrawfiles.h
+cdrawfiles.o: ../cdrawfiles.cpp ../cdrawfiles.h \
+		../cinifile.h \
+		../crecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cdrawfiles.o ../cdrawfiles.cpp
 
 qrc_resourcedata.o: qrc_resourcedata.cpp 

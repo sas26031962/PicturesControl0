@@ -5,9 +5,12 @@
 #include <QDebug>
 #include <QStatusBar>
 #include <QString>
+#include <QValidator>
 
 #include "cinifile.h"
 #include "cdrawfiles.h"
+
+#define INT_VALIDATOR_VALUE 3000
 
 namespace Ui {
 class fmView;
@@ -34,6 +37,12 @@ private slots:
     void execDraw(QString s);
     void execShowExecStatus(QString s);
     void execHorizontalSliderValueChanged(int x);
+
+    void exexXChanged();
+    void exexYChanged();
+
+    void exexXRejected();
+    void exexYRejected();
 
 signals:
     void showExecStatus(QString s);
