@@ -58,11 +58,25 @@ bool cLoadFiles::execLoadFiles()
         QString qsSection = readIt.next();
         //qDebug() << qsSection;
         settings.beginGroup(qsSection);
-        QString qsPath = settings.value("path","noName").toString();
-        QString qsName = settings.value("name", "noName").toString();
-        QString qsId = settings.value("Id","0").toString();
-        QString qsError = settings.value("Error", "false").toString();
-        //int Error = qsError.toInt(Ok);
+        //===
+        QString qsPath, qsName, qsError, qsId;
+
+        QStringList keys = cIniFile::settings.childKeys();
+        QListIterator<QString> readIt(keys);
+        int iIndex = 0;
+        while(readIt.hasNext())
+        {
+            QString key = readIt.next();
+            QString value = cIniFile::settings.value(key,"0").toString();
+
+            if(key == "Id") qsId = value;
+            if(key == "path") qsPath = value;
+            if(key == "name") qsName = value;
+            if(key == "Eror") qsError = value;
+
+            iIndex++;
+            //qDebug() << "iterator:" << key << " index:" << iIndex;
+        }
 
         int Id = qsId.toInt(Ok);
         if(!*Ok) Id = 0;
@@ -78,7 +92,7 @@ bool cLoadFiles::execLoadFiles()
             s += qsName;
             qDebug() << "Id=" << Id << "Name=" << s << " iCount=" << iCount;
         }
-
+        //===
         settings.endGroup();
     }
 
