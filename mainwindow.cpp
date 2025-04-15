@@ -95,9 +95,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timerUpdate, SIGNAL(timeout()), this, SLOT( execTimerUpdate()));
     timerUpdate->start(100);
 
-    labelRotator = new QLabel("|");
-    ui->statusBar->addWidget(labelRotator);
-
     progressBarProcess = new QProgressBar();
     progressBarProcess->setOrientation(Qt::Horizontal);
     progressBarProcess->setRange(0, cImportFiles::MaxIndexValue);
@@ -170,7 +167,6 @@ MainWindow::~MainWindow()
     delete progressBarProcess;
     delete labelExecStatus;
     delete labelFileName;
-    delete labelRotator;
 
     delete fmViewPicture;
 
@@ -583,6 +579,8 @@ void MainWindow::execActionImportInitial()
 
 void MainWindow::execActionLoad()
 {
+    //--- Начало функции загрузки
+
     // Создаем объект QSettings с указанием формата INI и пути к файлу
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
 
@@ -612,27 +610,19 @@ void MainWindow::execActionLoad()
     qDebug() << "childGroupsList length: " << cIniFile::Groups->count();
     qDebug() << "----------------------------";
     cImportFiles::MaxIndexValue = cIniFile::Groups->count();
-    progressBarProcess->setRange(0, cIniFile::Groups->count());
-    SpinBoxIndex->setMaximum(cIniFile::Groups->count());
+    //progressBarProcess->setRange(0, cIniFile::Groups->count());
+    //SpinBoxIndex->setRange(0, cIniFile::Groups->count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
+
     QListIterator<QString> readIt(*cIniFile::Groups);
     while (readIt.hasNext())
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
 
         //---Отображение состояния загрузки
-        int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-        progressBarProcess->setValue(x);
-
-        switch (x % 4)
-        {
-            case 0: labelRotator->setText("-"); break;
-            case 1: labelRotator->setText("\\"); break;
-            case 2: labelRotator->setText("|"); break;
-            case 3: labelRotator->setText("/"); break;
-            default:  break;
-        }
+        //int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+        //progressBarProcess->setValue(x);
         //---
 
         QString qsSection = readIt.next();
@@ -661,12 +651,15 @@ void MainWindow::execActionLoad()
 
         settings.endGroup();
     }
+
     if(iCount > 0)
         qDebug() << "Space character in file name detected in " << iCount << " files";
     else
         qDebug() << "No errors in file names detected, Ok!";
 
     iCurrentIndexGlobal.store(LoadedCurrentIndex);
+
+    //--- Окончание функции загрузки
 
     //Установка навигации
     progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);

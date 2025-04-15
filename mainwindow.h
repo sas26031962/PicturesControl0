@@ -51,8 +51,6 @@ private:
     QProgressBar * progressBarNavigation;
     QSpinBox * SpinBoxIndex;
 
-    QLabel * labelRotator;
-
     QTimer * timerUpdate;
     int iTimerUpdateCounter = 0;
 

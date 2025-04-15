@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     #programm/moc_mainwindow.cpp
     fmview.cpp \
     cimportfiles.cpp \
-    cdrawfiles.cpp
+    cdrawfiles.cpp \
+    cloadfiles.cpp
 
 HEADERS  += mainwindow.h \
     cinifile.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     #programm/ui_mainwindow.h
     fmview.h \
     cimportfiles.h \
-    cdrawfiles.h
+    cdrawfiles.h \
+    cloadfiles.h
 
 FORMS    += mainwindow.ui \
     fmview.ui
