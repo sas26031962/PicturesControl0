@@ -271,7 +271,7 @@ void MainWindow::showCurrentIndexPicture()
     if(iGroupsCount > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(index);
-        qDebug() << "showCurrentIndexPicture(): GroupName=" << qsGroupName;
+        //qDebug() << "showCurrentIndexPicture(): GroupName=" << qsGroupName;
         //Пропускаем RecordList
         if(qsGroupName == "RecordList")
         {
@@ -286,6 +286,7 @@ void MainWindow::showCurrentIndexPicture()
 
         QStringList keys = cIniFile::settings.childKeys();
         int iStrings = keys.count();
+        qDebug() << "showCurrentIndexPicture(): GroupName=" << qsGroupName << " KeysCount=" << iStrings;
 
         QStandardItemModel * model= new QStandardItemModel(iStrings, 2);
         QListIterator<QString> readIt(keys);
@@ -602,8 +603,8 @@ void MainWindow::execActionLoad()
     settings.endGroup();
 
     //Загрузка списка групп
-    //*cIniFile::Groups = settings.childGroups();//20250415 ???
-    cImportFiles::getGroupsList();
+    *cIniFile::Groups = settings.childGroups();//20250415 ???
+    //cImportFiles::getGroupsList();
 
     // Выводим значения
     qDebug() << "length: " << iLength;

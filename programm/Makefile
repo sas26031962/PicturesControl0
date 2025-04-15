@@ -58,7 +58,8 @@ SOURCES       = ../main.cpp \
 		../crecord.cpp \
 		../fmview.cpp \
 		../cimportfiles.cpp \
-		../cdrawfiles.cpp qrc_resourcedata.cpp \
+		../cdrawfiles.cpp \
+		../cloadfiles.cpp qrc_resourcedata.cpp \
 		moc_mainwindow.cpp \
 		moc_fmview.cpp
 OBJECTS       = main.o \
@@ -68,6 +69,7 @@ OBJECTS       = main.o \
 		fmview.o \
 		cimportfiles.o \
 		cdrawfiles.o \
+		cloadfiles.o \
 		qrc_resourcedata.o \
 		moc_mainwindow.o \
 		moc_fmview.o
@@ -154,13 +156,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../crecord.h \
 		../fmview.h \
 		../cimportfiles.h \
-		../cdrawfiles.h ../main.cpp \
+		../cdrawfiles.h \
+		../cloadfiles.h ../main.cpp \
 		../mainwindow.cpp \
 		../cinifile.cpp \
 		../crecord.cpp \
 		../fmview.cpp \
 		../cimportfiles.cpp \
-		../cdrawfiles.cpp
+		../cdrawfiles.cpp \
+		../cloadfiles.cpp
 QMAKE_TARGET  = PicturesControl0
 DESTDIR       = 
 TARGET        = PicturesControl0
@@ -349,8 +353,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../resourcedata.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../cinifile.h ../crecord.h ../fmview.h ../cimportfiles.h ../cdrawfiles.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../cinifile.cpp ../crecord.cpp ../fmview.cpp ../cimportfiles.cpp ../cdrawfiles.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../cinifile.h ../crecord.h ../fmview.h ../cimportfiles.h ../cdrawfiles.h ../cloadfiles.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../cinifile.cpp ../crecord.cpp ../fmview.cpp ../cimportfiles.cpp ../cdrawfiles.cpp ../cloadfiles.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui ../fmview.ui $(DISTDIR)/
 
 
@@ -478,6 +482,12 @@ cdrawfiles.o: ../cdrawfiles.cpp ../cdrawfiles.h \
 		../cinifile.h \
 		../crecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cdrawfiles.o ../cdrawfiles.cpp
+
+cloadfiles.o: ../cloadfiles.cpp ../cloadfiles.h \
+		../cimportfiles.h \
+		../crecord.h \
+		../cinifile.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cloadfiles.o ../cloadfiles.cpp
 
 qrc_resourcedata.o: qrc_resourcedata.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resourcedata.o qrc_resourcedata.cpp

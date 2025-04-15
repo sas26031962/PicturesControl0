@@ -57,6 +57,8 @@ public:
     QAction *actionLoadHashTagListTheame;
     QAction *actionRemoveSection;
     QAction *actionGotoIndex;
+    QAction *actionRemoveBin;
+    QAction *actionRemove3gp;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -148,6 +150,10 @@ public:
         actionRemoveSection->setObjectName(QString::fromUtf8("actionRemoveSection"));
         actionGotoIndex = new QAction(MainWindow);
         actionGotoIndex->setObjectName(QString::fromUtf8("actionGotoIndex"));
+        actionRemoveBin = new QAction(MainWindow);
+        actionRemoveBin->setObjectName(QString::fromUtf8("actionRemoveBin"));
+        actionRemove3gp = new QAction(MainWindow);
+        actionRemove3gp->setObjectName(QString::fromUtf8("actionRemove3gp"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -269,6 +275,8 @@ public:
         menuFile->addAction(actionRemoveMovie);
         menuFile->addAction(actionRemoveText);
         menuFile->addAction(actionRemoveTif);
+        menuFile->addAction(actionRemoveBin);
+        menuFile->addAction(actionRemove3gp);
         menuFile->addAction(actionGetGroupsList);
         menuFile->addAction(actionRemoveSection);
         menuFile->addAction(actionExit);
@@ -320,6 +328,8 @@ public:
         actionLoadHashTagListTheame->setText(QCoreApplication::translate("MainWindow", "Theame", nullptr));
         actionRemoveSection->setText(QCoreApplication::translate("MainWindow", "RemoveSection", nullptr));
         actionGotoIndex->setText(QCoreApplication::translate("MainWindow", "Goto index", nullptr));
+        actionRemoveBin->setText(QCoreApplication::translate("MainWindow", "Remove Bin", nullptr));
+        actionRemove3gp->setText(QCoreApplication::translate("MainWindow", "Remove 3gp", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());

@@ -41,11 +41,11 @@ public:
         labelMain->setAlignment(Qt::AlignCenter);
         labelInfo = new QLabel(fmView);
         labelInfo->setObjectName(QString::fromUtf8("labelInfo"));
-        labelInfo->setGeometry(QRect(10, 830, 631, 22));
+        labelInfo->setGeometry(QRect(10, 830, 621, 22));
         labelInfo->setStyleSheet(QString::fromUtf8("background-color: rgb(248, 255, 250);"));
         horizontalSliderScale = new QSlider(fmView);
         horizontalSliderScale->setObjectName(QString::fromUtf8("horizontalSliderScale"));
-        horizontalSliderScale->setGeometry(QRect(640, 830, 181, 22));
+        horizontalSliderScale->setGeometry(QRect(650, 830, 171, 22));
         horizontalSliderScale->setMinimum(410);
         horizontalSliderScale->setMaximum(1640);
         horizontalSliderScale->setValue(821);
