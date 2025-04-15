@@ -8,7 +8,9 @@
 
 #include "cinifile.h"
 
-#define VERTICAL_SHIFT_AFTER_ROtATION 880
+#define VERTICAL_SHIFT_AFTER_ROTATION 880
+#define INITIAL_SHIFT_X -200
+#define INITIAL_SHIFT_Y -200
 
 class cDrawFiles
 {

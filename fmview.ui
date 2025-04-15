@@ -37,7 +37,7 @@
     <rect>
      <x>10</x>
      <y>830</y>
-     <width>631</width>
+     <width>621</width>
      <height>22</height>
     </rect>
    </property>
@@ -51,9 +51,9 @@
   <widget class="QSlider" name="horizontalSliderScale">
    <property name="geometry">
     <rect>
-     <x>640</x>
+     <x>650</x>
      <y>830</y>
-     <width>181</width>
+     <width>171</width>
      <height>22</height>
     </rect>
    </property>

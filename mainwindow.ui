@@ -373,6 +373,8 @@
     <addaction name="actionRemoveMovie"/>
     <addaction name="actionRemoveText"/>
     <addaction name="actionRemoveTif"/>
+    <addaction name="actionRemoveBin"/>
+    <addaction name="actionRemove3gp"/>
     <addaction name="actionGetGroupsList"/>
     <addaction name="actionRemoveSection"/>
     <addaction name="actionExit"/>
@@ -537,6 +539,16 @@
   <action name="actionGotoIndex">
    <property name="text">
     <string>Goto index</string>
+   </property>
+  </action>
+  <action name="actionRemoveBin">
+   <property name="text">
+    <string>Remove Bin</string>
+   </property>
+  </action>
+  <action name="actionRemove3gp">
+   <property name="text">
+    <string>Remove 3gp</string>
    </property>
   </action>
  </widget>

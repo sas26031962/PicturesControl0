@@ -16,11 +16,11 @@ fmView::fmView(QWidget *parent) :
     connect(this, SIGNAL(showExecStatus(QString)), this, SLOT( execShowExecStatus(QString)));
     connect(this->ui->horizontalSliderScale, SIGNAL(valueChanged(int)), this, SLOT( execHorizontalSliderValueChanged(int)));
 
-    connect(this->ui->lineEditX, SIGNAL(editingFinished()), this, SLOT( exexXChanged()));
-    connect(this->ui->lineEditX, SIGNAL(inputRejected()), this, SLOT( exexXRejected()));
+    connect(this->ui->lineEditX, SIGNAL(editingFinished()), this, SLOT( execXChanged()));
+    //connect(this->ui->lineEditX, SIGNAL(inputRejected()), this, SLOT( execXRejected()));
 
-    connect(this->ui->lineEditY, SIGNAL(editingFinished()), this, SLOT(exexYChanged()));
-    connect(this->ui->lineEditY, SIGNAL(inputRejected()), this, SLOT( exexYRejected()));
+    connect(this->ui->lineEditY, SIGNAL(editingFinished()), this, SLOT(execYChanged()));
+    //connect(this->ui->lineEditY, SIGNAL(inputRejected()), this, SLOT( execYRejected()));
 
 }
 
@@ -51,29 +51,33 @@ void fmView::execHorizontalSliderValueChanged(int x)
     execDraw(currentImagePath);
 }
 
-void fmView::exexXChanged()
+void fmView::execXChanged()
 {
     QString s = ui->lineEditX->text();
-    cDrawFiles::dx = s.toInt();
+    cDrawFiles::dx = INITIAL_SHIFT_X;
+    cDrawFiles::dx += s.toInt();
     qDebug() << "X=" << s << " Value=" << cDrawFiles::dx;
-    execDraw(currentImagePath);
+    emit shiftXValueChanged();
+    //execDraw(cIniFile::currentRotatedImagePath);
 }
 
-void fmView::exexYChanged()
+void fmView::execYChanged()
 {
     QString s = ui->lineEditY->text();
-    cDrawFiles::dy = s.toInt();
+    cDrawFiles::dy = INITIAL_SHIFT_Y;
+    cDrawFiles::dy += s.toInt();
     qDebug() << "Y=" << s << " Value=" << cDrawFiles::dy;
-    execDraw(currentImagePath);
+    emit shiftYValueChanged();
+    //execDraw(cIniFile::currentRotatedImagePath);
 }
 
-void fmView::exexXRejected()
+void fmView::execXRejected()
 {
     QString s = ui->lineEditX->text();
     qDebug() << "X value Rejected: " << s;
 }
 
-void fmView::exexYRejected()
+void fmView::execYRejected()
 {
     QString s = ui->lineEditY->text();
     qDebug() << "Y value Rejected: " << s;

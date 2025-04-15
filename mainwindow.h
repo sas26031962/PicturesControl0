@@ -118,6 +118,8 @@ private slots:
     void execActionRemoveMovie();
     void execActionRemoveText();
     void execActionRemoveTif();
+    void execActionRemove3gp();
+    void execActionRemoveBin();
     void execActionRemoveSection();
 
     void execActionGetGroupsList();
@@ -128,6 +130,9 @@ private slots:
     void execActionRotateCCW();
     void execSpinBoxAngle(int angle);
     void execShowExecStatus(QString s);
+
+    void execShiftXValueChanged();
+    void execShiftYValueChanged();
 
 public slots:
 

@@ -1,8 +1,8 @@
 #include "cdrawfiles.h"
 
 
-qreal cDrawFiles::dx = 0;
-qreal cDrawFiles::dy = VERTICAL_SHIFT_AFTER_ROtATION;
+qreal cDrawFiles::dx = INITIAL_SHIFT_X;
+qreal cDrawFiles::dy = INITIAL_SHIFT_Y;
 
 cDrawFiles::cDrawFiles()
 {

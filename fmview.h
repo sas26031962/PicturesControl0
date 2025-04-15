@@ -38,14 +38,16 @@ private slots:
     void execShowExecStatus(QString s);
     void execHorizontalSliderValueChanged(int x);
 
-    void exexXChanged();
-    void exexYChanged();
+    void execXChanged();
+    void execYChanged();
 
-    void exexXRejected();
-    void exexYRejected();
+    void execXRejected();
+    void execYRejected();
 
 signals:
     void showExecStatus(QString s);
+    void shiftXValueChanged();
+    void shiftYValueChanged();
 
 };
 

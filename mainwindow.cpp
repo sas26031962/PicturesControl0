@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRemoveMovie, SIGNAL(triggered()), this, SLOT( execActionRemoveMovie()));
     connect(ui->actionRemoveText, SIGNAL(triggered()), this, SLOT( execActionRemoveText()));
     connect(ui->actionRemoveTif, SIGNAL(triggered()), this, SLOT( execActionRemoveTif()));
+    connect(ui->actionRemoveBin, SIGNAL(triggered()), this, SLOT( execActionRemoveBin()));
+    connect(ui->actionRemove3gp, SIGNAL(triggered()), this, SLOT( execActionRemove3gp()));
     connect(ui->actionRemoveSection, SIGNAL(triggered()), this, SLOT( execActionRemoveSection()));
 
     connect(ui->actionRotateCW_2, SIGNAL(triggered()), this, SLOT( execActionRotateCW()));
@@ -146,6 +148,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
         connect(ui->listWidgetTheams, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetTheameItemClicked()));
     }
+
+    connect(fmViewPicture, SIGNAL(shiftXValueChanged()), this, SLOT( execShiftXValueChanged()));
+    connect(fmViewPicture, SIGNAL(shiftYValueChanged()), this, SLOT( execShiftYValueChanged()));
 
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
@@ -270,6 +275,14 @@ void MainWindow::showCurrentIndexPicture()
     if(iGroupsCount > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(index);
+        //Пропускаем RecordList
+        if(qsGroupName == "RecordList")
+        {
+            index++;
+            iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
+            qsGroupName = cIniFile::Groups->at(index);
+        }
+
         cIniFile::settings.beginGroup(qsGroupName);
 
         QString qsPath, qsName, qsError;
@@ -332,7 +345,6 @@ void MainWindow::showCurrentIndexPicture()
         QString s = "Groups is empty!";
         emit showExecStatus(s);
 
-        //execActionImportInitial();//!!!
     }
 
 }
@@ -390,7 +402,7 @@ void MainWindow::loadRemovedSectionsList()
         filePathRemovedSectionList = "/home/andy/MyQtProjects/PicturesControl0/programm/data/RemovedSectionListPhotos.txt";// Прямой путь к файлу
         qDebug() << "loadRemovedSectionsList():"  << "HOME_STORAGE";
     #else
-        filePathRemovedSectionList = "C:/WORK/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
+        filePathRemovedSectionList = "C:/WORK/PicturesControl/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
         qDebug() << "loadRemovedSectionsList():" << "WORK_STORAGE";
     #endif
 
@@ -410,7 +422,7 @@ void MainWindow::saveRemovedSectionsList()
         filePathRemovedSectionList = "/home/andy/MyQtProjects/PicturesControl0/programm/data/RemovedSectionListPhotos.txt";// Прямой путь к файлу
         qDebug() << "saveRemovedSectionsList():"  << "HOME_STORAGE";
     #else
-        filePathRemovedSectionList = "C:/WORK/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
+        filePathRemovedSectionList = "C:/WORK/PicturesControl/PicturesControl0/programm/data/RemovedSectionListShips.txt";// Прямой путь к файлу
         qDebug() << "saveRemovedSectionsList():"  << "WORK_STORAGE";
     #endif
 
@@ -598,6 +610,7 @@ void MainWindow::execActionLoad()
     qDebug() << "----------------------------";
     cImportFiles::MaxIndexValue = cIniFile::Groups->count();
     progressBarProcess->setRange(0, cIniFile::Groups->count());
+    SpinBoxIndex->setMaximum(cIniFile::Groups->count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
     QListIterator<QString> readIt(*cIniFile::Groups);
@@ -696,7 +709,7 @@ bool MainWindow::loadHashTagListSubject()
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListSubjectPhotos.txt";// Прямой путь к файлу
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Прямой путь к файлу
+    filePathSubject = "C:/WORK/PicturesControl/PicturesControl0/programm/data/HashTagListSubjectShips.txt";// Прямой путь к файлу
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -734,7 +747,7 @@ bool MainWindow::loadHashTagListPlace()
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0/programm/data/HashTagListPlacesPhotos.txt";//Прямой путь к файлу
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPlacesShips.txt";//Прямой путь к файлу
+    filePathSubject = "C:/WORK/PicturesControl/PicturesControl0/programm/data/HashTagListPlacesShips.txt";//Прямой путь к файлу
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -771,7 +784,7 @@ bool MainWindow::loadHashTagListTheame()
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0//programm/data/HashTagListTheamsPhotos.txt";// Путь прямой
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListTheamsShips.txt";// Путь прямой
+    filePathSubject = "C:/WORK/PicturesControl/PicturesControl0/programm/data/HashTagListTheamsShips.txt";// Путь прямой
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -812,7 +825,7 @@ bool MainWindow::loadHashTagListProperty()
     filePathSubject = "/home/andy/MyQtProjects/PicturesControl0//programm/data/HashTagListPropertyesPhotos.txt";// Путь прямой
     qDebug() << "HOME_STORAGE";
 #else
-    filePathSubject = "C:/WORK/PicturesControl0/programm/data/HashTagListPropertyesShips.txt";// Путь прямой
+    filePathSubject = "C:/WORK/PicturesControl/PicturesControl0/programm/data/HashTagListPropertyesShips.txt";// Путь прямой
     qDebug() << "WORK_STORAGE";
 #endif
 
@@ -1200,6 +1213,188 @@ void MainWindow::execActionRemoveTif()
 
 //=============================================================================
 
+void MainWindow::execActionRemove3gp()
+{
+
+    QString s = "ActionRemove3gp()";
+    //===
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    QStringList GroupsLocal = settings.childGroups();
+
+    // Выводим значения
+    //ui->listWidgetOther->clear();
+    //ui->listWidgetOther->addItems(GroupsLocal);
+
+    qDebug() << "childGroupsList length: " << GroupsLocal.count();
+    qDebug() << "----------------------------";
+    //---
+
+    int iCount = 0;
+
+    QStringList GroupsResult;//Список - результат
+    GroupsResult.clear();
+
+    QListIterator<QString> readIt(GroupsLocal);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+
+        bool IsSign = false;
+
+        settings.beginGroup(qsSection);
+        QList<QString> keys = settings.childKeys();
+        int iKeysCount = keys.count();
+
+        QString qsName = settings.value("name", "noName").toString();
+        QString qsPath = settings.value("path", "noPath").toString();
+        QString qsWay = qsPath + "/" + qsName;
+
+        if(qsName.toLower().indexOf(".3gp") >= 0)
+        {
+            iCount++;
+
+            IsSign = true;
+
+            GroupsResult.append(qsSection);//Добавление секции в список - результат
+
+            qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+            // Перебор всей ключей в секции
+            QListIterator<QString> readKeyIt(keys);
+            while (readKeyIt.hasNext())
+            {
+                QString qsKey = readKeyIt.next();
+                qDebug() << qsKey;
+                settings.remove(qsKey);
+            }
+            qDebug() << "All keys in section " << qsSection << " removed!";
+        }
+
+        settings.endGroup();
+
+        //--- Удаление секции совсем ---
+        if(IsSign)
+        {
+            settings.remove(qsSection);
+            cIniFile::Groups->removeOne(qsSection);
+            //qslDeletedSections.append(qsSection);
+            qslDeletedSections.append(qsWay);//#@
+            ui->listWidgetOther->clear();
+            ui->listWidgetOther->addItems(qslDeletedSections);
+            qDebug() << "Section " << qsSection << " removed!";
+        }
+
+    }//End of while (readIt.hasNext())
+
+    // Выводим имена обрабатываемых файлов
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(GroupsResult);
+
+    if(iCount > 0)
+        qDebug() << "Extension '3gp' detected in " << iCount << " files";
+    else
+        qDebug() << "No '3gp' in file names detected, Ok!";
+
+    //===
+    emit execShowExecStatus(s);
+   //===
+
+}
+
+//=============================================================================
+
+void MainWindow::execActionRemoveBin()
+{
+
+    QString s = "ActionRemoveBin()";
+    //===
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    QStringList GroupsLocal = settings.childGroups();
+
+    // Выводим значения
+    //ui->listWidgetOther->clear();
+    //ui->listWidgetOther->addItems(GroupsLocal);
+
+    qDebug() << "childGroupsList length: " << GroupsLocal.count();
+    qDebug() << "----------------------------";
+    //---
+
+    int iCount = 0;
+
+    QStringList GroupsResult;//Список - результат
+    GroupsResult.clear();
+
+    QListIterator<QString> readIt(GroupsLocal);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+
+        bool IsSign = false;
+
+        settings.beginGroup(qsSection);
+        QList<QString> keys = settings.childKeys();
+        int iKeysCount = keys.count();
+
+        QString qsName = settings.value("name", "noName").toString();
+        QString qsPath = settings.value("path", "noPath").toString();
+        QString qsWay = qsPath + "/" + qsName;
+
+        if(qsName.toLower().indexOf(".bin") >= 0)
+        {
+            iCount++;
+
+            IsSign = true;
+
+            GroupsResult.append(qsSection);//Добавление секции в список - результат
+
+            qDebug() << "Name=" << qsName << " iCount=" << iCount << " Keys count=" << iKeysCount;
+            // Перебор всей ключей в секции
+            QListIterator<QString> readKeyIt(keys);
+            while (readKeyIt.hasNext())
+            {
+                QString qsKey = readKeyIt.next();
+                qDebug() << qsKey;
+                settings.remove(qsKey);
+            }
+            qDebug() << "All keys in section " << qsSection << " removed!";
+        }
+
+        settings.endGroup();
+
+        //--- Удаление секции совсем ---
+        if(IsSign)
+        {
+            settings.remove(qsSection);
+            cIniFile::Groups->removeOne(qsSection);
+            //qslDeletedSections.append(qsSection);
+            qslDeletedSections.append(qsWay);//#@
+            ui->listWidgetOther->clear();
+            ui->listWidgetOther->addItems(qslDeletedSections);
+            qDebug() << "Section " << qsSection << " removed!";
+        }
+
+    }//End of while (readIt.hasNext())
+
+    // Выводим имена обрабатываемых файлов
+    ui->listWidgetOther->clear();
+    ui->listWidgetOther->addItems(GroupsResult);
+
+    if(iCount > 0)
+        qDebug() << "Extension 'bin' detected in " << iCount << " files";
+    else
+        qDebug() << "No 'bin' in file names detected, Ok!";
+
+    //===
+    emit execShowExecStatus(s);
+   //===
+
+}
+
+//=============================================================================
+
 void MainWindow::execActionRemoveMovie()
 {
     QString s = "ActionRemoveMovie()";
@@ -1274,7 +1469,6 @@ void MainWindow::execActionRemoveMovie()
         }
         //---
     }//End of while (readIt.hasNext())
-
     // Выводим имена обрабатываемых файлов
     ui->listWidgetOther->clear();
     ui->listWidgetOther->addItems(GroupsResult);
@@ -1631,5 +1825,30 @@ void MainWindow::execListWidgetPlaceItemClicked()
 }
 
 //=============================================================================
+
+void MainWindow::execShiftXValueChanged()
+{
+    QString s = "ShiftXValueChanged:";
+    s += QString::number(cDrawFiles::dx);
+
+    cDrawFiles::execRotate(0);
+
+    emit draw(cIniFile::currentRotatedImagePath);
+
+    emit showExecStatus(s);
+
+}
+
+void MainWindow::execShiftYValueChanged()
+{
+    QString s = "ShiftYValueChanged:";
+    s += QString::number(cDrawFiles::dy);
+
+    cDrawFiles::execRotate(0);
+
+    emit draw(cIniFile::currentRotatedImagePath);
+
+    emit showExecStatus(s);
+}
 
 
