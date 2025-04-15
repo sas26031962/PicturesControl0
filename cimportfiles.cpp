@@ -5,7 +5,7 @@
 int cImportFiles::MaxIndexValue = MAX_INDEX_DEFAULT_VALUE;
 
 QString cImportFiles::labelExecStatusText = "";
-bool cImportFiles::IslabelExecStatusTextChacnged = false;
+bool cImportFiles::IslabelExecStatusTextChanged = false;
 
 QString cImportFiles::labelFileNameText = "";
 bool cImportFiles::IslabelFileNameTextChanged = false;
@@ -141,17 +141,14 @@ bool cImportFiles::getGroupsList()
             QString groupName = line.mid(1, line.length() - 2); // Извлекаем имя секции
             if (!cIniFile::Groups->contains(groupName))
             {
+                cIniFile::Groups->append(groupName); // Добавляем в список, если еще не существует
                 //Чтение списка ключей
                 cIniFile::settings.beginGroup(groupName);
                 QList<QString> keys = cIniFile::settings.childKeys();
                 int iKeysCount = keys.count();
                 cIniFile::settings.endGroup();
-                //Формирование сообщения
-                QString s = groupName;
-                s += ": ";
-                s += QString::number(iKeysCount);
                 //Вывод сообщения в список
-                cIniFile::Groups->append(s); // Добавляем в список, если еще не существует
+                qDebug() << "Section: " << groupName << " contains " << iKeysCount << " keys";
             }
             else
             {

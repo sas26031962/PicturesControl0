@@ -275,6 +275,7 @@ void MainWindow::showCurrentIndexPicture()
     if(iGroupsCount > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(index);
+        qDebug() << "showCurrentIndexPicture(): GroupName=" << qsGroupName;
         //Пропускаем RecordList
         if(qsGroupName == "RecordList")
         {
@@ -602,7 +603,9 @@ void MainWindow::execActionLoad()
     if(!*Ok)iLength = 0;
     settings.endGroup();
 
-    *cIniFile::Groups = settings.childGroups();
+    //Загрузка списка групп
+    //*cIniFile::Groups = settings.childGroups();//20250415 ???
+    cImportFiles::getGroupsList();
 
     // Выводим значения
     qDebug() << "length: " << iLength;
@@ -1568,10 +1571,10 @@ void MainWindow::execTimerUpdate()
 //    int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
 //    progressBarProcess->setValue(x);
 
-    if(cImportFiles::IslabelExecStatusTextChacnged)
+    if(cImportFiles::IslabelExecStatusTextChanged)
     {
         labelExecStatus->setText(cImportFiles::labelExecStatusText);
-        cImportFiles::IslabelExecStatusTextChacnged = false;
+        cImportFiles::IslabelExecStatusTextChanged = false;
     }
 
     if(cImportFiles::IslabelFileNameTextChanged)
@@ -1587,7 +1590,7 @@ void MainWindow::execTimerUpdate()
 void MainWindow::execShowExecStatus(QString s)
 {
     cImportFiles::labelExecStatusText = s;
-    cImportFiles::IslabelExecStatusTextChacnged = true;
+    cImportFiles::IslabelExecStatusTextChanged = true;
 }
 
 //=============================================================================

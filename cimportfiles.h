@@ -29,8 +29,7 @@ class cImportFiles
 public:
     static int MaxIndexValue;
     static QString labelExecStatusText;
-    static bool IslabelExecStatusTextChacnged;
-//    static QStringList * Groups;
+    static bool IslabelExecStatusTextChanged;
 
 
     static QString labelFileNameText;
