@@ -32,8 +32,8 @@ bool cLoadFiles::execLoadFiles()
     settings.endGroup();
 
     //Загрузка списка групп
-    //*cIniFile::Groups = settings.childGroups();//20250415 ???
-    cImportFiles::getGroupsList();
+    *cIniFile::Groups = settings.childGroups();//20250415 ???
+    //cImportFiles::getGroupsList();
 
     // Выводим значения
     qDebug() << "length: " << iLength;

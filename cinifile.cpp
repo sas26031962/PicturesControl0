@@ -141,4 +141,25 @@ void cIniFile::getCurrentImagePath()
 
 }
 
+int cIniFile::getCurrentIndex()
+{
+    std::unique_ptr<bool> ptrOk = std::make_unique<bool>(true);
+    bool* Ok = ptrOk.get();
+
+    // Читаем значение текущего индекса из INI-файла
+    cIniFile::settings.beginGroup("RecordList");
+
+    QString qsCurrentIndex = cIniFile::settings.value("index", "0").toString();
+    int LoadedCurrentIndex = qsCurrentIndex.toInt(Ok);
+    if(!*Ok)LoadedCurrentIndex = 0;
+
+    qDebug() << "Loaded CurrentIndex:" << LoadedCurrentIndex;
+
+    QString qsLength = cIniFile::settings.value("length", "0").toString();
+    int iLength = qsLength.toInt(Ok);
+    if(!*Ok)iLength = 0;
+    cIniFile::settings.endGroup();
+
+    return LoadedCurrentIndex;
+}
 

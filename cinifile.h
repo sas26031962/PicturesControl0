@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QImage>
 #include <atomic>
+#include <memory>
 
 #include "crecord.h"
 
@@ -18,7 +19,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 //-----------------------------------------------------------------------------
 //Глобальные переменные
@@ -54,6 +55,7 @@ public:
     void addRecordListData();
 
     static void getCurrentImagePath();
+    static int getCurrentIndex();
 
 };
 

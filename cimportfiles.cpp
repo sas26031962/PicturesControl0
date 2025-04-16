@@ -123,6 +123,7 @@ void cImportFiles::execImport(QProgressBar * bar)
 bool cImportFiles::getGroupsList()
 {
     bool IsError = false;
+/*
     cIniFile::Groups->clear();
     QFile file(cIniFile::iniFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -160,6 +161,9 @@ bool cImportFiles::getGroupsList()
     file.close();
 
     qDebug() << "###getGroupsList from " << cIniFile::iniFilePath << " complete";
+*/
+
+   *cIniFile::Groups = cIniFile::settings.childGroups();
 
     return IsError;//Возвращаем флаг ошибки
 
