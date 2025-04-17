@@ -116,6 +116,7 @@ private slots:
     void execActionLoadHashTagListTheame();
 
     void execActionSearchRotated();
+    void execActionSearchOrYes();
 
     void execActionRemoveMovie();
     void execActionRemoveText();

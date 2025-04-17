@@ -411,6 +411,7 @@
      <string>Search</string>
     </property>
     <addaction name="actionSearchRotated"/>
+    <addaction name="actionSearchOrYes"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
@@ -561,6 +562,11 @@
   <action name="actionSearchRotated">
    <property name="text">
     <string>SearchRotated</string>
+   </property>
+  </action>
+  <action name="actionSearchOrYes">
+   <property name="text">
+    <string>SearchOrYes</string>
    </property>
   </action>
  </widget>

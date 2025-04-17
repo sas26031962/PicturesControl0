@@ -150,6 +150,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fmViewPicture, SIGNAL(shiftYValueChanged()), this, SLOT( execShiftYValueChanged()));
 
     connect(ui->actionSearchRotated, SIGNAL(triggered()), this, SLOT( execActionSearchRotated()));
+    connect(ui->actionSearchOrYes, SIGNAL(triggered()), this, SLOT( execActionSearchOrYes()));
 
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
@@ -1794,23 +1795,27 @@ void MainWindow::execActionSearchRotated()
 
     installNavigation();//Настройка навигации
 
-//    iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
+    s += ": find ";
+    s += QString::number(cImportFiles::MaxIndexValue);
+    s += " records";
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
 
-//    //Настройка навигации
-//    cImportFiles::MaxIndexValue = cIniFile::Groups->count();
+//=============================================================================
 
-//    // Установка текущего индекса
-//    iCurrentIndexGlobal.store(0);
+void MainWindow::execActionSearchOrYes()
+{
+    QString s = "execActionSearchOrYes()";
 
-//    // Установка навигации
-//    progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);
-//    progressBarNavigation->setValue(0);
+    QStringList yes;
+    yes.clear();
+    yes.append("IsRotated");
 
-//    SpinBoxIndex->setRange(0, cImportFiles::MaxIndexValue);
-//    SpinBoxIndex->setValue(0);
+    cLoadFiles::execLoadFilesByConditionOrYes(yes);
 
-//    // Переход к начальному индексу
-//    execActionSelectImageBegin();
+    installNavigation();//Настройка навигации
 
     s += ": find ";
     s += QString::number(cImportFiles::MaxIndexValue);

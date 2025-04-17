@@ -159,5 +159,5 @@ void cDrawFiles::scaleImage(QString path, int width, int height)
         status += " fault";
     }
 
-    qDebug() << status;
+    //qDebug() << status;
 }
