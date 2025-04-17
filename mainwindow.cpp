@@ -1811,7 +1811,8 @@ void MainWindow::execActionSearchOrYes()
 
     QStringList yes;
     yes.clear();
-    yes.append("IsRotated");
+    //yes.append("IsRotated");
+    yes.append("Archive");
 
     cLoadFiles::execLoadFilesByConditionOrYes(yes);
 

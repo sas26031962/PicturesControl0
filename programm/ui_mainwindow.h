@@ -59,6 +59,8 @@ public:
     QAction *actionGotoIndex;
     QAction *actionRemoveBin;
     QAction *actionRemove3gp;
+    QAction *actionSearchRotated;
+    QAction *actionSearchOrYes;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -94,6 +96,7 @@ public:
     QMenu *menuSelect_image;
     QMenu *menuForms;
     QMenu *menuTags;
+    QMenu *menuSearch;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -154,6 +157,10 @@ public:
         actionRemoveBin->setObjectName(QString::fromUtf8("actionRemoveBin"));
         actionRemove3gp = new QAction(MainWindow);
         actionRemove3gp->setObjectName(QString::fromUtf8("actionRemove3gp"));
+        actionSearchRotated = new QAction(MainWindow);
+        actionSearchRotated->setObjectName(QString::fromUtf8("actionSearchRotated"));
+        actionSearchOrYes = new QAction(MainWindow);
+        actionSearchOrYes->setObjectName(QString::fromUtf8("actionSearchOrYes"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -258,6 +265,8 @@ public:
         menuForms->setObjectName(QString::fromUtf8("menuForms"));
         menuTags = new QMenu(menuBar);
         menuTags->setObjectName(QString::fromUtf8("menuTags"));
+        menuSearch = new QMenu(menuBar);
+        menuSearch->setObjectName(QString::fromUtf8("menuSearch"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -270,6 +279,7 @@ public:
         menuBar->addAction(menuSelect_image->menuAction());
         menuBar->addAction(menuForms->menuAction());
         menuBar->addAction(menuTags->menuAction());
+        menuBar->addAction(menuSearch->menuAction());
         menuFile->addAction(actionImport);
         menuFile->addAction(actionLoad);
         menuFile->addAction(actionRemoveMovie);
@@ -292,6 +302,8 @@ public:
         menuTags->addAction(actionLoadHashTagListPlace);
         menuTags->addAction(actionLoadHashTagListProperty);
         menuTags->addAction(actionLoadHashTagListTheame);
+        menuSearch->addAction(actionSearchRotated);
+        menuSearch->addAction(actionSearchOrYes);
 
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -330,6 +342,8 @@ public:
         actionGotoIndex->setText(QCoreApplication::translate("MainWindow", "Goto index", nullptr));
         actionRemoveBin->setText(QCoreApplication::translate("MainWindow", "Remove Bin", nullptr));
         actionRemove3gp->setText(QCoreApplication::translate("MainWindow", "Remove 3gp", nullptr));
+        actionSearchRotated->setText(QCoreApplication::translate("MainWindow", "SearchRotated", nullptr));
+        actionSearchOrYes->setText(QCoreApplication::translate("MainWindow", "SearchOrYes", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());
@@ -376,6 +390,7 @@ public:
         menuSelect_image->setTitle(QCoreApplication::translate("MainWindow", "Select image", nullptr));
         menuForms->setTitle(QCoreApplication::translate("MainWindow", "Forms", nullptr));
         menuTags->setTitle(QCoreApplication::translate("MainWindow", "Tags", nullptr));
+        menuSearch->setTitle(QCoreApplication::translate("MainWindow", "Search", nullptr));
     } // retranslateUi
 
 };
