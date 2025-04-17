@@ -1762,11 +1762,8 @@ void MainWindow::execListWidgetPlaceItemClicked()
 
 //=============================================================================
 
-void MainWindow::execActionSearchRotated()
+void MainWindow::installNavigation()
 {
-    QString s = "execActionSearchRotated()";
-
-    cLoadFiles::execLoadFiles();
     iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
 
     //Настройка навигации
@@ -1785,7 +1782,39 @@ void MainWindow::execActionSearchRotated()
     // Переход к начальному индексу
     execActionSelectImageBegin();
 
+}
 
+//=============================================================================
+
+void MainWindow::execActionSearchRotated()
+{
+    QString s = "execActionSearchRotated()";
+
+    cLoadFiles::execLoadFiles();
+
+    installNavigation();//Настройка навигации
+
+//    iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
+
+//    //Настройка навигации
+//    cImportFiles::MaxIndexValue = cIniFile::Groups->count();
+
+//    // Установка текущего индекса
+//    iCurrentIndexGlobal.store(0);
+
+//    // Установка навигации
+//    progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);
+//    progressBarNavigation->setValue(0);
+
+//    SpinBoxIndex->setRange(0, cImportFiles::MaxIndexValue);
+//    SpinBoxIndex->setValue(0);
+
+//    // Переход к начальному индексу
+//    execActionSelectImageBegin();
+
+    s += ": find ";
+    s += QString::number(cImportFiles::MaxIndexValue);
+    s += " records";
     //---
     emit execShowExecStatus(s);
     //---

@@ -84,7 +84,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-   //Методы
+    //Методы
+    void installNavigation();
 
 protected:
     void keyPressEvent(QKeyEvent * e) override;//keys
