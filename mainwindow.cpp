@@ -149,6 +149,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fmViewPicture, SIGNAL(shiftXValueChanged()), this, SLOT( execShiftXValueChanged()));
     connect(fmViewPicture, SIGNAL(shiftYValueChanged()), this, SLOT( execShiftYValueChanged()));
 
+    connect(ui->actionSearchRotated, SIGNAL(triggered()), this, SLOT( execActionSearchRotated()));
+
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
     //execActionLoad();
@@ -1753,6 +1755,37 @@ void MainWindow::execListWidgetPlaceItemClicked()
     }
     // Отобразить картинку
     showCurrentIndexPicture();
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execActionSearchRotated()
+{
+    QString s = "execActionSearchRotated()";
+
+    cLoadFiles::execLoadFiles();
+    iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
+
+    //Настройка навигации
+    cImportFiles::MaxIndexValue = cIniFile::Groups->count();
+
+    // Установка текущего индекса
+    iCurrentIndexGlobal.store(0);
+
+    // Установка навигации
+    progressBarNavigation->setRange(0, cImportFiles::MaxIndexValue);
+    progressBarNavigation->setValue(0);
+
+    SpinBoxIndex->setRange(0, cImportFiles::MaxIndexValue);
+    SpinBoxIndex->setValue(0);
+
+    // Переход к начальному индексу
+    execActionSelectImageBegin();
+
+
     //---
     emit execShowExecStatus(s);
     //---

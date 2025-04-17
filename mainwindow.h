@@ -26,6 +26,7 @@
 #include "cimportfiles.h"
 #include "stvarmem.h"
 #include "cdrawfiles.h"
+#include "cloadfiles.h"
 
 #define STATUS_BAR_DELAY 500
 #define WINDOW_LEFT_MARGING 40
@@ -112,6 +113,8 @@ private slots:
     void execActionLoadHashTagListPlace();
     void execActionLoadHashTagListProperty();
     void execActionLoadHashTagListTheame();
+
+    void execActionSearchRotated();
 
     void execActionRemoveMovie();
     void execActionRemoveText();

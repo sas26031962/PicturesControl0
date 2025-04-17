@@ -406,10 +406,17 @@
     <addaction name="actionLoadHashTagListProperty"/>
     <addaction name="actionLoadHashTagListTheame"/>
    </widget>
+   <widget class="QMenu" name="menuSearch">
+    <property name="title">
+     <string>Search</string>
+    </property>
+    <addaction name="actionSearchRotated"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
    <addaction name="menuForms"/>
    <addaction name="menuTags"/>
+   <addaction name="menuSearch"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -549,6 +556,11 @@
   <action name="actionRemove3gp">
    <property name="text">
     <string>Remove 3gp</string>
+   </property>
+  </action>
+  <action name="actionSearchRotated">
+   <property name="text">
+    <string>SearchRotated</string>
    </property>
   </action>
  </widget>
