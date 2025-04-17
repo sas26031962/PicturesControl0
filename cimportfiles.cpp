@@ -32,6 +32,7 @@ cImportFiles::cImportFiles()
  *****************************************************************************/
 void cImportFiles::execImport(QProgressBar * bar)
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     //---Добавление идентификационной секции
     cImportFiles::MaxIndexValue = cRecord::RecordList->count();
     cIniFile::IniFile.addInitalSection(cImportFiles::MaxIndexValue);
@@ -96,23 +97,25 @@ void cImportFiles::execImport(QProgressBar * bar)
         }
 
             int id = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-            cIniFile::settings.beginGroup(groupName);
-            cIniFile::settings.setValue("Id", id);
-            cIniFile::settings.setValue("name", name);
-            cIniFile::settings.setValue("path", PathWithoutName);
-            cIniFile::settings.setValue("size", size);
+            settings.beginGroup(groupName);
+            settings.setValue("Id", id);
+            settings.setValue("name", name);
+            settings.setValue("path", PathWithoutName);
+            settings.setValue("size", size);
             if(IsError)
             {
-                cIniFile::settings.setValue("error", true);
+                settings.setValue("error", true);
             }
             else
             {
-                cIniFile::settings.setValue("width", width);
-                cIniFile::settings.setValue("height", height);
+                settings.setValue("width", width);
+                settings.setValue("height", height);
             }
-            cIniFile::settings.endGroup();
+            settings.endGroup();
 
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
+
+    settings.sync();
 
 }//End of bool cImportFiles::execImport()
 
@@ -163,7 +166,9 @@ bool cImportFiles::getGroupsList()
     qDebug() << "###getGroupsList from " << cIniFile::iniFilePath << " complete";
 */
 
-   *cIniFile::Groups = cIniFile::settings.childGroups();
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    *cIniFile::Groups = settings.childGroups();
+    qDebug() << "cImportFiles::getGroupsList(): Groups count=" << cIniFile::Groups->count();
 
     return IsError;//Возвращаем флаг ошибки
 

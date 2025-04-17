@@ -19,9 +19,11 @@
     QString cIniFile::currentRotatedImagePath = "";
     QStringList * cIniFile::Groups;
 
+    QStringList * cIniFile::currentGroups;
+
     QList<cRecord> * cRecord::RecordList;
 
-    QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    //QSettings cIniFile::settings(cIniFile::iniFilePath, QSettings::IniFormat);//20250417
 
 // Путь к каталогу, который нужно прочитать.
 #ifdef HOME_STORAGE
@@ -44,13 +46,15 @@ QString cIniFile::getDirectoryPah()
 
 void cIniFile::addInitalSection(int n)
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     cIniFile::IniFile.iRecordListLength = n;
 
-    cIniFile::settings.beginGroup("RecordList");
-    cIniFile::settings.setValue("root_path", cIniFile::IniFile.getDirectoryPah());
-    cIniFile::settings.setValue("length", cIniFile::IniFile.iRecordListLength);
-    cIniFile::settings.setValue("index", 0);
-    cIniFile::settings.endGroup();
+    settings.beginGroup("RecordList");
+    settings.setValue("root_path", cIniFile::IniFile.getDirectoryPah());
+    settings.setValue("length", cIniFile::IniFile.iRecordListLength);
+    settings.setValue("index", 0);
+    settings.endGroup();
+    settings.sync();
 }
 /******************************************************************************
  * Функция добавления данных из списка QList<cRecord> в конфигурационный файл
@@ -58,6 +62,7 @@ void cIniFile::addInitalSection(int n)
  *****************************************************************************/
 void cIniFile::addRecordListData()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     iCurrentIndexGlobal.store(0);
     for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
      {
@@ -99,46 +104,48 @@ void cIniFile::addRecordListData()
 
             int id = iCurrentIndexGlobal.load(std::memory_order_relaxed);
 
-            cIniFile::settings.beginGroup(groupName);
-            cIniFile::settings.setValue("Id", id);
-            cIniFile::settings.setValue("name", name);
-            cIniFile::settings.setValue("path", PathWithoutName);
-            cIniFile::settings.setValue("size", size);
+            settings.beginGroup(groupName);
+            settings.setValue("Id", id);
+            settings.setValue("name", name);
+            settings.setValue("path", PathWithoutName);
+            settings.setValue("size", size);
             if(IsError)
             {
-                cIniFile::settings.setValue("error", true);
+                settings.setValue("error", true);
             }
             else
             {
-                cIniFile::settings.setValue("width", width);
-                cIniFile::settings.setValue("height", height);
+                settings.setValue("width", width);
+                settings.setValue("height", height);
             }
-            cIniFile::settings.endGroup();
+            settings.endGroup();
 
     }//End of for(QList<cRecord>::iterator it = cRecord::RecordList->begin(); it != cRecord::RecordList->end(); ++it)
-
+    settings.sync();
     qDebug() << "==================Task is done!!!=========================";
 }
 
 void cIniFile::getCurrentImagePath()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString imagePath = "";
 
     //--- Читаем значения из INI-файла
     QString GroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
 
-    cIniFile::settings.beginGroup(GroupName);
+    settings.beginGroup(GroupName);
 
-    QString qsPath = cIniFile::settings.value("path","").toString();
-    QString qsName = cIniFile::settings.value("name","").toString();
+    QString qsPath = settings.value("path","").toString();
+    QString qsName = settings.value("name","").toString();
 
-    cIniFile::settings.endGroup();
+    settings.endGroup();
 
     imagePath = qsPath + '/' + qsName;
     qDebug() << "OriginalPath:" << imagePath;
 
     cIniFile::currentImagePath = imagePath;
 
+    settings.sync();
 }
 
 int cIniFile::getCurrentIndex()
@@ -146,19 +153,15 @@ int cIniFile::getCurrentIndex()
     std::unique_ptr<bool> ptrOk = std::make_unique<bool>(true);
     bool* Ok = ptrOk.get();
 
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     // Читаем значение текущего индекса из INI-файла
-    cIniFile::settings.beginGroup("RecordList");
+    settings.beginGroup("RecordList");
 
-    QString qsCurrentIndex = cIniFile::settings.value("index", "0").toString();
+    QString qsCurrentIndex = settings.value("index", "0").toString();
     int LoadedCurrentIndex = qsCurrentIndex.toInt(Ok);
     if(!*Ok)LoadedCurrentIndex = 0;
 
     qDebug() << "Loaded CurrentIndex:" << LoadedCurrentIndex;
-
-    QString qsLength = cIniFile::settings.value("length", "0").toString();
-    int iLength = qsLength.toInt(Ok);
-    if(!*Ok)iLength = 0;
-    cIniFile::settings.endGroup();
 
     return LoadedCurrentIndex;
 }

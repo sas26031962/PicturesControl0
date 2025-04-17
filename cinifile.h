@@ -34,13 +34,14 @@ private:
 public:
     //Атрибуты
     static QStringList * Groups;
+    static QStringList * currentGroups;
 
     static QString iniFilePath;
     static QString rotatedImagePath;
     static QString scaledImagePath;
     static QString currentImagePath;
     static QString currentRotatedImagePath;
-    static QSettings settings;
+//    static QSettings settings;//20250417
     static cIniFile IniFile;
 
     int iRecordListLength = 0;  //Полное число записей

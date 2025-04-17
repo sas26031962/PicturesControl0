@@ -40,8 +40,6 @@ bool cLoadFiles::execLoadFiles()
     qDebug() << "childGroupsList length: " << cIniFile::Groups->count();
     qDebug() << "----------------------------";
     cImportFiles::MaxIndexValue = cIniFile::Groups->count();
-    //progressBarProcess->setRange(0, cIniFile::Groups->count());
-    //SpinBoxIndex->setRange(0, cIniFile::Groups->count());
     int iCount = 0;
     iCurrentIndexGlobal.store(0);
 
@@ -61,13 +59,13 @@ bool cLoadFiles::execLoadFiles()
         //===
         QString qsPath, qsName, qsError, qsId;
 
-        QStringList keys = cIniFile::settings.childKeys();
+        QStringList keys = settings.childKeys();
         QListIterator<QString> readIt(keys);
         int iIndex = 0;
         while(readIt.hasNext())
         {
             QString key = readIt.next();
-            QString value = cIniFile::settings.value(key,"0").toString();
+            QString value = settings.value(key,"0").toString();
 
             if(key == "Id") qsId = value;
             if(key == "path") qsPath = value;
@@ -104,5 +102,8 @@ bool cLoadFiles::execLoadFiles()
     iCurrentIndexGlobal.store(LoadedCurrentIndex);
 
     //--- Окончание функции загрузки
+
+    settings.sync();
+
     return Result;
 }

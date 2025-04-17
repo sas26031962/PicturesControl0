@@ -159,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    cIniFile::settings.sync();
+//    cIniFile::settings.sync();//20250417
     timerUpdate->stop();
 
     saveRemovedSectionsList();
@@ -259,6 +259,7 @@ void MainWindow::showCurrentIndexPicture()
 {
 
     // Читаем значения из INI-файла
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
     if(index > (cIniFile::Groups->count() - 1))
     {
@@ -280,11 +281,11 @@ void MainWindow::showCurrentIndexPicture()
             qsGroupName = cIniFile::Groups->at(index);
         }
 
-        cIniFile::settings.beginGroup(qsGroupName);
+        settings.beginGroup(qsGroupName);
 
         QString qsPath, qsName, qsError;
 
-        QStringList keys = cIniFile::settings.childKeys();
+        QStringList keys = settings.childKeys();
         int iStrings = keys.count();
         qDebug() << "showCurrentIndexPicture(): GroupName=" << qsGroupName << " KeysCount=" << iStrings;
 
@@ -294,7 +295,7 @@ void MainWindow::showCurrentIndexPicture()
         while(readIt.hasNext())
         {
             QString key = readIt.next();
-            QString value = cIniFile::settings.value(key,"0").toString();
+            QString value = settings.value(key,"0").toString();
 
             if(key == "path") qsPath = value;
             if(key == "name") qsName = value;
@@ -309,7 +310,7 @@ void MainWindow::showCurrentIndexPicture()
         model->setHeaderData(1,Qt::Horizontal,"Value");
         ui->tableViewCurrent->setModel(model);
 
-        cIniFile::settings.endGroup();
+        settings.endGroup();
 
         if(!qsPath.count() || !qsName.count())
         {
@@ -334,9 +335,10 @@ void MainWindow::showCurrentIndexPicture()
 
         //Сохранение текущего индекса
         int x = iCurrentIndexGlobal.load(std::memory_order_relaxed);
-        cIniFile::settings.beginGroup("RecordList");
-        cIniFile::settings.setValue("index", x);
-        cIniFile::settings.endGroup();
+        settings.beginGroup("RecordList");
+        settings.setValue("index", x);
+        settings.endGroup();
+        settings.sync();
     }
     else
     {
@@ -441,7 +443,7 @@ void MainWindow::execActionGotoIndex()
     showCurrentIndexPicture();
 
     progressBarNavigation->setValue(index);
-
+    SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionGotoIndex(), goto index:";
     s += QString::number(index);
@@ -454,18 +456,18 @@ void MainWindow::execActionGotoIndex()
 
 void MainWindow::execActionSelectImageBegin()
 {
+    int index = 0;
     // Модификация индекса
-    iCurrentIndexGlobal.store(0, std::memory_order_relaxed);
+    iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
     progressBarNavigation->setValue(index);
     SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageBegin(), goto index:";
-    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    s += QString::number(index);
     emit execShowExecStatus(s);
     //---
 
@@ -475,19 +477,21 @@ void MainWindow::execActionSelectImageBegin()
 
 void MainWindow::execActionSelectImageNext()
 {
+    // Модификация индекса
     if(iCurrentIndexGlobal.load(std::memory_order_relaxed) < cIniFile::Groups->count() - 1)
     {
         iCurrentIndexGlobal.fetch_add(1, std::memory_order_relaxed);
     }
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
 
     // Отобразить картинку
     showCurrentIndexPicture();
-    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
+
     progressBarNavigation->setValue(index);
     SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageNext(), goto index:";
-    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    s += QString::number(index);
     emit execShowExecStatus(s);
     //---
 
@@ -497,20 +501,21 @@ void MainWindow::execActionSelectImageNext()
 
 void MainWindow::execActionSelectImagePrevious()
 {
+    // Модификация индекса
     if(iCurrentIndexGlobal.load(std::memory_order_relaxed) > 0)
     {
         iCurrentIndexGlobal.fetch_sub(1, std::memory_order_relaxed);
     }
+    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
     progressBarNavigation->setValue(index);
     SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImagePrevious(), goto index:";
-    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    s += QString::number(index);
     emit execShowExecStatus(s);
     //---
 
@@ -520,17 +525,18 @@ void MainWindow::execActionSelectImagePrevious()
 
 void MainWindow::execActionSelectImageEnd()
 {
-    iCurrentIndexGlobal.store(cIniFile::Groups->count() - 1);
+    int index = cIniFile::Groups->count() - 1;
+    // Модификация индекса
+    iCurrentIndexGlobal.store(index, std::memory_order_relaxed);
 
     // Отобразить картинку
     showCurrentIndexPicture();
 
-    int index = iCurrentIndexGlobal.load(std::memory_order_relaxed);
     progressBarNavigation->setValue(index);
     SpinBoxIndex->setValue(index);
     //---
     QString s = "execActionSelectImageEnd(), goto index";
-    s += QString::number(iCurrentIndexGlobal.load(std::memory_order_relaxed));
+    s += QString::number(index);
     emit execShowExecStatus(s);
     //---
 
@@ -891,12 +897,13 @@ bool MainWindow::deleteSection(QString s)
 {
     bool Error = false;
 
-    cIniFile::settings.beginGroup(s);
-    QList<QString> keys = cIniFile::settings.childKeys();
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    settings.beginGroup(s);
+    QList<QString> keys = settings.childKeys();
     int iKeysCount = keys.count();
 
-    QString qsName = cIniFile::settings.value("name", "noName").toString();
-    QString qsPath = cIniFile::settings.value("path", "noPath").toString();
+    QString qsName = settings.value("name", "noName").toString();
+    QString qsPath = settings.value("path", "noPath").toString();
     QString qsWay = qsPath + "/" + qsName;
 
     if(iKeysCount > 0)
@@ -907,7 +914,7 @@ bool MainWindow::deleteSection(QString s)
         {
             QString qsKey = readKeyIt.next();
             qDebug() << qsKey;
-            cIniFile::settings.remove(qsKey);
+            settings.remove(qsKey);
         }
         qDebug() << "All keys in section " << s << " removed!";
 
@@ -916,9 +923,11 @@ bool MainWindow::deleteSection(QString s)
     {
         qDebug() << "No keys in section " << s << " found!";
     }
-    cIniFile::settings.endGroup();
+    settings.endGroup();
 
-    cIniFile::settings.remove(s);
+    settings.remove(s);
+    settings.sync();
+
     qDebug() << "Section " << s << " removed!";
 
     //Добавление секции в список - результат
@@ -1546,6 +1555,7 @@ void MainWindow::execActionGetGroupsList()
 
 void MainWindow::execActionMemo()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString s;
     QString item = ui->lineEditMemo->text();
     if(item.length() > 0)
@@ -1558,23 +1568,21 @@ void MainWindow::execActionMemo()
         if(cIniFile::Groups->count() > 0)
         {
             QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-            //cIniFile::settings.beginGroup(qsGroupName);
-            //cIniFile::settings.setValue("memo", item);
-            cIniFile::settings.beginGroup(qsGroupName);
+            settings.beginGroup(qsGroupName);
             QString key = "memo";
-            QStringList list = cIniFile::settings.childKeys();
+            QStringList list = settings.childKeys();
             if(list.contains(key))
             {
                 qDebug() << qsGroupName << " contains " << key;
-                cIniFile::settings.remove(key);
+                settings.remove(key);
             }
             else
             {
                 qDebug() << qsGroupName << " not contains " << key;
-                cIniFile::settings.setValue(key, item);
+                settings.setValue(key, item);
             }
-            cIniFile::settings.endGroup();
-
+            settings.endGroup();
+            settings.sync();
         }
         else
         {
@@ -1598,6 +1606,7 @@ void MainWindow::execActionMemo()
 
 void MainWindow::execListWidgetSubjectItemClicked()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString s = "execSubjectItemClicked()";
     QString item = ui->listWidgetSubject->currentItem()->text();
     qDebug() << "listWidgetSubject: item=" << item;
@@ -1606,22 +1615,20 @@ void MainWindow::execListWidgetSubjectItemClicked()
     if(cIniFile::Groups->count() > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-        //cIniFile::settings.beginGroup(qsGroupName);
-        //cIniFile::settings.setValue(item, "true");
-        cIniFile::settings.beginGroup(qsGroupName);
-        QStringList list = cIniFile::settings.childKeys();
+        settings.beginGroup(qsGroupName);
+        QStringList list = settings.childKeys();
         if(list.contains(item))
         {
             qDebug() << qsGroupName << " contains " << item;
-            cIniFile::settings.remove(item);
+            settings.remove(item);
         }
         else
         {
             qDebug() << qsGroupName << " not contains " << item;
-            cIniFile::settings.setValue(item, "true");
+            settings.setValue(item, "true");
         }
-        cIniFile::settings.endGroup();
-
+        settings.endGroup();
+        settings.sync();
     }
     else
     {
@@ -1638,6 +1645,7 @@ void MainWindow::execListWidgetSubjectItemClicked()
 
 void MainWindow::execListWidgetPropertyItemClicked()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString s = "execPropertyItemClicked()";
     QString item = ui->listWidgetPropertyes->currentItem()->text();
     qDebug() << "listWidgetProperty: item=" << item;
@@ -1646,22 +1654,20 @@ void MainWindow::execListWidgetPropertyItemClicked()
     if(cIniFile::Groups->count() > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-        //cIniFile::settings.beginGroup(qsGroupName);
-        //cIniFile::settings.setValue(item, "true");
-        cIniFile::settings.beginGroup(qsGroupName);
-        QStringList list = cIniFile::settings.childKeys();
+        settings.beginGroup(qsGroupName);
+        QStringList list = settings.childKeys();
         if(list.contains(item))
         {
             qDebug() << qsGroupName << " contains " << item;
-            cIniFile::settings.remove(item);
+            settings.remove(item);
         }
         else
         {
             qDebug() << qsGroupName << " not contains " << item;
-            cIniFile::settings.setValue(item, "true");
+            settings.setValue(item, "true");
         }
-        cIniFile::settings.endGroup();
-
+       settings.endGroup();
+       settings.sync();
     }
     else
     {
@@ -1678,6 +1684,7 @@ void MainWindow::execListWidgetPropertyItemClicked()
 
 void MainWindow::execListWidgetTheameItemClicked()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString s = "execTheameItemClicked()";
     QString item = ui->listWidgetTheams->currentItem()->text();
     qDebug() << "listWidgetTheame: item=" << item;
@@ -1686,22 +1693,20 @@ void MainWindow::execListWidgetTheameItemClicked()
     if(cIniFile::Groups->count() > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-        //cIniFile::settings.beginGroup(qsGroupName);
-        //cIniFile::settings.setValue(item, "true");
-        cIniFile::settings.beginGroup(qsGroupName);
-        QStringList list = cIniFile::settings.childKeys();
+        settings.beginGroup(qsGroupName);
+        QStringList list = settings.childKeys();
         if(list.contains(item))
         {
             qDebug() << qsGroupName << " contains " << item;
-            cIniFile::settings.remove(item);
+            settings.remove(item);
         }
         else
         {
             qDebug() << qsGroupName << " not contains " << item;
-            cIniFile::settings.setValue(item, "true");
+            settings.setValue(item, "true");
         }
-        cIniFile::settings.endGroup();
-
+        settings.endGroup();
+        settings.sync();
     }
     else
     {
@@ -1718,6 +1723,7 @@ void MainWindow::execListWidgetTheameItemClicked()
 
 void MainWindow::execListWidgetPlaceItemClicked()
 {
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
     QString s = "execPlaceItemClicked()";
     QString item = ui->listWidgetPlaces->currentItem()->text();
     qDebug() << "listWidgetPlace: item=" << item;
@@ -1726,20 +1732,20 @@ void MainWindow::execListWidgetPlaceItemClicked()
     if(cIniFile::Groups->count() > 0)
     {
         QString qsGroupName = cIniFile::Groups->at(iCurrentIndexGlobal.load(std::memory_order_relaxed));
-        cIniFile::settings.beginGroup(qsGroupName);
-        QStringList list = cIniFile::settings.childKeys();
+        settings.beginGroup(qsGroupName);
+        QStringList list = settings.childKeys();
         if(list.contains(item))
         {
             qDebug() << qsGroupName << " contains " << item;
-            cIniFile::settings.remove(item);
+            settings.remove(item);
         }
         else
         {
             qDebug() << qsGroupName << " not contains " << item;
-            cIniFile::settings.setValue(item, "true");
+            settings.setValue(item, "true");
         }
-        cIniFile::settings.endGroup();
-
+        settings.endGroup();
+        settings.sync();
     }
     else
     {
