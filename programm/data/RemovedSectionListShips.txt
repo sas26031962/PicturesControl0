@@ -13,3 +13,4 @@ C:/Work/Ships/slava/slava_1_600dpi.tif
 C:/Work/Ships/slava/slava_2_600dpi.tif
 C:/Work/Ships/slava/slava_3_600dpi.tif
 C:/Work/Ships/slava/slava_4_600dpi.tif
+C:/Work/Ships/timer0.bin
