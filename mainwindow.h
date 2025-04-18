@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <atomic>
 #include <QKeyEvent>
+#include <QSet>
 
 #include "cinifile.h"
 #include "fmview.h"
@@ -110,6 +111,9 @@ private slots:
     void execListWidgetTheameItemClicked();
     void execListWidgetPlaceItemClicked();
 
+    void execListWidgetKeysItemClicked();
+    void execListWidgetSearchItemClicked();
+
     void execActionLoadHashTagListSubject();
     void execActionLoadHashTagListPlace();
     void execActionLoadHashTagListProperty();
@@ -126,6 +130,7 @@ private slots:
     void execActionRemoveSection();
 
     void execActionGetGroupsList();
+    void execActionGetKeysList();
 
     void execActionGotoIndex();
 

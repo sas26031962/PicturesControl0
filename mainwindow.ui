@@ -338,6 +338,76 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>Search</string>
+     </attribute>
+     <widget class="QListWidget" name="listWidgetKeys">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>150</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="listWidgetSearch">
+      <property name="geometry">
+       <rect>
+        <x>175</x>
+        <y>30</y>
+        <width>150</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelKeysCaption">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>5</y>
+        <width>150</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>All keys</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSearchKeysCaption">
+      <property name="geometry">
+       <rect>
+        <x>175</x>
+        <y>5</y>
+        <width>150</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Keys for search</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonSearchOrYes">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>290</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Search OR YES</string>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
       <string>Other</string>
@@ -376,6 +446,7 @@
     <addaction name="actionRemoveBin"/>
     <addaction name="actionRemove3gp"/>
     <addaction name="actionGetGroupsList"/>
+    <addaction name="actionGetKeysList"/>
     <addaction name="actionRemoveSection"/>
     <addaction name="actionExit"/>
    </widget>
@@ -567,6 +638,11 @@
   <action name="actionSearchOrYes">
    <property name="text">
     <string>SearchOrYes</string>
+   </property>
+  </action>
+  <action name="actionGetKeysList">
+   <property name="text">
+    <string>GetKeysList</string>
    </property>
   </action>
  </widget>

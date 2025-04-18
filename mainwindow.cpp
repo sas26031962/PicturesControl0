@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     cIniFile::Groups = new QStringList();
+    cIniFile::Keys = new QStringList();
+    cIniFile::SearchKeys = new QStringList();
 
     qslDeletedSections.clear();
 
@@ -62,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionImport, SIGNAL(triggered()), this, SLOT( execActionImportInitial()));
 
     connect(ui->actionGetGroupsList, SIGNAL(triggered()), this, SLOT( execActionGetGroupsList()));
+    connect(ui->actionGetKeysList, SIGNAL(triggered()), this, SLOT( execActionGetKeysList()));
 
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT( execActionLoad()));
     //---Для удаления
@@ -150,7 +153,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fmViewPicture, SIGNAL(shiftYValueChanged()), this, SLOT( execShiftYValueChanged()));
 
     connect(ui->actionSearchRotated, SIGNAL(triggered()), this, SLOT( execActionSearchRotated()));
+
     connect(ui->actionSearchOrYes, SIGNAL(triggered()), this, SLOT( execActionSearchOrYes()));
+    connect(ui->pushButtonSearchOrYes, SIGNAL(pressed()), this, SLOT( execActionSearchOrYes()));
+
+    connect(ui->listWidgetKeys, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetKeysItemClicked()));
+    connect(ui->listWidgetSearch, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(execListWidgetSearchItemClicked()));
 
     //ui->labelMain->setText("Exec 'Load' option for get file name list");
 
@@ -176,6 +184,8 @@ MainWindow::~MainWindow()
     delete qslHashTagList;
 
     if(cIniFile::Groups != nullptr) delete cIniFile::Groups;
+    if(cIniFile::Keys != nullptr) delete cIniFile::Keys;
+    if(cIniFile::SearchKeys != nullptr) delete cIniFile::SearchKeys;
 
     delete ui;
 }
@@ -597,6 +607,9 @@ void MainWindow::execActionLoad()
     //Загрузка списка групп
     cImportFiles::getGroupsList();
     cImportFiles::MaxIndexValue = cIniFile::Groups->count();
+
+    // Загрузка списка ключей
+    execActionGetKeysList();
 
     // Установка текущего индекса
     iCurrentIndexGlobal.store(LoadedCurrentIndex);
@@ -1536,6 +1549,7 @@ void MainWindow::execActionGetGroupsList()
 {
     QString s = "execActionGetGroupsList()";
 
+    ui->listWidgetOther->clear();
     bool x = cImportFiles::getGroupsList();
     if(x)
     {
@@ -1545,8 +1559,58 @@ void MainWindow::execActionGetGroupsList()
     {
         s += ": sucsess!";
 
-        ui->listWidgetOther->clear();
         ui->listWidgetOther->addItems(*cIniFile::Groups);
+    }
+
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execActionGetKeysList()
+{
+    QString s = "execActionGetKeysList()";
+
+    ui->listWidgetKeys->clear();
+    bool x = cImportFiles::getKeysList();
+    if(x)
+    {
+        s += ": error detected!";
+    }
+    else
+    {
+        s += ": sucsess!";
+
+        //Удаление имени секции
+        for(QList<QString>::iterator it = cIniFile::Keys->begin(); it != cIniFile::Keys->end(); ++it)
+        {
+            QString s = *it;
+            int pos = s.lastIndexOf('/');
+            if(pos > 0)
+            {
+                *it = s.mid(pos + 1);
+            }
+        }
+
+        //---Удаление повторяющихся значений с сохранением порядка
+
+        QSet<QString> seen;
+        QStringList result;
+        for(const QString &str : *cIniFile::Keys)
+        {
+            if(!seen.contains(str))
+            {
+                seen.insert(str);
+                result.append(str);
+            }
+        }
+        *cIniFile::Keys = result;
+
+        //---
+        ui->listWidgetKeys->addItems(*cIniFile::Keys);
+        ui->labelKeysCaption->setText("All keys:" + QString::number(cIniFile::Keys->count()));
     }
 
     //---
@@ -1724,6 +1788,58 @@ void MainWindow::execListWidgetTheameItemClicked()
 
 //=============================================================================
 
+void MainWindow::execListWidgetKeysItemClicked()
+{
+    //QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    QString s = "execKeysItemClicked()";
+    QString item = ui->listWidgetKeys->currentItem()->text();
+    s += ": ";
+    s += item;
+
+    if(
+         item != "Id"
+      && item != "height"
+      && item != "name"
+      && item != "path"
+      && item != "size"
+      && item != "width"
+      )
+    {
+        cIniFile::SearchKeys->append(item);
+        ui->listWidgetSearch->clear();
+        ui->listWidgetSearch->addItems(*cIniFile::SearchKeys);
+    }
+    else
+    {
+        s += " forbidden value!!!";
+    }
+
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execListWidgetSearchItemClicked()
+{
+    //QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    QString s = "execSearchItemClicked()";
+    QString item = ui->listWidgetSearch->currentItem()->text();
+    s += ": ";
+    s += item;
+
+    cIniFile::SearchKeys->removeAll(item);
+
+    ui->listWidgetSearch->clear();
+    ui->listWidgetSearch->addItems(*cIniFile::SearchKeys);
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
 void MainWindow::execListWidgetPlaceItemClicked()
 {
     QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
@@ -1809,18 +1925,27 @@ void MainWindow::execActionSearchOrYes()
 {
     QString s = "execActionSearchOrYes()";
 
-    QStringList yes;
-    yes.clear();
-    //yes.append("IsRotated");
-    yes.append("Archive");
+//    cIniFile::SearchKeys->clear();
+//    cIniFile::SearchKeys->append("IsRotated");
+//    cIniFile::SearchKeys->append("Archive");
 
-    cLoadFiles::execLoadFilesByConditionOrYes(yes);
+//    ui->listWidgetSearch->clear();
+//    ui->listWidgetSearch->addItems(*cIniFile::SearchKeys);
 
-    installNavigation();//Настройка навигации
+    if(cIniFile::SearchKeys->count() > 0)
+    {
+        cLoadFiles::execLoadFilesByConditionOrYes(*cIniFile::SearchKeys);
 
-    s += ": find ";
-    s += QString::number(cImportFiles::MaxIndexValue);
-    s += " records";
+        installNavigation();//Настройка навигации
+
+        s += ": find ";
+        s += QString::number(cImportFiles::MaxIndexValue);
+        s += " records";
+    }
+    else
+    {
+        s += ": empy search task, nothing to do!!!";
+    }
     //---
     emit execShowExecStatus(s);
     //---

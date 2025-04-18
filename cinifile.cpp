@@ -17,7 +17,10 @@
 
     QString cIniFile::currentImagePath = "";
     QString cIniFile::currentRotatedImagePath = "";
+
     QStringList * cIniFile::Groups;
+    QStringList * cIniFile::Keys;
+    QStringList * cIniFile::SearchKeys;
 
     QStringList * cIniFile::currentGroups;
 

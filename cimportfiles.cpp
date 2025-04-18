@@ -172,5 +172,16 @@ bool cImportFiles::getGroupsList()
 
     return IsError;//Возвращаем флаг ошибки
 
-}//End of QStringList cImportFiles::getGroupsList()
+}//End of bool cImportFiles::getGroupsList()
+
+bool cImportFiles::getKeysList()
+{
+    bool IsError = true;
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+    *cIniFile::Keys = settings.allKeys();
+
+    if(cIniFile::Keys->count() > 0)IsError = false;
+
+    return IsError;//Возвращаем флаг ошибки
+}
 

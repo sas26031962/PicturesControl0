@@ -19,7 +19,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 //-----------------------------------------------------------------------------
 //Глобальные переменные
@@ -34,6 +34,8 @@ private:
 public:
     //Атрибуты
     static QStringList * Groups;
+    static QStringList * Keys;
+    static QStringList * SearchKeys;
     static QStringList * currentGroups;
 
     static QString iniFilePath;

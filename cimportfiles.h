@@ -39,6 +39,7 @@ public:
 
     static void execImport(QProgressBar * bar);
     static bool getGroupsList();
+    static bool getKeysList();
 
 };
 
