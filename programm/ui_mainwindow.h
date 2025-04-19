@@ -61,6 +61,7 @@ public:
     QAction *actionRemove3gp;
     QAction *actionSearchRotated;
     QAction *actionSearchOrYes;
+    QAction *actionGetKeysList;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -89,6 +90,12 @@ public:
     QListWidget *listWidgetPropertyes;
     QWidget *tab_3;
     QListWidget *listWidgetTheams;
+    QWidget *tab_6;
+    QListWidget *listWidgetKeys;
+    QListWidget *listWidgetSearch;
+    QLabel *labelKeysCaption;
+    QLabel *labelSearchKeysCaption;
+    QPushButton *pushButtonSearchOrYes;
     QWidget *tab_5;
     QListWidget *listWidgetOther;
     QMenuBar *menuBar;
@@ -161,6 +168,8 @@ public:
         actionSearchRotated->setObjectName(QString::fromUtf8("actionSearchRotated"));
         actionSearchOrYes = new QAction(MainWindow);
         actionSearchOrYes->setObjectName(QString::fromUtf8("actionSearchOrYes"));
+        actionGetKeysList = new QAction(MainWindow);
+        actionGetKeysList->setObjectName(QString::fromUtf8("actionGetKeysList"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -247,6 +256,26 @@ public:
         listWidgetTheams->setObjectName(QString::fromUtf8("listWidgetTheams"));
         listWidgetTheams->setGeometry(QRect(10, 10, 261, 291));
         tabWidget->addTab(tab_3, QString());
+        tab_6 = new QWidget();
+        tab_6->setObjectName(QString::fromUtf8("tab_6"));
+        listWidgetKeys = new QListWidget(tab_6);
+        listWidgetKeys->setObjectName(QString::fromUtf8("listWidgetKeys"));
+        listWidgetKeys->setGeometry(QRect(10, 30, 150, 241));
+        listWidgetSearch = new QListWidget(tab_6);
+        listWidgetSearch->setObjectName(QString::fromUtf8("listWidgetSearch"));
+        listWidgetSearch->setGeometry(QRect(175, 30, 150, 241));
+        labelKeysCaption = new QLabel(tab_6);
+        labelKeysCaption->setObjectName(QString::fromUtf8("labelKeysCaption"));
+        labelKeysCaption->setGeometry(QRect(10, 5, 150, 20));
+        labelKeysCaption->setAlignment(Qt::AlignCenter);
+        labelSearchKeysCaption = new QLabel(tab_6);
+        labelSearchKeysCaption->setObjectName(QString::fromUtf8("labelSearchKeysCaption"));
+        labelSearchKeysCaption->setGeometry(QRect(175, 5, 150, 20));
+        labelSearchKeysCaption->setAlignment(Qt::AlignCenter);
+        pushButtonSearchOrYes = new QPushButton(tab_6);
+        pushButtonSearchOrYes->setObjectName(QString::fromUtf8("pushButtonSearchOrYes"));
+        pushButtonSearchOrYes->setGeometry(QRect(10, 280, 91, 23));
+        tabWidget->addTab(tab_6, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
         listWidgetOther = new QListWidget(tab_5);
@@ -256,7 +285,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 601, 21));
+        menuBar->setGeometry(QRect(0, 0, 601, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuSelect_image = new QMenu(menuBar);
@@ -288,6 +317,7 @@ public:
         menuFile->addAction(actionRemoveBin);
         menuFile->addAction(actionRemove3gp);
         menuFile->addAction(actionGetGroupsList);
+        menuFile->addAction(actionGetKeysList);
         menuFile->addAction(actionRemoveSection);
         menuFile->addAction(actionExit);
         menuSelect_image->addAction(actionSelectImageBegin);
@@ -344,6 +374,7 @@ public:
         actionRemove3gp->setText(QCoreApplication::translate("MainWindow", "Remove 3gp", nullptr));
         actionSearchRotated->setText(QCoreApplication::translate("MainWindow", "SearchRotated", nullptr));
         actionSearchOrYes->setText(QCoreApplication::translate("MainWindow", "SearchOrYes", nullptr));
+        actionGetKeysList->setText(QCoreApplication::translate("MainWindow", "GetKeysList", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());
@@ -385,6 +416,10 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Places", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Propertyes", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Theams", nullptr));
+        labelKeysCaption->setText(QCoreApplication::translate("MainWindow", "All keys", nullptr));
+        labelSearchKeysCaption->setText(QCoreApplication::translate("MainWindow", "Keys for search", nullptr));
+        pushButtonSearchOrYes->setText(QCoreApplication::translate("MainWindow", "Search OR YES", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("MainWindow", "Search", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Other", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuSelect_image->setTitle(QCoreApplication::translate("MainWindow", "Select image", nullptr));

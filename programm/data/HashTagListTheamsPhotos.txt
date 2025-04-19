@@ -13,6 +13,8 @@
 Похороны_мамы
 Our_dogs
 Our_cats
+Our_cooking
+Our_pupils
 My_Electronix
 My_Photo_Archive
 My_Hobby
@@ -20,6 +22,7 @@ My_Avito
 My_bicycle
 My_tools
 My_teeth
+My_yoga
 My_marketplaces
 My_shields
 My_garage_making
