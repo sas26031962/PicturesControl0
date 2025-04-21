@@ -154,6 +154,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionSearchRotated, SIGNAL(triggered()), this, SLOT( execActionSearchRotated()));
 
+    connect(ui->actionSearchNamePattern1, SIGNAL(triggered()), this, SLOT( execActionSearchNamePattern1()));
+    connect(ui->actionSearchNamePattern2, SIGNAL(triggered()), this, SLOT( execActionSearchNamePattern2()));
+
     connect(ui->actionSearchOrYes, SIGNAL(triggered()), this, SLOT( execActionSearchOrYes()));
     connect(ui->pushButtonSearchOrYes, SIGNAL(pressed()), this, SLOT( execActionSearchOrYes()));
 
@@ -1946,6 +1949,86 @@ void MainWindow::execActionSearchOrYes()
     {
         s += ": empy search task, nothing to do!!!";
     }
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execActionSearchNamePattern1()
+{
+    QString s = "execActionSearchNamePattern1()";
+    QString pattern = "^20[0-9]{6}_[0-9]{6}";
+    QRegularExpression re(pattern);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+
+    QStringList TotalGroups = settings.childGroups();//Загрузка полного списка групп
+    cIniFile::Groups->clear();//Очистка результата
+
+    int iCount = 0;// Очистка счётчика найденных объектов
+    ui->listWidgetOther->clear();
+    QListIterator<QString> readIt(TotalGroups);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+        //qDebug() << qsSection;
+        bool match = re.match(qsSection.toLower()).hasMatch();
+        if(match)
+        {
+            iCount++;
+            cIniFile::Groups->append(qsSection);
+            qDebug() << "iterator: section=" << qsSection << " contain pattern:" << pattern << " count=" << iCount;
+            ui->listWidgetOther->addItem(qsSection);
+        }
+    }
+
+    s += ": iCount=";
+    s += QString::number(iCount);
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execActionSearchNamePattern2()
+{
+    QString s = "execActionSearchNamePattern2()";
+    QString pattern = "^20[0-9]{2}-[0-9]{2}-[0-9]{2} [0-9]{2}-[0-9]{2}-[0-9]{2}";
+    QRegularExpression re(pattern);
+
+    // Создаем объект QSettings с указанием формата INI и пути к файлу
+    QSettings settings(cIniFile::iniFilePath, QSettings::IniFormat);
+
+    // Читаем значения из INI-файла
+
+    QStringList TotalGroups = settings.childGroups();//Загрузка полного списка групп
+    cIniFile::Groups->clear();//Очистка результата
+
+    int iCount = 0;// Очистка счётчика найденных объектов
+    ui->listWidgetOther->clear();
+    QListIterator<QString> readIt(TotalGroups);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+        //qDebug() << qsSection;
+        bool match = re.match(qsSection.toLower()).hasMatch();
+        if(match)
+        {
+            iCount++;
+            cIniFile::Groups->append(qsSection);
+            qDebug() << "iterator: section=" << qsSection << " contain pattern:" << pattern << " count=" << iCount;
+            ui->listWidgetOther->addItem(qsSection);
+        }
+    }
+
+    s += ": iCount=";
+    s += QString::number(iCount);
     //---
     emit execShowExecStatus(s);
     //---

@@ -276,7 +276,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -431,7 +431,7 @@
      <x>0</x>
      <y>0</y>
      <width>601</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -483,6 +483,8 @@
     </property>
     <addaction name="actionSearchRotated"/>
     <addaction name="actionSearchOrYes"/>
+    <addaction name="actionSearchNamePattern1"/>
+    <addaction name="actionSearchNamePattern2"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
@@ -643,6 +645,16 @@
   <action name="actionGetKeysList">
    <property name="text">
     <string>GetKeysList</string>
+   </property>
+  </action>
+  <action name="actionSearchNamePattern1">
+   <property name="text">
+    <string>SearchNamePattern1</string>
+   </property>
+  </action>
+  <action name="actionSearchNamePattern2">
+   <property name="text">
+    <string>SearchNamePattern2</string>
    </property>
   </action>
  </widget>

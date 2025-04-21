@@ -21,6 +21,7 @@
 #include <atomic>
 #include <QKeyEvent>
 #include <QSet>
+#include <QRegularExpression>
 
 #include "cinifile.h"
 #include "fmview.h"
@@ -121,6 +122,8 @@ private slots:
 
     void execActionSearchRotated();
     void execActionSearchOrYes();
+    void execActionSearchNamePattern1();
+    void execActionSearchNamePattern2();
 
     void execActionRemoveMovie();
     void execActionRemoveText();
