@@ -62,6 +62,8 @@ public:
     QAction *actionSearchRotated;
     QAction *actionSearchOrYes;
     QAction *actionGetKeysList;
+    QAction *actionSearchNamePattern1;
+    QAction *actionSearchNamePattern2;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -170,6 +172,10 @@ public:
         actionSearchOrYes->setObjectName(QString::fromUtf8("actionSearchOrYes"));
         actionGetKeysList = new QAction(MainWindow);
         actionGetKeysList->setObjectName(QString::fromUtf8("actionGetKeysList"));
+        actionSearchNamePattern1 = new QAction(MainWindow);
+        actionSearchNamePattern1->setObjectName(QString::fromUtf8("actionSearchNamePattern1"));
+        actionSearchNamePattern2 = new QAction(MainWindow);
+        actionSearchNamePattern2->setObjectName(QString::fromUtf8("actionSearchNamePattern2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -285,7 +291,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 601, 22));
+        menuBar->setGeometry(QRect(0, 0, 601, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuSelect_image = new QMenu(menuBar);
@@ -334,11 +340,13 @@ public:
         menuTags->addAction(actionLoadHashTagListTheame);
         menuSearch->addAction(actionSearchRotated);
         menuSearch->addAction(actionSearchOrYes);
+        menuSearch->addAction(actionSearchNamePattern1);
+        menuSearch->addAction(actionSearchNamePattern2);
 
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
 
-        tabWidget->setCurrentIndex(4);
+        tabWidget->setCurrentIndex(5);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -375,6 +383,8 @@ public:
         actionSearchRotated->setText(QCoreApplication::translate("MainWindow", "SearchRotated", nullptr));
         actionSearchOrYes->setText(QCoreApplication::translate("MainWindow", "SearchOrYes", nullptr));
         actionGetKeysList->setText(QCoreApplication::translate("MainWindow", "GetKeysList", nullptr));
+        actionSearchNamePattern1->setText(QCoreApplication::translate("MainWindow", "SearchNamePattern1", nullptr));
+        actionSearchNamePattern2->setText(QCoreApplication::translate("MainWindow", "SearchNamePattern2", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());

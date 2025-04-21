@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[42];
-    char stringdata0[926];
+    QByteArrayData data[44];
+    char stringdata0[984];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -58,22 +58,24 @@ QT_MOC_LITERAL(22, 494, 33), // "execActionLoadHashTagListProp..."
 QT_MOC_LITERAL(23, 528, 31), // "execActionLoadHashTagListTheame"
 QT_MOC_LITERAL(24, 560, 23), // "execActionSearchRotated"
 QT_MOC_LITERAL(25, 584, 21), // "execActionSearchOrYes"
-QT_MOC_LITERAL(26, 606, 21), // "execActionRemoveMovie"
-QT_MOC_LITERAL(27, 628, 20), // "execActionRemoveText"
-QT_MOC_LITERAL(28, 649, 19), // "execActionRemoveTif"
-QT_MOC_LITERAL(29, 669, 19), // "execActionRemove3gp"
-QT_MOC_LITERAL(30, 689, 19), // "execActionRemoveBin"
-QT_MOC_LITERAL(31, 709, 23), // "execActionRemoveSection"
-QT_MOC_LITERAL(32, 733, 23), // "execActionGetGroupsList"
-QT_MOC_LITERAL(33, 757, 21), // "execActionGetKeysList"
-QT_MOC_LITERAL(34, 779, 19), // "execActionGotoIndex"
-QT_MOC_LITERAL(35, 799, 18), // "execActionRotateCW"
-QT_MOC_LITERAL(36, 818, 19), // "execActionRotateCCW"
-QT_MOC_LITERAL(37, 838, 16), // "execSpinBoxAngle"
-QT_MOC_LITERAL(38, 855, 5), // "angle"
-QT_MOC_LITERAL(39, 861, 18), // "execShowExecStatus"
-QT_MOC_LITERAL(40, 880, 22), // "execShiftXValueChanged"
-QT_MOC_LITERAL(41, 903, 22) // "execShiftYValueChanged"
+QT_MOC_LITERAL(26, 606, 28), // "execActionSearchNamePattern1"
+QT_MOC_LITERAL(27, 635, 28), // "execActionSearchNamePattern2"
+QT_MOC_LITERAL(28, 664, 21), // "execActionRemoveMovie"
+QT_MOC_LITERAL(29, 686, 20), // "execActionRemoveText"
+QT_MOC_LITERAL(30, 707, 19), // "execActionRemoveTif"
+QT_MOC_LITERAL(31, 727, 19), // "execActionRemove3gp"
+QT_MOC_LITERAL(32, 747, 19), // "execActionRemoveBin"
+QT_MOC_LITERAL(33, 767, 23), // "execActionRemoveSection"
+QT_MOC_LITERAL(34, 791, 23), // "execActionGetGroupsList"
+QT_MOC_LITERAL(35, 815, 21), // "execActionGetKeysList"
+QT_MOC_LITERAL(36, 837, 19), // "execActionGotoIndex"
+QT_MOC_LITERAL(37, 857, 18), // "execActionRotateCW"
+QT_MOC_LITERAL(38, 876, 19), // "execActionRotateCCW"
+QT_MOC_LITERAL(39, 896, 16), // "execSpinBoxAngle"
+QT_MOC_LITERAL(40, 913, 5), // "angle"
+QT_MOC_LITERAL(41, 919, 18), // "execShowExecStatus"
+QT_MOC_LITERAL(42, 938, 22), // "execShiftXValueChanged"
+QT_MOC_LITERAL(43, 961, 22) // "execShiftYValueChanged"
 
     },
     "MainWindow\0draw\0\0s\0showExecStatus\0"
@@ -94,6 +96,8 @@ QT_MOC_LITERAL(41, 903, 22) // "execShiftYValueChanged"
     "execActionLoadHashTagListProperty\0"
     "execActionLoadHashTagListTheame\0"
     "execActionSearchRotated\0execActionSearchOrYes\0"
+    "execActionSearchNamePattern1\0"
+    "execActionSearchNamePattern2\0"
     "execActionRemoveMovie\0execActionRemoveText\0"
     "execActionRemoveTif\0execActionRemove3gp\0"
     "execActionRemoveBin\0execActionRemoveSection\0"
@@ -111,7 +115,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      38,   14, // methods
+      40,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -119,46 +123,48 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  204,    2, 0x06 /* Public */,
-       4,    1,  207,    2, 0x06 /* Public */,
+       1,    1,  214,    2, 0x06 /* Public */,
+       4,    1,  217,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  210,    2, 0x08 /* Private */,
-       6,    0,  211,    2, 0x08 /* Private */,
-       7,    0,  212,    2, 0x08 /* Private */,
-       8,    0,  213,    2, 0x08 /* Private */,
-       9,    0,  214,    2, 0x08 /* Private */,
-      10,    0,  215,    2, 0x08 /* Private */,
-      11,    0,  216,    2, 0x08 /* Private */,
-      12,    0,  217,    2, 0x08 /* Private */,
-      13,    0,  218,    2, 0x08 /* Private */,
-      14,    0,  219,    2, 0x08 /* Private */,
-      15,    0,  220,    2, 0x08 /* Private */,
-      16,    0,  221,    2, 0x08 /* Private */,
-      17,    0,  222,    2, 0x08 /* Private */,
-      18,    0,  223,    2, 0x08 /* Private */,
-      19,    0,  224,    2, 0x08 /* Private */,
-      20,    0,  225,    2, 0x08 /* Private */,
-      21,    0,  226,    2, 0x08 /* Private */,
-      22,    0,  227,    2, 0x08 /* Private */,
-      23,    0,  228,    2, 0x08 /* Private */,
-      24,    0,  229,    2, 0x08 /* Private */,
-      25,    0,  230,    2, 0x08 /* Private */,
-      26,    0,  231,    2, 0x08 /* Private */,
-      27,    0,  232,    2, 0x08 /* Private */,
-      28,    0,  233,    2, 0x08 /* Private */,
-      29,    0,  234,    2, 0x08 /* Private */,
-      30,    0,  235,    2, 0x08 /* Private */,
-      31,    0,  236,    2, 0x08 /* Private */,
-      32,    0,  237,    2, 0x08 /* Private */,
-      33,    0,  238,    2, 0x08 /* Private */,
-      34,    0,  239,    2, 0x08 /* Private */,
-      35,    0,  240,    2, 0x08 /* Private */,
-      36,    0,  241,    2, 0x08 /* Private */,
-      37,    1,  242,    2, 0x08 /* Private */,
-      39,    1,  245,    2, 0x08 /* Private */,
-      40,    0,  248,    2, 0x08 /* Private */,
-      41,    0,  249,    2, 0x08 /* Private */,
+       5,    0,  220,    2, 0x08 /* Private */,
+       6,    0,  221,    2, 0x08 /* Private */,
+       7,    0,  222,    2, 0x08 /* Private */,
+       8,    0,  223,    2, 0x08 /* Private */,
+       9,    0,  224,    2, 0x08 /* Private */,
+      10,    0,  225,    2, 0x08 /* Private */,
+      11,    0,  226,    2, 0x08 /* Private */,
+      12,    0,  227,    2, 0x08 /* Private */,
+      13,    0,  228,    2, 0x08 /* Private */,
+      14,    0,  229,    2, 0x08 /* Private */,
+      15,    0,  230,    2, 0x08 /* Private */,
+      16,    0,  231,    2, 0x08 /* Private */,
+      17,    0,  232,    2, 0x08 /* Private */,
+      18,    0,  233,    2, 0x08 /* Private */,
+      19,    0,  234,    2, 0x08 /* Private */,
+      20,    0,  235,    2, 0x08 /* Private */,
+      21,    0,  236,    2, 0x08 /* Private */,
+      22,    0,  237,    2, 0x08 /* Private */,
+      23,    0,  238,    2, 0x08 /* Private */,
+      24,    0,  239,    2, 0x08 /* Private */,
+      25,    0,  240,    2, 0x08 /* Private */,
+      26,    0,  241,    2, 0x08 /* Private */,
+      27,    0,  242,    2, 0x08 /* Private */,
+      28,    0,  243,    2, 0x08 /* Private */,
+      29,    0,  244,    2, 0x08 /* Private */,
+      30,    0,  245,    2, 0x08 /* Private */,
+      31,    0,  246,    2, 0x08 /* Private */,
+      32,    0,  247,    2, 0x08 /* Private */,
+      33,    0,  248,    2, 0x08 /* Private */,
+      34,    0,  249,    2, 0x08 /* Private */,
+      35,    0,  250,    2, 0x08 /* Private */,
+      36,    0,  251,    2, 0x08 /* Private */,
+      37,    0,  252,    2, 0x08 /* Private */,
+      38,    0,  253,    2, 0x08 /* Private */,
+      39,    1,  254,    2, 0x08 /* Private */,
+      41,    1,  257,    2, 0x08 /* Private */,
+      42,    0,  260,    2, 0x08 /* Private */,
+      43,    0,  261,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -197,7 +203,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   38,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   40,
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void,
     QMetaType::Void,
@@ -234,21 +242,23 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 20: _t->execActionLoadHashTagListTheame(); break;
         case 21: _t->execActionSearchRotated(); break;
         case 22: _t->execActionSearchOrYes(); break;
-        case 23: _t->execActionRemoveMovie(); break;
-        case 24: _t->execActionRemoveText(); break;
-        case 25: _t->execActionRemoveTif(); break;
-        case 26: _t->execActionRemove3gp(); break;
-        case 27: _t->execActionRemoveBin(); break;
-        case 28: _t->execActionRemoveSection(); break;
-        case 29: _t->execActionGetGroupsList(); break;
-        case 30: _t->execActionGetKeysList(); break;
-        case 31: _t->execActionGotoIndex(); break;
-        case 32: _t->execActionRotateCW(); break;
-        case 33: _t->execActionRotateCCW(); break;
-        case 34: _t->execSpinBoxAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 35: _t->execShowExecStatus((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 36: _t->execShiftXValueChanged(); break;
-        case 37: _t->execShiftYValueChanged(); break;
+        case 23: _t->execActionSearchNamePattern1(); break;
+        case 24: _t->execActionSearchNamePattern2(); break;
+        case 25: _t->execActionRemoveMovie(); break;
+        case 26: _t->execActionRemoveText(); break;
+        case 27: _t->execActionRemoveTif(); break;
+        case 28: _t->execActionRemove3gp(); break;
+        case 29: _t->execActionRemoveBin(); break;
+        case 30: _t->execActionRemoveSection(); break;
+        case 31: _t->execActionGetGroupsList(); break;
+        case 32: _t->execActionGetKeysList(); break;
+        case 33: _t->execActionGotoIndex(); break;
+        case 34: _t->execActionRotateCW(); break;
+        case 35: _t->execActionRotateCCW(); break;
+        case 36: _t->execSpinBoxAngle((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 37: _t->execShowExecStatus((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 38: _t->execShiftXValueChanged(); break;
+        case 39: _t->execShiftYValueChanged(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -299,13 +309,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 38)
+        if (_id < 40)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 38;
+        _id -= 40;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 38)
+        if (_id < 40)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 38;
+        _id -= 40;
     }
     return _id;
 }
