@@ -10,6 +10,7 @@ Dreadnote_Poltava
 Dreadnote_Sevastopol
 Dreadnote_Sevastopol_1969
 Dreadnote_Petropavlovsk
+Destroyer_Pr56
 Lider_Tashkent
 MO_4
 Minesweeper_Strela
