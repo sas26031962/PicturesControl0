@@ -2056,6 +2056,60 @@ void MainWindow::execActionSearchNamePatternsIntersection()
 {
     QString s = "execActionSearchNamePattensIntersection()";
 
+    QString pattern1 = "^20[0-9]{6}_[0-9]{6}";
+
+    QStringList qslPattern1 = cLoadFiles::loadStringListFromFile(cIniFile::pattern1StringListFilePath);
+    QStringList qslPattern2 = cLoadFiles::loadStringListFromFile(cIniFile::pattern2StringListFilePath);
+
+    qDebug() << "ListPattern1 count=" << qslPattern1.count() << " ListPattern2 count=" << qslPattern2.count();
+
+    int iCount = 0;// Очистка счётчика найденных объектов
+    ui->listWidgetOther->clear();
+    QListIterator<QString> readIt(qslPattern1);
+    while (readIt.hasNext())
+    {
+        QString qsSection = readIt.next();
+        //qDebug() << qsSection;
+        QRegularExpression re(pattern1);
+        bool match = re.match(qsSection.toLower()).hasMatch();
+        int Year, Month, Day, Hour, Min, Sec;
+        QString qsMirror;
+        if (match)
+        {
+            Year = qsSection.mid(0, 4).toInt();
+            Month = qsSection.mid(4, 2).toInt();
+            Day = qsSection.mid(6, 2).toInt();
+            Hour = qsSection.mid(9, 2).toInt();
+            Min = qsSection.mid(11, 2).toInt();
+            Sec = qsSection.mid(13, 2).toInt();
+            //qDebug() << "Строка " << qsSection << " is Ok for:" << pattern1 << ": Year=" << Year << " Month=" << Month << " Day=" << Day << " Hour=" << Hour << " Min=" << Min << " Sec=" << Sec;
+             qsMirror = QString::number(Year);
+            qsMirror += "-";
+            if(Month < 10)qsMirror += "0";
+            qsMirror += QString::number(Month);
+            qsMirror += "-";
+            if(Day < 10)qsMirror += "0";
+            qsMirror += QString::number(Day);
+            qsMirror += " ";
+            if(Hour < 10)qsMirror += "0";
+            qsMirror += QString::number(Hour);
+            qsMirror += "-";
+            if(Min < 10)qsMirror += "0";
+            qsMirror += QString::number(Min);
+            qsMirror += "-";
+            if(Sec < 10)qsMirror += "0";
+            qsMirror += QString::number(Sec);
+            qDebug() << "Строка " << qsSection << " is Ok for:" << pattern1 << ": Mirror=" << qsMirror;
+            if(qslPattern2.contains(qsMirror))
+            {
+                iCount++;
+                qDebug() << "String " << qsSection << " has mirror:" << qsMirror;
+                ui->listWidgetOther->addItem(qsSection);
+            }
+        }
+    }
+    s += ": mirrors count=";
+    s += QString::number(iCount);
     //---
     emit execShowExecStatus(s);
     //---
