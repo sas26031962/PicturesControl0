@@ -485,6 +485,7 @@
     <addaction name="actionSearchOrYes"/>
     <addaction name="actionSearchNamePattern1"/>
     <addaction name="actionSearchNamePattern2"/>
+    <addaction name="actionSearchNamePattensIntersection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSelect_image"/>
@@ -655,6 +656,11 @@
   <action name="actionSearchNamePattern2">
    <property name="text">
     <string>SearchNamePattern2</string>
+   </property>
+  </action>
+  <action name="actionSearchNamePattensIntersection">
+   <property name="text">
+    <string>SearchNamePattensIntersection</string>
    </property>
   </action>
  </widget>

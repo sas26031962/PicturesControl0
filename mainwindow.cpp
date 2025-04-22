@@ -156,6 +156,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionSearchNamePattern1, SIGNAL(triggered()), this, SLOT( execActionSearchNamePattern1()));
     connect(ui->actionSearchNamePattern2, SIGNAL(triggered()), this, SLOT( execActionSearchNamePattern2()));
+    connect(ui->actionSearchNamePattensIntersection, SIGNAL(triggered()), this, SLOT( execActionSearchNamePatternsIntersection()));
 
     connect(ui->actionSearchOrYes, SIGNAL(triggered()), this, SLOT( execActionSearchOrYes()));
     connect(ui->pushButtonSearchOrYes, SIGNAL(pressed()), this, SLOT( execActionSearchOrYes()));
@@ -2044,6 +2045,17 @@ void MainWindow::execActionSearchNamePattern2()
     {
         s += "pattern2StringList stored in file";
     }
+    //---
+    emit execShowExecStatus(s);
+    //---
+}
+
+//=============================================================================
+
+void MainWindow::execActionSearchNamePatternsIntersection()
+{
+    QString s = "execActionSearchNamePattensIntersection()";
+
     //---
     emit execShowExecStatus(s);
     //---
