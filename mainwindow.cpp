@@ -2052,6 +2052,33 @@ void MainWindow::execActionSearchNamePattern2()
 
 //=============================================================================
 
+void MainWindow::execShiftXValueChanged()
+{
+    QString s = "ShiftXValueChanged:";
+    s += QString::number(cDrawFiles::dx);
+
+    cDrawFiles::execRotate(0);
+
+    emit draw(cIniFile::currentRotatedImagePath);
+
+    emit showExecStatus(s);
+
+}
+
+void MainWindow::execShiftYValueChanged()
+{
+    QString s = "ShiftYValueChanged:";
+    s += QString::number(cDrawFiles::dy);
+
+    cDrawFiles::execRotate(0);
+
+    emit draw(cIniFile::currentRotatedImagePath);
+
+    emit showExecStatus(s);
+}
+
+//=============================================================================
+
 void MainWindow::execActionSearchNamePatternsIntersection()
 {
     QString s = "execActionSearchNamePattensIntersection()";
@@ -2105,6 +2132,8 @@ void MainWindow::execActionSearchNamePatternsIntersection()
                 iCount++;
                 qDebug() << "String " << qsSection << " has mirror:" << qsMirror;
                 ui->listWidgetOther->addItem(qsSection);
+
+                deleteSection(qsMirror);//!!!
             }
         }
     }
@@ -2116,30 +2145,4 @@ void MainWindow::execActionSearchNamePatternsIntersection()
 }
 
 //=============================================================================
-
-void MainWindow::execShiftXValueChanged()
-{
-    QString s = "ShiftXValueChanged:";
-    s += QString::number(cDrawFiles::dx);
-
-    cDrawFiles::execRotate(0);
-
-    emit draw(cIniFile::currentRotatedImagePath);
-
-    emit showExecStatus(s);
-
-}
-
-void MainWindow::execShiftYValueChanged()
-{
-    QString s = "ShiftYValueChanged:";
-    s += QString::number(cDrawFiles::dy);
-
-    cDrawFiles::execRotate(0);
-
-    emit draw(cIniFile::currentRotatedImagePath);
-
-    emit showExecStatus(s);
-}
-
 

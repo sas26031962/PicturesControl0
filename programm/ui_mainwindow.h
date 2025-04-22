@@ -64,6 +64,7 @@ public:
     QAction *actionGetKeysList;
     QAction *actionSearchNamePattern1;
     QAction *actionSearchNamePattern2;
+    QAction *actionSearchNamePattensIntersection;
     QWidget *centralWidget;
     QGroupBox *groupBoxControl;
     QPushButton *pushButtonBegin;
@@ -176,6 +177,8 @@ public:
         actionSearchNamePattern1->setObjectName(QString::fromUtf8("actionSearchNamePattern1"));
         actionSearchNamePattern2 = new QAction(MainWindow);
         actionSearchNamePattern2->setObjectName(QString::fromUtf8("actionSearchNamePattern2"));
+        actionSearchNamePattensIntersection = new QAction(MainWindow);
+        actionSearchNamePattensIntersection->setObjectName(QString::fromUtf8("actionSearchNamePattensIntersection"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         groupBoxControl = new QGroupBox(centralWidget);
@@ -342,6 +345,7 @@ public:
         menuSearch->addAction(actionSearchOrYes);
         menuSearch->addAction(actionSearchNamePattern1);
         menuSearch->addAction(actionSearchNamePattern2);
+        menuSearch->addAction(actionSearchNamePattensIntersection);
 
         retranslateUi(MainWindow);
         QObject::connect(actionExit, SIGNAL(triggered()), MainWindow, SLOT(close()));
@@ -385,6 +389,7 @@ public:
         actionGetKeysList->setText(QCoreApplication::translate("MainWindow", "GetKeysList", nullptr));
         actionSearchNamePattern1->setText(QCoreApplication::translate("MainWindow", "SearchNamePattern1", nullptr));
         actionSearchNamePattern2->setText(QCoreApplication::translate("MainWindow", "SearchNamePattern2", nullptr));
+        actionSearchNamePattensIntersection->setText(QCoreApplication::translate("MainWindow", "SearchNamePattensIntersection", nullptr));
         groupBoxControl->setTitle(QCoreApplication::translate("MainWindow", "Navigation", nullptr));
 #if QT_CONFIG(tooltip)
         pushButtonBegin->setToolTip(QString());
