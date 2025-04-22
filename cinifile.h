@@ -19,7 +19,7 @@
  *
  *****************************************************************************/
 
-#define HOME_STORAGE YES
+//#define HOME_STORAGE YES
 
 //-----------------------------------------------------------------------------
 //Глобальные переменные
@@ -43,7 +43,10 @@ public:
     static QString scaledImagePath;
     static QString currentImagePath;
     static QString currentRotatedImagePath;
-//    static QSettings settings;//20250417
+
+    static QString pattern1StringListFilePath;
+    static QString pattern2StringListFilePath;
+
     static cIniFile IniFile;
 
     int iRecordListLength = 0;  //Полное число записей

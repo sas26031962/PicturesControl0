@@ -1986,9 +1986,15 @@ void MainWindow::execActionSearchNamePattern1()
             ui->listWidgetOther->addItem(qsSection);
         }
     }
-
+    //---
+    bool x = cLoadFiles::saveStringListToFile(cIniFile::pattern1StringListFilePath, *cIniFile::Groups);
+    //---
     s += ": iCount=";
     s += QString::number(iCount);
+    if(x)
+    {
+        s += "pattern1StringList stored in file";
+    }
     //---
     emit execShowExecStatus(s);
     //---
@@ -2029,6 +2035,15 @@ void MainWindow::execActionSearchNamePattern2()
 
     s += ": iCount=";
     s += QString::number(iCount);
+    //---
+    bool x = cLoadFiles::saveStringListToFile(cIniFile::pattern2StringListFilePath, *cIniFile::Groups);
+    //---
+    s += ": iCount=";
+    s += QString::number(iCount);
+    if(x)
+    {
+        s += "pattern2StringList stored in file";
+    }
     //---
     emit execShowExecStatus(s);
     //---

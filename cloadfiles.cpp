@@ -136,3 +136,39 @@ bool cLoadFiles::execLoadFilesByConditionOrYes(QStringList yes)
 
     return Result;
 }
+
+bool cLoadFiles::saveStringListToFile(const QString& fileName, const QStringList& list)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out.setCodec("UTF-8"); // Установка кодировки
+
+    for (const QString& str : list) {
+        out << str << "\n";
+    }
+
+    file.close();
+    return true;
+}
+
+QStringList cLoadFiles::loadStringListFromFile(const QString& fileName)
+{
+    QStringList list;
+    QFile file(fileName);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        in.setCodec("UTF-8");
+
+        while (!in.atEnd()) {
+            list << in.readLine();
+        }
+
+        file.close();
+    }
+    return list;
+}
